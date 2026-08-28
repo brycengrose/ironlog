@@ -799,7 +799,7 @@ function chart(el, pts, opts){
     var minV = vals.length ? Math.min.apply(null, vals) : 0;
     var maxV = vals.length ? Math.max.apply(null, vals) : 0;
     var span = maxV - minV;
-    var pad = span > 0 ? span*0.26 : Math.max(1, Math.abs(maxV)*0.08 || 1);
+    var pad = span > 0 ? span*(opts.tight?0.08:0.26) : Math.max(1, Math.abs(maxV)*0.08 || 1);
     var top = maxV + pad;
     var bot = Math.max(0, minV - pad);
     if(top-bot < 1e-9){ top += 1; bot = Math.max(0, bot-1); }
@@ -1068,7 +1068,7 @@ function renderOverview(){
   qs("#ovCards").innerHTML = html;
   qsa("#ovCards [data-spark]").forEach(function(sp){
     var pts = pointsFor(sp.getAttribute("data-spark"),"w",s);
-    chart(sp, pts, {height:46, thin:true, noAnim:true, noLabel:true, id:"sp"+sp.getAttribute("data-spark")});
+    chart(sp, pts, {height:46, thin:true, noAnim:true, noLabel:true, tight:true, id:"sp"+sp.getAttribute("data-spark")});
   });
   qsa("#ovCards .day-card").forEach(function(c){
     c.addEventListener("click", function(){

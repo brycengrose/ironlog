@@ -177,42 +177,16 @@ nav{flex:1;margin-top:26px;display:flex;flex-direction:column;gap:4px}
 .view-cta:active{transform:none;box-shadow:2px 2px 0 rgba(0,0,0,.35)}
 .view-cta .arr{font-size:15px;line-height:1}
 
-.musc-wrap{display:grid;grid-template-columns:320px 1fr;gap:16px;margin-top:34px;align-items:start}
-.musc-panel{position:relative;min-width:0;padding:22px;border:1px solid #e3d7c4;background:linear-gradient(180deg,#fffdf8,#f6efe1);
-  box-shadow:0 20px 48px rgba(0,0,0,.5), inset 0 0 0 1px rgba(255,255,255,.6)}
-.musc-panel::before,.musc-panel::after{content:"";position:absolute;width:10px;height:10px}
-.musc-panel::before{top:-1px;left:-1px;border-top:2px solid #b42c24;border-left:2px solid #b42c24}
-.musc-panel::after{bottom:-1px;right:-1px;border-bottom:2px solid #b42c24;border-right:2px solid #b42c24}
-.musc-title{display:flex;align-items:center;gap:12px;font-size:9px;letter-spacing:.32em;color:#b42c24;text-transform:uppercase;font-weight:600;margin-bottom:6px}
-.musc-title::before{content:"";width:34px;height:1px;background:#b42c24}
-.musc-sub{margin-top:14px;font-size:9.5px;color:#8a7761;letter-spacing:.14em;line-height:1.7;text-transform:uppercase}
-.musc-list{list-style:none;margin-top:16px;display:grid;gap:11px}
-.musc-list li{display:flex;align-items:center;gap:11px;font-size:11.5px;letter-spacing:.02em;color:#6b5a47}
-.musc-list .lab{flex:none;width:88px;font-weight:600;color:#2e241a}
-.musc-list .rng{margin-left:auto;font-size:9.5px;color:#a08c74;letter-spacing:.06em;white-space:nowrap}
-.sw{width:15px;height:15px;flex:none;border-radius:2px}
-.sw.lv-neg{background:#9aa3ad;border:1px solid #848e9c}
-.sw.lv-1{background:#f1d0c0;border:1px solid #e0aa93}
-.sw.lv-2{background:#ea9a7c;border:1px solid #cf7a57}
-.sw.lv-3{background:#d45a36;border:1px solid #b23a1e}
-.sw.lv-4{background:#ab241c;border:1px solid #7e1611}
-.sw.lv-0{background:repeating-linear-gradient(45deg,#fff 0 4px,#e9ded0 4px 8px);border:1px solid #d9c6b2}
-.musc-fast{margin-top:16px;padding-top:14px;border-top:1px solid #e3d7c4;font-size:10.5px;color:#8a7761;line-height:1.9;letter-spacing:.05em}
-.musc-fast b{color:#b42c24;font-weight:600}
-.musc-foot{margin-top:14px;font-size:9.5px;color:#a08c74;letter-spacing:.04em;line-height:1.8}
-.musc-fig{display:grid;grid-template-columns:1fr 1fr;gap:4px}
-.musc-fig .cap{font-size:9px;letter-spacing:.36em;color:#b42c24;text-transform:uppercase;text-align:center;margin-bottom:8px;font-weight:600}
-.musc-fig svg{width:100%;height:auto;display:block;max-width:330px;margin:0 auto}
-.sil{fill:#d9c6b2;stroke:rgba(124,97,75,.38);stroke-width:1.3;stroke-linejoin:round}
-.musc-zone{fill:transparent;stroke:none;cursor:pointer;transition:fill .3s ease}
-.musc-zone.hollow{stroke:rgba(124,97,75,.55);stroke-width:1.3;stroke-dasharray:3 3}
-.musc-zone.lv-neg{fill:#9aa3ad;stroke:#848e9c;stroke-width:.8}
-.musc-zone.lv-1{fill:#f1d0c0;stroke:#e0aa93;stroke-width:.8}
-.musc-zone.lv-2{fill:#ea9a7c;stroke:#cf7a57;stroke-width:.8}
-.musc-zone.lv-3{fill:#d45a36;stroke:#b23a1e;stroke-width:.8}
-.musc-zone.lv-4{fill:#ab241c;stroke:#7e1611;stroke-width:.8}
-.musc-zone.lv-2,.musc-zone.lv-3,.musc-zone.lv-4{filter:drop-shadow(0 2px 3px rgba(140,60,40,.28))}
-.musc-zone:hover{filter:brightness(1.08)}
+.hero-chart{margin-top:8px;border:1px solid var(--line);background:var(--panel);padding:16px 16px 6px;position:relative}
+.sr-card{border:1px solid var(--line);background:var(--panel);padding:14px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.sr-card:hover{border-color:var(--line2)}
+.sr-top{display:flex;align-items:flex-start;gap:10px;min-width:0}
+.sr-no{font-family:var(--font-display);color:var(--accent);font-size:13px;line-height:1.3}
+.sr-nm{font-family:var(--font-display);font-weight:400;font-size:17px;line-height:1;text-transform:uppercase;letter-spacing:.02em}
+.sr-delta{margin-left:auto;font-size:10px;letter-spacing:.1em;white-space:nowrap;color:var(--ink-faint);flex:none}
+.sr-delta.up{color:var(--good)}
+.sr-delta.down{color:var(--accent)}
+.sr-spark{height:46px;flex:1;min-width:0;position:relative}
 
 .controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:18px}
 .chip{padding:9px 14px;border:1px solid var(--line2);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-dim);
@@ -399,7 +373,6 @@ table.tbl{width:100%;border-collapse:collapse;font-size:11.5px}
   .mobile-nav .mnav.is-on svg{opacity:1}
   .mobile-nav .mnav.is-add{color:#0b0c09;background:var(--accent)}
   .cards,.lift-grid{grid-template-columns:minmax(0,1fr)}
-.musc-wrap{grid-template-columns:minmax(0,1fr)}
   .ex-row .ex-name{white-space:normal;overflow:visible;text-overflow:clip;line-height:1.5;font-size:12px}
   .ex-row{align-items:flex-start}
   .delta{min-width:0}
@@ -440,7 +413,7 @@ table.tbl{width:100%;border-collapse:collapse;font-size:11.5px}
       <button class="nav-item is-active" data-view="overview"><span class="idx">01</span>Overview</button>
       <button class="nav-item" data-view="lifts"><span class="idx">02</span>Lift Progress</button>
       <button class="nav-item" data-view="sessions"><span class="idx">03</span>Session Log</button>
-      <button class="nav-item" data-view="muscles"><span class="idx">04</span>Muscle Map</button>
+      <button class="nav-item" data-view="strength"><span class="idx">04</span>Strength Index</button>
     </nav>
     <div class="rail-foot">
       <div class="rail-name" id="railName"></div>
@@ -530,107 +503,31 @@ table.tbl{width:100%;border-collapse:collapse;font-size:11.5px}
       </div>
     </section>
 
-    <section class="view" id="view-muscles">
+    <section class="view" id="view-strength">
       <div class="masthead">
-        <div class="ghost">BODY</div>
+        <div class="ghost">POWER</div>
         <div class="masthead-top">
           <div class="ledger-title">
-            <div class="kicker">Section 04 &mdash; pace map</div>
-            <h2>Muscle<br><em>Map</em></h2>
+            <div class="kicker">Section 04 &mdash; strength index</div>
+            <h2>Strength<br><em>Index</em></h2>
           </div>
-          <div class="meta-block" id="msMeta"></div>
+          <div class="meta-block" id="srMeta"></div>
         </div>
       </div>
       <div class="ruler" aria-hidden="true"></div>
-      <div class="musc-wrap">
-        <div class="musc-panel">
-          <div class="musc-title">Color guide</div>
-          <div class="musc-sub">Weekly pace &mdash; how fast each area is improving</div>
-          <ul class="musc-list">
-            <li><span class="sw lv-0"></span><span class="lab">None</span><span class="rng">fewer than 3 logs</span></li>
-            <li><span class="sw lv-neg"></span><span class="lab">Cooling</span><span class="rng">&minus; &gt;1%/wk</span></li>
-            <li><span class="sw lv-1"></span><span class="lab">Holding</span><span class="rng">&plusmn;1%/wk</span></li>
-            <li><span class="sw lv-2"></span><span class="lab">Slow climb</span><span class="rng">+1&ndash;2.5%/wk</span></li>
-            <li><span class="sw lv-3"></span><span class="lab">Steady</span><span class="rng">+2.5&ndash;4%/wk</span></li>
-            <li><span class="sw lv-4"></span><span class="lab">Fast gains</span><span class="rng">+ &gt;4%/wk</span></li>
-          </ul>
-          <div class="musc-fast" id="msReadout"></div>
-          <div class="musc-foot">Pace &mdash; the trend of your logged working weights, averaged across every lift in that area and shown as % per week. Tap a muscle for its exact number.</div>
-        </div>
-        <div class="musc-panel">
-          <div class="musc-title">Body map</div>
-          <div class="musc-fig">
-            <div>
-              <div class="cap">Front</div>
-              <svg id="muscFront" viewBox="0 0 120 240" role="img" aria-label="Front view muscle map">
-                <g class="sil">
-                  <ellipse cx="60" cy="20" rx="10.5" ry="13.5"/>
-                  <rect x="54" y="31" width="12" height="9" rx="2"/>
-                  <path d="M46 44 C43 52 43 64 43 76 L45 86 C44 106 46 126 47 140 C48 146 52 151 57 153 L63 153 C68 151 72 146 73 140 C74 126 76 106 75 86 L77 76 C77 64 77 52 74 44 C65 37 55 37 46 44 Z"/>
-                  <path d="M55.9 44.7 L48.9 92.7 A9 9 0 0 1 31.1 95.3 L38.1 47.3 A9 9 0 0 1 55.9 44.7 Z"/>
-                  <path d="M81.9 44.7 L88.9 92.7 A9 9 0 0 1 71.1 95.3 L64.1 47.3 A9 9 0 0 1 81.9 44.7 Z"/>
-                  <path d="M46.47 94.68 L42.47 132.68 A6.5 6.5 0 0 1 29.53 131.32 L33.53 93.32 A6.5 6.5 0 0 1 46.47 94.68 Z"/>
-                  <path d="M86.47 93.32 L90.47 131.32 A6.5 6.5 0 0 1 77.53 132.68 L73.53 94.68 A6.5 6.5 0 0 1 86.47 93.32 Z"/>
-                  <ellipse cx="34.5" cy="138" rx="5.2" ry="7.4"/>
-                  <ellipse cx="85.5" cy="138" rx="5.2" ry="7.4"/>
-                  <path d="M63.96 143 L67.96 195 A13 13 0 0 1 42.04 197 L38.04 145 A13 13 0 0 1 63.96 143 Z"/>
-                  <path d="M56.04 143 L52.04 195 A13 13 0 0 1 77.96 197 L81.96 145 A13 13 0 0 1 56.04 143 Z"/>
-                  <path d="M63.49 198.7 L64.49 225.7 A8.5 8.5 0 0 1 47.51 226.3 L46.51 199.3 A8.5 8.5 0 0 1 63.49 198.7 Z"/>
-                  <path d="M56.51 198.7 L55.51 225.7 A8.5 8.5 0 0 1 72.49 226.3 L73.49 199.3 A8.5 8.5 0 0 1 56.51 198.7 Z"/>
-                  <ellipse cx="52" cy="231" rx="7" ry="3.6"/>
-                  <ellipse cx="68" cy="231" rx="7" ry="3.6"/>
-                </g>
-                <ellipse class="musc-zone" data-group="shoulders" data-label="Shoulders" cx="44.5" cy="48" rx="8.5" ry="6.5" transform="rotate(-24 44.5 48)"/>
-                <ellipse class="musc-zone" data-group="shoulders" data-label="Shoulders" cx="75.5" cy="48" rx="8.5" ry="6.5" transform="rotate(24 75.5 48)"/>
-                <ellipse class="musc-zone" data-group="arms" data-label="Arms" cx="43" cy="69" rx="7.5" ry="15" transform="rotate(-7 43 69)"/>
-                <ellipse class="musc-zone" data-group="arms" data-label="Arms" cx="77" cy="69" rx="7.5" ry="15" transform="rotate(7 77 69)"/>
-                <ellipse class="musc-zone" data-group="chest" data-label="Chest" cx="50" cy="61" rx="11" ry="14" transform="rotate(-9 50 61)"/>
-                <ellipse class="musc-zone" data-group="chest" data-label="Chest" cx="70" cy="61" rx="11" ry="14" transform="rotate(9 70 61)"/>
-                <ellipse class="musc-zone" data-group="core" data-label="Core" cx="60" cy="99" rx="11" ry="20"/>
-                <ellipse class="musc-zone" data-group="quads" data-label="Quads" cx="53" cy="168" rx="12" ry="25" transform="rotate(3 53 168)"/>
-                <ellipse class="musc-zone" data-group="quads" data-label="Quads" cx="67" cy="168" rx="12" ry="25" transform="rotate(-3 67 168)"/>
-                <ellipse class="musc-zone" data-group="calves" data-label="Calves" cx="55" cy="212" rx="8.5" ry="13"/>
-                <ellipse class="musc-zone" data-group="calves" data-label="Calves" cx="65" cy="212" rx="8.5" ry="13"/>
-              </svg>
-            </div>
-            <div>
-              <div class="cap">Back</div>
-              <svg id="muscBack" viewBox="0 0 120 240" role="img" aria-label="Back view muscle map">
-                <g class="sil">
-                  <ellipse cx="60" cy="20" rx="10.5" ry="13.5"/>
-                  <rect x="54" y="31" width="12" height="9" rx="2"/>
-                  <path d="M46 44 C43 52 43 64 43 76 L45 86 C44 106 46 126 47 140 C48 146 52 151 57 153 L63 153 C68 151 72 146 73 140 C74 126 76 106 75 86 L77 76 C77 64 77 52 74 44 C65 37 55 37 46 44 Z"/>
-                  <path d="M55.9 44.7 L48.9 92.7 A9 9 0 0 1 31.1 95.3 L38.1 47.3 A9 9 0 0 1 55.9 44.7 Z"/>
-                  <path d="M81.9 44.7 L88.9 92.7 A9 9 0 0 1 71.1 95.3 L64.1 47.3 A9 9 0 0 1 81.9 44.7 Z"/>
-                  <path d="M46.47 94.68 L42.47 132.68 A6.5 6.5 0 0 1 29.53 131.32 L33.53 93.32 A6.5 6.5 0 0 1 46.47 94.68 Z"/>
-                  <path d="M86.47 93.32 L90.47 131.32 A6.5 6.5 0 0 1 77.53 132.68 L73.53 94.68 A6.5 6.5 0 0 1 86.47 93.32 Z"/>
-                  <ellipse cx="34.5" cy="138" rx="5.2" ry="7.4"/>
-                  <ellipse cx="85.5" cy="138" rx="5.2" ry="7.4"/>
-                  <path d="M63.96 143 L67.96 195 A13 13 0 0 1 42.04 197 L38.04 145 A13 13 0 0 1 63.96 143 Z"/>
-                  <path d="M56.04 143 L52.04 195 A13 13 0 0 1 77.96 197 L81.96 145 A13 13 0 0 1 56.04 143 Z"/>
-                  <path d="M63.49 198.7 L64.49 225.7 A8.5 8.5 0 0 1 47.51 226.3 L46.51 199.3 A8.5 8.5 0 0 1 63.49 198.7 Z"/>
-                  <path d="M56.51 198.7 L55.51 225.7 A8.5 8.5 0 0 1 72.49 226.3 L73.49 199.3 A8.5 8.5 0 0 1 56.51 198.7 Z"/>
-                  <ellipse cx="52" cy="231" rx="7" ry="3.6"/>
-                  <ellipse cx="68" cy="231" rx="7" ry="3.6"/>
-                </g>
-                <ellipse class="musc-zone" data-group="shoulders" data-label="Shoulders (rear)" cx="44.5" cy="48" rx="8.5" ry="6.5" transform="rotate(-24 44.5 48)"/>
-                <ellipse class="musc-zone" data-group="shoulders" data-label="Shoulders (rear)" cx="75.5" cy="48" rx="8.5" ry="6.5" transform="rotate(24 75.5 48)"/>
-                <ellipse class="musc-zone" data-group="arms" data-label="Arms (triceps)" cx="43" cy="69" rx="7.5" ry="15" transform="rotate(-7 43 69)"/>
-                <ellipse class="musc-zone" data-group="arms" data-label="Arms (triceps)" cx="77" cy="69" rx="7.5" ry="15" transform="rotate(7 77 69)"/>
-                <ellipse class="musc-zone" data-group="back" data-label="Back" cx="60" cy="62" rx="20" ry="18"/>
-                <ellipse class="musc-zone" data-group="back" data-label="Back" cx="45" cy="99" rx="10" ry="21" transform="rotate(7 45 99)"/>
-                <ellipse class="musc-zone" data-group="back" data-label="Back" cx="75" cy="99" rx="10" ry="21" transform="rotate(-7 75 99)"/>
-                <ellipse class="musc-zone" data-group="glutes" data-label="Glutes" cx="50" cy="140" rx="12.5" ry="14" transform="rotate(5 50 140)"/>
-                <ellipse class="musc-zone" data-group="glutes" data-label="Glutes" cx="70" cy="140" rx="12.5" ry="14" transform="rotate(-5 70 140)"/>
-                <ellipse class="musc-zone" data-group="hamstrings" data-label="Hamstrings" cx="52" cy="168" rx="12" ry="25" transform="rotate(3 52 168)"/>
-                <ellipse class="musc-zone" data-group="hamstrings" data-label="Hamstrings" cx="68" cy="168" rx="12" ry="25" transform="rotate(-3 68 168)"/>
-                <ellipse class="musc-zone" data-group="calves" data-label="Calves" cx="55" cy="212" rx="8.5" ry="13"/>
-                <ellipse class="musc-zone" data-group="calves" data-label="Calves" cx="65" cy="212" rx="8.5" ry="13"/>
-              </svg>
-            </div>
-          </div>
-        </div>
+      <div class="stats" id="srStats"></div>
+      <div class="sec-head">
+        <span class="idx">IMPROVEMENT</span>
+        <h3>How much you&rsquo;re improving</h3>
+        <span class="hint">est. 1-rep max averaged across lifts, vs first log</span>
       </div>
+      <div class="hero-chart" id="srChart"></div>
+      <div class="sec-head">
+        <span class="idx">EST. 1RM</span>
+        <h3>Strength trend per exercise</h3>
+        <span class="hint">weight &times; (1 + reps&frasl;30)</span>
+      </div>
+      <div class="lift-grid" id="srGrid"></div>
     </section>
 
   </main>
@@ -647,8 +544,8 @@ table.tbl{width:100%;border-collapse:collapse;font-size:11.5px}
   <button class="mnav" data-view="sessions">
     <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 6h13M8 12h13M8 18h13"/><path d="M3 6h.01M3 12h.01M3 18h.01"/></svg>Log
   </button>
-  <button class="mnav" data-view="muscles">
-    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg>Muscle
+  <button class="mnav" data-view="strength">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V10"/><path d="M10 20V4"/><path d="M16 20v-8"/><path d="M22 20H2"/></svg>Strength
   </button>
   <button class="mnav is-add" id="mFab">+&nbsp;Session</button>
 </div>
@@ -1041,7 +938,7 @@ function chart(el, pts, opts){
           var rect = el.getBoundingClientRect();
           var tX = cx0, tY = cy0 - 12;
           tool.style.opacity = "1";
-          var show = buildTip(pt);
+          var show = opts.tipFn ? opts.tipFn(pt) : buildTip(pt);
           tool.innerHTML = show.html;
           tool.style.width = "auto";
           tool.style.left = "0px";
@@ -1111,26 +1008,13 @@ var currentView = "overview";
 var liftDayFilter = "all";
 var liftSearch = "";
 
-var MUSCLE = {
-  chest:["pec-deck","incline-press"],
-  back:["pullover","pulldown","deadlift"],
-  shoulders:["lat-raise","rear-delt"],
-  arms:["curl","pressdown","dips"],
-  core:["sit-ups"],
-  glutes:["squat","leg-press"],
-  quads:["leg-ext","leg-press","squat","leg-ext-hold"],
-  hamstrings:["deadlift","squat"],
-  calves:["calf-raise"]
-};
-var MUSCLE_LABEL = {
-  chest:"Chest", back:"Back", shoulders:"Shoulders", arms:"Arms", core:"Core",
-  glutes:"Glutes", quads:"Quads", hamstrings:"Hamstrings", calves:"Calves"
-};
+function e1rm(w, r){
+  var rr = Number(r); if(isNaN(rr) || rr==null) rr = 0;
+  var ww = Number(w); if(isNaN(ww) || ww==null) ww = 0;
+  return Math.round(ww*(1+rr/30)*10)/10;
+}
 
-function muscleRate(exs){
-  var pts = [];
-  exs.forEach(function(ex){ pts = pts.concat(pointsFor(ex,"w",state.sessions)); });
-  if(pts.length < 3) return {lvl:0, rate:null, n:pts.length};
+function paceFor(pts){
   var t0 = parseD(pts[0].date).getTime();
   var n=0, sx=0, sy=0, sxy=0, sxx=0;
   pts.forEach(function(p){
@@ -1141,63 +1025,106 @@ function muscleRate(exs){
   var mx=sx/n, my=sy/n;
   var den = sxx - n*mx*mx;
   var slope = Math.abs(den)<1e-9 ? 0 : (sxy - n*mx*my)/den;
-  var base = Math.max(Math.abs(my), 1);
-  var r = slope*7/base*100;
-  var lvl;
-  if(r >= 4) lvl = 4;
-  else if(r >= 2.5) lvl = 3;
-  else if(r >= 1) lvl = 2;
-  else if(r > -1) lvl = 1;
-  else lvl = -1;
-  return {lvl:lvl, rate:r, n:pts.length};
+  return slope*7/Math.max(Math.abs(my),1)*100;
 }
 
-function renderMuscles(){
-  var rates = {};
-  var nLogs = 0;
-  state.sessions.forEach(function(s){ nLogs += s.lifts.length; });
-  Object.keys(MUSCLE).forEach(function(g){
-    rates[g] = muscleRate(MUSCLE[g]);
+function diffE(pts){
+  var d = Math.round((pts[pts.length-1].v - pts[0].v)*10)/10;
+  if(d===0) return {txt:"\u20130", cls:"flat"};
+  if(d>0) return {txt:"+"+d, cls:"up"};
+  return {txt:"\u2212"+Math.abs(d), cls:"down"};
+}
+
+function srTip(pt){
+  var html = '<div class="t-date">'+esc(fmtDYear(pt.s.date))+(pt.s.est?' <span style="color:#ffcb2e">&#8776;</span>':"")+"</div>";
+  html += '<div class="t-val">'+esc(nicer(pt.v))+' INDEX</div>';
+  if(pt.lift && pt.lift.n) html += '<div class="t-note">'+pt.lift.n+" weighted lifts</div>";
+  if(pt.s.note) html += '<div class="t-note">'+esc(pt.s.note)+"</div>";
+  return {html:html};
+}
+
+function renderStrength(){
+  var s = state.sessions;
+  var series = {};
+
+  Object.keys(exIndex).forEach(function(ex){
+    var pts = [];
+    pointsFor(ex,"w",s).forEach(function(p){
+      if(p.lift.w==null) return;
+      pts.push({s:p.s, lift:{ex:ex, w:p.lift.w, r:p.lift.r}, v:e1rm(p.lift.w, p.lift.r), date:p.date});
+    });
+    if(pts.length >= 2) series[ex] = pts;
   });
 
-  qsa(".musc-zone").forEach(function(z){
-    var g = z.getAttribute("data-group");
-    var m = rates[g];
-    z.classList.remove("hollow","lv-neg","lv-1","lv-2","lv-3","lv-4");
-    z.removeAttribute("aria-label");
-    var t = z.querySelector("title"); if(t){ z.removeChild(t); }
-    if(!m || m.lvl===0){
-      z.classList.add("hollow");
-      z.setAttribute("aria-label", z.getAttribute("data-label")+" \u2014 not enough logs");
-      var t0 = document.createElementNS("http://www.w3.org/2000/svg","title");
-      t0.textContent = z.getAttribute("data-label")+" \u2014 log a few sessions to see the pace";
-      z.appendChild(t0);
-    } else {
-      z.classList.add(m.lvl<0 ? "lv-neg" : "lv-"+m.lvl);
-      var pct = (m.rate>=0? "+" : "\u2212")+(Math.abs(m.rate)).toFixed(1)+"%/wk";
-      z.setAttribute("aria-label", z.getAttribute("data-label")+" \u2014 "+pct);
-      var t1 = document.createElementNS("http://www.w3.org/2000/svg","title");
-      t1.textContent = (m.lvl<0?"Cooling \u2014 ":"")+z.getAttribute("data-label")+" \u2014 "+pct;
-      z.appendChild(t1);
-    }
-  });
+  var cards = Object.keys(series).length;
+  qs("#srMeta").innerHTML =
+    '<span class="lab">Weighted lifts</span>'+
+    '<span class="val">'+cards+' EXERCISES</span>'+
+    '<span class="sub">est. 1RM = weight &times; (1 + reps&frasl;30)</span>';
 
-  var list = Object.keys(MUSCLE).map(function(g){ return {g:g, m:rates[g]}; }).filter(function(o){ return o.m.n>=3; });
-  list.sort(function(a,b){ return b.m.rate - a.m.rate; });
-  var rhtml = "";
-  if(list.length){
-    var f = list[0], s = list[list.length-1];
-    rhtml = 'Fastest: <b>'+esc(MUSCLE_LABEL[f.g].toUpperCase())+'  +'+f.m.rate.toFixed(1)+'%/wk</b><br>'+
-            'Slowest: <b>'+esc(MUSCLE_LABEL[s.g].toUpperCase())+'  '+s.m.rate.toFixed(1)+'%/wk</b>';
-  } else {
-    rhtml = "<b>Log a few sessions</b> and the map starts lighting up.";
+  if(!cards){
+    qs("#srStats").innerHTML = "";
+    qs("#srChart").innerHTML =
+      '<div style="padding:30px 8px;text-align:center;font-size:11px;letter-spacing:.14em;color:var(--ink-faint);text-transform:uppercase">Log a few sets &mdash; the index builds from weight and reps.</div>';
+    qs("#srGrid").innerHTML =
+      '<div style="padding:18px 8px;text-align:center;font-size:11px;letter-spacing:.14em;color:var(--ink-faint)">no per-lift data yet</div>';
+    return;
   }
-  qs("#msReadout").innerHTML = rhtml;
 
-  qs("#msMeta").innerHTML =
-    '<span class="lab">Muscle groups</span>'+
-    '<span class="val">'+Object.keys(MUSCLE).length+' AREAS</span>'+
-    '<span class="sub">'+(nLogs? nLogs+" logged lifts tracked" : "no lifts logged yet")+'</span>';
+  var first = {};
+  Object.keys(series).forEach(function(ex){ first[ex] = series[ex][0].v; });
+
+  var heroPts = s.map(function(sess){
+    var cum = 0, base = 0, n = 0;
+    Object.keys(series).forEach(function(ex){
+      var sp = series[ex], cur = null, tS = parseD(sess.date).getTime();
+      for(var i=0;i<sp.length;i++){
+        if(sp[i].s === sess){ cur = sp[i]; break; }
+        if(parseD(sp[i].date).getTime() > tS) break;
+        cur = sp[i];
+      }
+      if(cur){ cum += cur.v; base += first[ex]; n++; }
+    });
+    if(base<=0) return null;
+    var v = cum/base*100;
+    return {s:sess, lift:{ex:null, w:v, r:0, n:n}, v:v, date:sess.date};
+  }).filter(function(p){ return p; });
+
+  if(heroPts.length < 2){
+    qs("#srStats").innerHTML = stat("START","—","","not enough data yet");
+    qs("#srChart").innerHTML = "";
+  } else {
+    var start = heroPts[0].v;
+    var now = heroPts[heroPts.length-1].v;
+    var gain = now - start;
+    var gTxt = (gain>=0?"+":"\u2212")+Math.abs(Math.round(gain*10)/10);
+    var pace = paceFor(heroPts);
+    qs("#srStats").innerHTML =
+      stat("START","100","%","first logged day")+
+      stat("NOW", nicer(now),"%","latest day")+
+      stat("GAIN", gTxt,"pts","vs first log", true)+
+      stat("PACE", (pace>=0?"+":"\u2212")+Math.abs(pace).toFixed(2), "%/wk","trend of index");
+    chart(qs("#srChart"), heroPts, {height:230, id:"strength", tight:true, tipFn:srTip});
+  }
+
+  var grid = Object.keys(series).sort(function(a,b){
+    return exIndex[a].name.localeCompare(exIndex[b].name);
+  }).map(function(ex, i){
+    var e = exIndex[ex], d = diffE(series[ex]);
+    return '<article class="sr-card rise" style="animation-delay:'+(i*40)+'ms">'+
+      '<div class="sr-top">'+
+        '<span class="sr-no">'+dayNo(e.day)+"</span>"+
+        '<span class="sr-nm">'+esc(e.name.toUpperCase())+"</span>"+
+        '<span class="sr-delta '+d.cls+'">'+d.txt+"</span>"+
+      "</div>"+
+      '<div class="sr-spark" data-ex="'+ex+'"></div>'+
+    "</article>";
+  }).join("");
+  qs("#srGrid").innerHTML = grid;
+  qsa("#srGrid .sr-spark").forEach(function(el){
+    var ex = el.getAttribute("data-ex");
+    chart(el, series[ex], {height:46, id:"sr"+ex, thin:true, tight:true, noAnim:true, noLabel:true});
+  });
 }
 
 function goView(name){
@@ -1209,10 +1136,10 @@ function goView(name){
   if(name==="overview") renderOverview();
   if(name==="lifts") renderLifts();
   if(name==="sessions") renderSessions();
-  if(name==="muscles") renderMuscles();
+  if(name==="strength") renderStrength();
 }
 
-function renderAll(){ renderOverview(); renderLifts(); renderSessions(); updateMeta(); renderName(); renderMuscles(); }
+function renderAll(){ renderOverview(); renderLifts(); renderSessions(); updateMeta(); renderName(); renderStrength(); }
 
 function renderName(){
   var n = state.name||"";

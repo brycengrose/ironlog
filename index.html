@@ -324,15 +324,6 @@ table.tbl{width:100%;border-collapse:collapse;font-size:11.5px}
 .fab:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(255,91,31,.42),7px 7px 0 rgba(0,0,0,.4)}
 .fab .plus{font-size:18px;line-height:1}
 
-.toast{position:fixed;left:26px;bottom:26px;z-index:120;background:var(--ink);color:#0b0c09;padding:13px 18px;
-  font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;display:flex;align-items:center;gap:12px;
-  transform:translateY(120%);transition:transform .3s cubic-bezier(.2,.8,.2,1)}
-.toast.show{transform:none}
-.toast .tick{color:var(--accent)}
-@media (max-width:1080px){
-  .toast{left:18px;right:18px;bottom:92px;width:auto}
-}
-
 .mobile-head{display:none}
 .mobile-nav{display:none}
 
@@ -546,8 +537,6 @@ table.tbl{width:100%;border-collapse:collapse;font-size:11.5px}
     </div>
   </div>
 </div>
-
-<div class="toast" id="toast"><span class="tick">&#10003;</span><span id="toastMsg">SAVED</span></div>
 
 <div class="modal" id="clearModal" role="dialog" aria-modal="true">
   <div class="modal-scrim" data-close></div>
@@ -1329,11 +1318,7 @@ function saveSession(){
 }
 
 function toast(msg){
-  qs("#toastMsg").textContent = msg.toUpperCase();
-  var t = qs("#toast");
-  t.classList.add("show");
-  clearTimeout(t._tt);
-  t._tt = setTimeout(function(){ t.classList.remove("show"); }, 2400);
+  void msg;
 }
 
 function exportData(){

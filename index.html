@@ -234,7 +234,10 @@ nav{flex:1;margin-top:26px;display:flex;flex-direction:column;gap:4px}
 .estim-badge .dot{width:5px;height:5px;background:var(--accent2);border-radius:50%;cursor:help}
 .estim-badge:hover .tip{opacity:1;visibility:visible}
 .estim-badge .tip{position:absolute;left:8px;top:-4px;padding:6px 9px;background:#0b0c09;border:1px solid var(--line2);font-size:9px;
-  letter-spacing:.08em;color:var(--ink-dim);opacity:0;visibility:hidden;transition:opacity .15s;white-space:nowrap;z-index:9}
+  letter-spacing:.08em;color:var(--ink-dim);opacity:0;visibility:hidden;transition:opacity .15s;white-space:normal;width:max-content;max-width:min(220px,58vw);line-height:1.5;z-index:9}
+@media (hover:none){
+  .estim-badge .tip{display:none}
+}
 .legend{display:flex;align-items:center;gap:8px;margin-top:16px;font-size:9.5px;color:var(--ink-faint);letter-spacing:.12em}
 .legend .dot{width:7px;height:7px;border-radius:50%;background:var(--accent2);flex:none}
 .legend b{color:var(--ink-dim);font-weight:500}

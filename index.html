@@ -89,13 +89,6 @@ nav{flex:1;margin-top:26px;display:flex;flex-direction:column;gap:4px}
 .rail-foot{margin-top:20px;padding-top:18px;border-top:1px solid var(--line);display:grid;gap:12px}
 .rail-date{font-size:11px;color:var(--ink-dim);line-height:1.7;letter-spacing:.06em}
 .rail-date b{color:var(--ink);font-weight:500}
-.reset-link{font-size:9px;letter-spacing:.22em;color:var(--ink-faint);text-align:left;text-transform:uppercase;margin-top:2px}
-.reset-link:hover{color:var(--accent)}
-.status-box{display:flex;align-items:center;gap:9px;background:var(--ink);color:#0b0c09;padding:9px 11px;margin-top:4px;
-  font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;line-height:1.4;
-  opacity:0;transform:translateY(4px);transition:opacity .25s,transform .25s;pointer-events:none;min-height:0}
-.status-box.show{opacity:1;transform:none;pointer-events:auto}
-.status-box .tick{color:var(--accent);flex:none;font-size:12px;line-height:1}
 
 .stage{padding:0 46px 90px;max-width:1500px;width:100%;margin:0 auto;min-width:0}
 .view{display:none;padding-top:34px}
@@ -406,8 +399,6 @@ table.tbl{width:100%;border-collapse:collapse;font-size:11.5px}
     </nav>
     <div class="rail-foot">
       <div class="rail-date" id="railDate"></div>
-      <div class="status-box" id="statusBox"></div>
-      <button class="reset-link" id="resetBtn">Reset to initial data</button>
     </div>
   </aside>
 
@@ -697,12 +688,6 @@ function persist(s){
 }
 function sortSessions(){
   state.sessions.sort(function(a,b){ return a.date < b.date ? -1 : a.date > b.date ? 1 : 0; });
-}
-function resetData(){
-  if(confirm("Reset all data back to the original seeded entries? Your changes will be lost.")){
-    state = {sessions: loadSeed()};
-    sortSessions(); persist(state); renderAll(); toast("Data reset");
-  }
 }
 
 function qs(sel, root){ return (root||document).querySelector(sel); }
@@ -1344,14 +1329,6 @@ function saveSession(){
 }
 
 function toast(msg){
-  var sb = qs("#statusBox");
-  if(window.innerWidth > 1080 && sb){
-    sb.innerHTML = '<span class="tick">&#10003;</span>'+esc(msg.toUpperCase());
-    sb.classList.add("show");
-    clearTimeout(sb._t);
-    sb._t = setTimeout(function(){ sb.classList.remove("show"); }, 2400);
-    return;
-  }
   qs("#toastMsg").textContent = msg.toUpperCase();
   var t = qs("#toast");
   t.classList.add("show");
@@ -1426,7 +1403,6 @@ function bindGlobal(){
     b.addEventListener("click", function(){ goView(b.getAttribute("data-view")); });
   });
   qs("#fab").addEventListener("click", function(){ openLogModal(); });
-  qs("#resetBtn").addEventListener("click", resetData);
 
   qsa("#view-lifts .chip").forEach(function(c){
     c.addEventListener("click", function(){

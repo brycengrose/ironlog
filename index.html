@@ -89,9 +89,13 @@ nav{flex:1;margin-top:26px;display:flex;flex-direction:column;gap:4px}
 .rail-foot{margin-top:20px;padding-top:18px;border-top:1px solid var(--line);display:grid;gap:12px}
 .rail-date{font-size:11px;color:var(--ink-dim);line-height:1.7;letter-spacing:.06em}
 .rail-date b{color:var(--ink);font-weight:500}
-.rail-tag{font-family:var(--font-note);font-style:italic;font-size:12px;color:var(--ink-faint);line-height:1.5}
 .reset-link{font-size:9px;letter-spacing:.22em;color:var(--ink-faint);text-align:left;text-transform:uppercase;margin-top:2px}
 .reset-link:hover{color:var(--accent)}
+.status-box{display:flex;align-items:center;gap:9px;background:var(--ink);color:#0b0c09;padding:9px 11px;margin-top:4px;
+  font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;line-height:1.4;
+  opacity:0;transform:translateY(4px);transition:opacity .25s,transform .25s;pointer-events:none;min-height:0}
+.status-box.show{opacity:1;transform:none;pointer-events:auto}
+.status-box .tick{color:var(--accent);flex:none;font-size:12px;line-height:1}
 
 .stage{padding:0 46px 90px;max-width:1500px;width:100%;margin:0 auto;min-width:0}
 .view{display:none;padding-top:34px}
@@ -332,6 +336,9 @@ table.tbl{width:100%;border-collapse:collapse;font-size:11.5px}
   transform:translateY(120%);transition:transform .3s cubic-bezier(.2,.8,.2,1)}
 .toast.show{transform:none}
 .toast .tick{color:var(--accent)}
+@media (max-width:1080px){
+  .toast{left:18px;right:18px;bottom:92px;width:auto}
+}
 
 .mobile-head{display:none}
 .mobile-nav{display:none}
@@ -399,8 +406,8 @@ table.tbl{width:100%;border-collapse:collapse;font-size:11.5px}
     </nav>
     <div class="rail-foot">
       <div class="rail-date" id="railDate"></div>
-      <div class="rail-tag">"No streaks needed. Every 5–7 days is the program."</div>
       <button class="reset-link" id="resetBtn">Reset to initial data</button>
+      <div class="status-box" id="statusBox"></div>
     </div>
   </aside>
 
@@ -480,10 +487,6 @@ table.tbl{width:100%;border-collapse:collapse;font-size:11.5px}
         <input type="file" id="importFile" accept="application/json,.json" style="display:none">
       </div>
       <div class="legend">
-        <span class="dot"></span>
-        <div><b>&#8776; approximate date</b> &mdash; your early entries had no date, so they&rsquo;re placed at the 5&ndash;7 day cadence working back from your first dated session (6/4). Edit a session to correct the date.</div>
-      </div>
-      <div class="legend" style="margin-top:10px">
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="2"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2" style="stroke:var(--accent2)"/></svg>
         <div><b>Independent by default</b> &mdash; each phone keeps its own log automatically, no account needed. Use Export/Import above to move or back up a person&rsquo;s data.</div>
       </div>
@@ -1341,6 +1344,14 @@ function saveSession(){
 }
 
 function toast(msg){
+  var sb = qs("#statusBox");
+  if(window.innerWidth > 1080 && sb){
+    sb.innerHTML = '<span class="tick">&#10003;</span>'+esc(msg.toUpperCase());
+    sb.classList.add("show");
+    clearTimeout(sb._t);
+    sb._t = setTimeout(function(){ sb.classList.remove("show"); }, 2400);
+    return;
+  }
   qs("#toastMsg").textContent = msg.toUpperCase();
   var t = qs("#toast");
   t.classList.add("show");

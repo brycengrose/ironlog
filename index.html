@@ -29,6 +29,7 @@
   --ink-faint:#5d634f;
   --accent:#ff5b1f;
   --accent2:#ffcb2e;
+  --danger:#ff3b30;
   --good:#c6e34d;
   --font-display:'Anton',Impact,sans-serif;
   --font-mono:'IBM Plex Mono',ui-monospace,monospace;
@@ -306,6 +307,16 @@ table.tbl{width:100%;border-collapse:collapse;font-size:11.5px}
 .btn-prime{background:var(--accent);border-color:var(--accent);color:#0b0c09}
 .btn-prime:hover{background:var(--ink);border-color:var(--ink);color:#0b0c09;box-shadow:0 0 0 rgba(0,0,0,0)}
 .btn-prime:disabled{opacity:.4;cursor:not-allowed}
+.btn-danger{background:var(--danger);border-color:var(--danger);color:#0b0c09}
+.btn-danger:hover{background:#ff5f57;border-color:#ff5f57;color:#0b0c09}
+.btn-danger:disabled{opacity:.35;cursor:not-allowed;background:transparent;border-color:var(--line2);color:var(--ink-faint)}
+.clr-warn{font-size:12px;line-height:1.7;color:var(--ink-dim);letter-spacing:.04em}
+.clr-warn b{color:var(--danger);font-weight:500}
+.clr-warn .big{display:block;font-family:var(--font-display);font-size:15px;text-transform:uppercase;color:var(--ink);margin-bottom:6px;letter-spacing:.04em}
+.clr-code{display:block;margin-top:14px}
+.clr-code label{font-size:9px;letter-spacing:.22em;color:var(--ink-faint);text-transform:uppercase;display:block;margin-bottom:8px}
+.clr-code input{padding:12px 13px;background:var(--bg);border:1px solid var(--line2);font-size:16px;letter-spacing:.5em;color:var(--ink);text-align:center;width:100%;box-sizing:border-box;font-family:var(--font-mono)}
+.clr-code input:focus{outline:none;border-color:var(--danger)}
 
 .fab{position:fixed;right:26px;bottom:26px;z-index:40;display:flex;align-items:center;gap:12px;background:var(--accent);color:#0b0c09;
   padding:16px 20px;font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:600;border:1px solid var(--accent);
@@ -462,6 +473,7 @@ table.tbl{width:100%;border-collapse:collapse;font-size:11.5px}
         <span class="dt-lab">DATA</span>
         <button class="sesh-btn" id="exportBtn">Export backup</button>
         <button class="sesh-btn" id="importBtn">Import backup</button>
+        <button class="sesh-btn del" id="clearBtn">Clear all data</button>
         <input type="file" id="importFile" accept="application/json,.json" style="display:none">
       </div>
       <div class="legend">
@@ -539,6 +551,33 @@ table.tbl{width:100%;border-collapse:collapse;font-size:11.5px}
 </div>
 
 <div class="toast" id="toast"><span class="tick">&#10003;</span><span id="toastMsg">SAVED</span></div>
+
+<div class="modal" id="clearModal" role="dialog" aria-modal="true">
+  <div class="modal-scrim" data-close></div>
+  <div class="dialog">
+    <div class="dialog-head">
+      <div class="t">
+        <h4>Wipe All Data</h4>
+        <span class="sub" style="color:var(--danger)">irreversible</span>
+      </div>
+      <button class="dialog-x" data-close aria-label="Close">&times;</button>
+    </div>
+    <div class="dialog-body">
+      <p class="clr-warn">
+        <span class="big">Every session on this device will be removed</span>
+        This deletes all 41 entries &mdash; logs, charts, PRs and notes &mdash; so someone else can start an empty ledger and track their own lifts without your numbers crowding their charts.
+      </p>
+      <div class="clr-code">
+        <label>Type 1234 to confirm</label>
+        <input type="number" inputmode="numeric" id="clearCode" placeholder="----" autocomplete="off">
+      </div>
+    </div>
+    <div class="dialog-foot">
+      <button class="btn" data-close>Cancel</button>
+      <button class="btn btn-danger" id="clearGo" disabled>Wipe Everything</button>
+    </div>
+  </div>
+</div>
 
 <script>
 "use strict";
@@ -947,8 +986,8 @@ function renderOverview(){
     }
   });
 
-  var squat = liftInSession(last, "squat");
-  var dead = liftInSession(last, "deadlift");
+  var squat = last? liftInSession(last, "squat") : null;
+  var dead = last? liftInSession(last, "deadlift") : null;
   var squatPts = pointsFor("squat","w",s);
   var deadPts = pointsFor("deadlift","w",s);
   var sqShow = squatPts.length? Math.max.apply(null,squatPts.map(function(p){return p.v;}))+" LB": "—";
@@ -1334,12 +1373,36 @@ function importData(file){
   fr.readAsText(file);
 }
 
+function openClearModal(){
+  var code = qs("#clearCode");
+  code.value = "";
+  qs("#clearGo").disabled = true;
+  openModal("clearModal");
+  setTimeout(function(){ code.focus(); }, 50);
+}
+function clearAll(){
+  try{ localStorage.removeItem(KEY); }catch(e){}
+  state = {sessions: []};
+  persist(state);
+  renderAll();
+  closeModal("clearModal");
+  toast("All data cleared");
+}
 function bindGlobal(){
   qs("#exportBtn").addEventListener("click", exportData);
   qs("#importBtn").addEventListener("click", function(){ qs("#importFile").click(); });
   qs("#importFile").addEventListener("change", function(){
     importData(qs("#importFile").files[0]);
     qs("#importFile").value = "";
+  });
+  qs("#clearBtn").addEventListener("click", openClearModal);
+  bindModalClose("clearModal");
+  qs("#clearCode").addEventListener("input", function(){
+    qs("#clearGo").disabled = qs("#clearCode").value !== "1234";
+  });
+  qs("#clearGo").addEventListener("click", clearAll);
+  qs("#clearCode").addEventListener("keydown", function(e){
+    if(e.key === "Enter" && !qs("#clearGo").disabled) clearAll();
   });
   qsa(".nav-item").forEach(function(b){
     b.addEventListener("click", function(){ goView(b.getAttribute("data-view")); });

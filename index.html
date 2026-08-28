@@ -89,6 +89,8 @@ nav{flex:1;margin-top:26px;display:flex;flex-direction:column;gap:4px}
 .rail-foot{margin-top:20px;padding-top:18px;border-top:1px solid var(--line);display:grid;gap:12px}
 .rail-date{font-size:11px;color:var(--ink-dim);line-height:1.7;letter-spacing:.06em}
 .rail-date b{color:var(--ink);font-weight:500}
+.rail-name{font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:var(--accent2);line-height:1.6}
+.rail-name b{color:var(--ink);font-weight:500}
 
 .stage{padding:0 46px 90px;max-width:1500px;width:100%;margin:0 auto;min-width:0}
 .view{display:none;padding-top:34px}
@@ -111,6 +113,11 @@ nav{flex:1;margin-top:26px;display:flex;flex-direction:column;gap:4px}
 .meta-block .lab{font-size:9px;letter-spacing:.26em;color:var(--ink-faint);text-transform:uppercase}
 .meta-block .val{font-size:16px;font-weight:500;letter-spacing:.02em}
 .meta-block .sub{font-size:11px;color:var(--ink-dim)}
+.meta-edit{background:none;border:1px solid var(--line2);color:var(--ink-faint);font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+  padding:6px 9px;margin-left:8px;cursor:pointer;vertical-align:1px;transition:color .15s,border-color .15s}
+.meta-edit:hover{color:var(--accent);border-color:var(--accent)}
+.meta-edit.hero{display:block;margin:12px 0 2px;padding:11px 13px;background:var(--accent);border-color:var(--accent);color:#0b0c09;font-weight:600}
+.meta-edit.hero:hover{background:var(--ink);border-color:var(--ink);color:#0b0c09}
 
 .ruler{height:16px;position:relative;overflow:hidden;opacity:.6}
 .ruler::before{content:"";position:absolute;inset:0;
@@ -144,6 +151,9 @@ nav{flex:1;margin-top:26px;display:flex;flex-direction:column;gap:4px}
 .day-no{font-family:var(--font-display);font-size:22px;color:var(--accent);line-height:1}
 .day-name{font-family:var(--font-display);font-size:21px;line-height:.95;text-transform:uppercase;letter-spacing:.02em}
 .day-tag{font-size:9px;letter-spacing:.2em;color:var(--ink-faint);text-transform:uppercase;margin-top:4px}
+.card-since{font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;color:var(--ink-faint);border:1px solid var(--line2);
+  padding:3px 7px;margin-left:auto;white-space:nowrap}
+.card-since.warm{color:var(--accent2);border-color:rgba(255,203,46,.5)}
 .card-exs{display:grid;gap:0;padding:4px 0}
 .ex-row{display:flex;align-items:baseline;gap:10px;padding:8px 16px;border-bottom:1px dashed rgba(36,40,29,.7)}
 .ex-row:last-child{border-bottom:none}
@@ -338,8 +348,10 @@ table.tbl{width:100%;border-collapse:collapse;font-size:11.5px}
   .stage{padding:0 18px 120px}
   .mobile-head{display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;
     background:rgba(11,12,9,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:14px 18px;gap:10px}
-  .mobile-head .brand-inline{font-family:var(--font-display);font-size:20px;letter-spacing:.02em}
-  .mobile-head .brand-inline b{color:var(--accent)}
+.mobile-head .brand-inline{font-family:var(--font-display);font-size:20px;letter-spacing:.02em}
+.mobile-head .brand-inline b{color:var(--accent)}
+.mobile-head .mh-brand{display:flex;flex-direction:column;gap:3px;min-width:0;line-height:1}
+.mobile-head .mh-track{font-size:7.5px;letter-spacing:.28em;color:var(--ink-faint);text-transform:uppercase;line-height:1.4}
   .mobile-head .mh-date{font-size:9px;color:var(--ink-faint);letter-spacing:.16em;text-transform:uppercase;text-align:right;line-height:1.5}
   .mobile-nav{position:fixed;left:0;right:0;bottom:0;z-index:55;display:grid;grid-template-columns:repeat(4,1fr);
     background:rgba(11,12,9,.97);border-top:1px solid var(--line);backdrop-filter:blur(8px)}
@@ -372,7 +384,10 @@ table.tbl{width:100%;border-collapse:collapse;font-size:11.5px}
 <div class="grain"></div>
 
 <div class="mobile-head">
-  <div class="brand-inline">IRON<b>LOG</b></div>
+  <div class="mh-brand">
+    <div class="brand-inline">IRON<b>LOG</b></div>
+    <div class="mh-track" id="mhTrack"></div>
+  </div>
   <div class="mh-date" id="mhDate"></div>
 </div>
 
@@ -389,6 +404,7 @@ table.tbl{width:100%;border-collapse:collapse;font-size:11.5px}
       <button class="nav-item" data-view="sessions"><span class="idx">03</span>Session Log</button>
     </nav>
     <div class="rail-foot">
+      <div class="rail-name" id="railName"></div>
       <div class="rail-date" id="railDate"></div>
     </div>
   </aside>
@@ -465,6 +481,7 @@ table.tbl{width:100%;border-collapse:collapse;font-size:11.5px}
         <span class="dt-lab">DATA</span>
         <button class="sesh-btn" id="exportBtn">Export backup</button>
         <button class="sesh-btn" id="importBtn">Import backup</button>
+        <button class="sesh-btn" id="nameBtn">Name</button>
         <button class="sesh-btn del" id="clearBtn">Clear all data</button>
         <input type="file" id="importFile" accept="application/json,.json" style="display:none">
       </div>
@@ -561,6 +578,30 @@ table.tbl{width:100%;border-collapse:collapse;font-size:11.5px}
     <div class="dialog-foot">
       <button class="btn" data-close>Cancel</button>
       <button class="btn btn-danger" id="clearGo" disabled>Wipe Everything</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="nameModal" role="dialog" aria-modal="true">
+  <div class="modal-scrim" data-close></div>
+  <div class="dialog" style="max-width:460px">
+    <div class="dialog-head">
+      <div class="t">
+        <h4>Who's Tracking</h4>
+        <span class="sub">shown in the ledger headers</span>
+      </div>
+      <button class="dialog-x" data-close aria-label="Close">&times;</button>
+    </div>
+    <div class="dialog-body">
+      <p class="clr-warn" style="font-size:11px;margin:0 0 14px;line-height:1.6">Every device keeps its own ledger. Enter a name so this one has an identity &mdash; e.g. <b style="color:var(--accent)">BRYCE</b> or the gf&rsquo;s name.</p>
+      <div class="clr-code">
+        <label>Name</label>
+        <input type="text" id="nameInput" placeholder="e.g. BRYCE" maxlength="16" autocomplete="off" style="text-align:left;letter-spacing:.1em">
+      </div>
+    </div>
+    <div class="dialog-foot">
+      <button class="btn" data-close>Cancel</button>
+      <button class="btn btn-prime" id="nameSave">Save</button>
     </div>
   </div>
 </div>
@@ -666,9 +707,9 @@ function loadSeed(){
 function load(){
   try{
     var raw = localStorage.getItem(KEY);
-    if(raw){ var parsed = JSON.parse(raw); if(parsed && parsed.sessions) return parsed; }
+    if(raw){ var parsed = JSON.parse(raw); if(parsed && parsed.sessions){ parsed.name = parsed.name||""; return parsed; } }
   }catch(e){}
-  var s = {sessions: loadSeed()};
+  var s = {sessions: loadSeed(), name:""};
   persist(s);
   return s;
 }
@@ -688,6 +729,7 @@ function fmtD(d){ var p = parseD(d); return p.toLocaleDateString("en-US",{month:
 function fmtDYear(d){ var p = parseD(d); return fmtD(d)+", '"+String(p.getFullYear()).slice(2); }
 function todayStr(){ var d = new Date(); return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate()); }
 function addDays(d, n){ var p = parseD(d); p.setDate(p.getDate()+n); return p.getFullYear()+"-"+pad(p.getMonth()+1)+"-"+pad(p.getDate()); }
+function daysSince(dateStr){ return Math.floor((Date.now()-parseD(dateStr).getTime())/86400000); }
 function nicer(v){ return (Math.round(v*10)/10).toString(); }
 function rounded(v){ return Math.round(v*10)/10; }
 
@@ -935,7 +977,13 @@ function goView(name){
   if(name==="sessions") renderSessions();
 }
 
-function renderAll(){ renderOverview(); renderLifts(); renderSessions(); updateMeta(); }
+function renderAll(){ renderOverview(); renderLifts(); renderSessions(); updateMeta(); renderName(); }
+
+function renderName(){
+  var n = state.name||"";
+  qs("#railName").innerHTML = n? "TRACKING<br><b>"+esc(n)+"</b>" : "";
+  qs("#mhTrack").textContent = n? "TRACKING: "+n : "";
+}
 
 function updateMeta(){
   var last = state.sessions[state.sessions.length-1];
@@ -948,10 +996,15 @@ function updateMeta(){
 function renderOverview(){
   var s = state.sessions;
   var last = s[s.length-1];
+  var hasS = s.length>0;
+  var nm = state.name? esc(state.name)+" &middot; 4-DAY SPLIT" : "4-DAY SPLIT";
+  var edit = hasS
+    ? '<button class="meta-edit" id="ovNameBtn" aria-label="Rename">&#9998;</button>'
+    : '<button class="meta-edit hero" id="ovNameBtn">Enter a name to start &rarr;</button>';
   qs("#ovMeta").innerHTML =
     '<span class="lab">Profile</span>'+
-    '<span class="val">4-DAY SPLIT</span>'+
-    '<span class="sub">Every 5\u20137 days &middot; no streaks required</span>'+
+    '<span class="val">'+nm+edit+'</span>'+
+    '<span class="sub">'+(hasS? "Every 5\u20137 days &middot; no streaks required" : "Name this device \u2014 each phone keeps its own ledger")+'</span>'+
     '<span class="lab" style="margin-top:10px;color:var(--accent)">Last session</span>'+
     '<span class="val" style="font-family:var(--font-display);font-size:22px">'+(last?esc(fmtDYear(last.date)):"—")+'</span>'+
     '<span class="sub">'+(last?esc(routineById[last.day].name):"")+"</span>";
@@ -997,10 +1050,13 @@ function renderOverview(){
     var fpts = pointsFor(fc.id,"w",s);
     var spark = fpts.length ? '<div class="spark" data-spark="'+fc.id+'"></div>' : "";
     var when = lastDay? fmtDYear(lastDay.date): "never";
+    var since = lastDay? daysSince(lastDay.date) : null;
+    var sinceTxt = since===null? "—" : since<=0? "TODAY" : since+"D";
     html += '<div class="day-card rise" style="animation-delay:'+(ri*80)+'ms" data-day="'+r.id+'">'+
       '<div class="card-top">'+
         '<span class="day-no">DAY '+r.no+"</span>"+
         '<div><div class="day-name">'+esc(r.name)+'</div><div class="day-tag">'+esc(r.tag)+" &middot; last: "+esc(when)+'</div></div>'+
+        '<span class="card-since'+(since!==null&&since>7?" warm":"")+'" title="Last trained '+esc(when)+'">'+sinceTxt+"</span>"+
       '</div>'+
       '<div class="card-exs">'+rows+'</div>'+
       '<div class="card-foot">'+
@@ -1341,7 +1397,7 @@ function importData(file){
       var parsed = JSON.parse(fr.result);
       var arr = parsed && parsed.sessions ? parsed.sessions : parsed;
       if(!Array.isArray(arr) || !arr.length || !arr[0].lifts){ toast("Not a valid backup"); return; }
-      state = {sessions: arr};
+      state = {sessions: arr, name: state.name||""};
       sortSessions(); persist(state); renderAll();
       toast("Backup imported");
     }catch(e){ toast("Import failed"); }
@@ -1358,11 +1414,22 @@ function openClearModal(){
 }
 function clearAll(){
   try{ localStorage.removeItem(KEY); }catch(e){}
-  state = {sessions: []};
+  state = {sessions: [], name: ""};
   persist(state);
   renderAll();
   closeModal("clearModal");
-  toast("All data cleared");
+  openNameModal();
+}
+function openNameModal(){
+  qs("#nameInput").value = state.name||"";
+  openModal("nameModal");
+  setTimeout(function(){ qs("#nameInput").focus(); }, 50);
+}
+function saveName(){
+  state.name = (qs("#nameInput").value||"").trim();
+  persist(state);
+  renderAll();
+  closeModal("nameModal");
 }
 function bindGlobal(){
   qs("#exportBtn").addEventListener("click", exportData);
@@ -1379,6 +1446,16 @@ function bindGlobal(){
   qs("#clearGo").addEventListener("click", clearAll);
   qs("#clearCode").addEventListener("keydown", function(e){
     if(e.key === "Enter" && !qs("#clearGo").disabled) clearAll();
+  });
+  qs("#nameBtn").addEventListener("click", openNameModal);
+  bindModalClose("nameModal");
+  qs("#nameSave").addEventListener("click", saveName);
+  qs("#nameInput").addEventListener("keydown", function(e){
+    if(e.key === "Enter") saveName();
+  });
+  document.addEventListener("click", function(e){
+    var t = e.target;
+    if(t.closest && t.closest("#ovNameBtn")) openNameModal();
   });
   qsa(".nav-item").forEach(function(b){
     b.addEventListener("click", function(){ goView(b.getAttribute("data-view")); });
@@ -1426,6 +1503,7 @@ function bindGlobal(){
   }
   updateMeta();
   renderOverview();
+  renderName();
 })();
 </script>
 </body>

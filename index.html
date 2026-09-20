@@ -87,7 +87,7 @@ nav{flex:1;margin-top:26px;display:flex;flex-direction:column;gap:4px}
   transition:all .18s ease}
 .nav-item .idx{font-size:10px;color:var(--ink-faint);letter-spacing:.1em;min-width:20px}
 .nav-item:hover{color:var(--ink);border-color:var(--line)}
-.nav-item.is-active{color:var(--ink);background:var(--panel);border-color:var(--line);border-left:3px solid var(--accent);padding-left:10px}
+.nav-item.is-active{color:var(--ink);background:linear-gradient(105deg,rgba(255,255,255,.07),rgba(255,91,31,.045));border-color:var(--line);border-left:3px solid var(--accent);padding-left:10px;box-shadow:inset 0 1px 0 rgba(255,255,255,.04),0 8px 24px rgba(0,0,0,.14)}
 
 .rail-foot{margin-top:20px;padding-top:18px;border-top:1px solid var(--line);display:grid;gap:12px}
 .rail-date{font-size:11px;color:var(--ink-dim);line-height:1.7;letter-spacing:.06em}
@@ -97,8 +97,14 @@ nav{flex:1;margin-top:26px;display:flex;flex-direction:column;gap:4px}
 
 .stage{padding:0 46px 90px;max-width:1500px;width:100%;margin:0 auto;min-width:0}
 .view{display:none;padding-top:34px}
-.view.is-active{display:block;animation:viewIn .5s cubic-bezier(.2,.7,.2,1) both}
-@keyframes viewIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.view.is-active{display:block;animation:viewIn .34s cubic-bezier(.2,.75,.25,1) both}
+@keyframes viewIn{from{opacity:0;filter:blur(1px);transform:translateY(3px)}to{opacity:1;filter:blur(0);transform:none}}
+.tab-glass{position:fixed;inset:0;z-index:65;pointer-events:none;opacity:0;background:rgba(237,234,222,.008);backdrop-filter:blur(0) saturate(1);-webkit-backdrop-filter:blur(0) saturate(1)}
+.tab-glass.is-flashing{animation:tabGlass .36s ease-out both}
+.tab-glass::before{content:"";position:absolute;inset:0;background:linear-gradient(120deg,rgba(255,255,255,.018),transparent 42%);opacity:0}
+.tab-glass.is-flashing::before{animation:tabSheen .36s ease-out both}
+@keyframes tabGlass{0%{opacity:0;backdrop-filter:blur(0) saturate(1);-webkit-backdrop-filter:blur(0) saturate(1)}30%{opacity:.1;backdrop-filter:blur(2px) saturate(1.04);-webkit-backdrop-filter:blur(2px) saturate(1.04)}100%{opacity:0;backdrop-filter:blur(0) saturate(1);-webkit-backdrop-filter:blur(0) saturate(1)}}
+@keyframes tabSheen{0%{opacity:0;transform:translateX(-1%)}30%{opacity:.35;transform:none}100%{opacity:0;transform:translateX(1%)}}
 
 .masthead{display:flex;flex-direction:column;gap:24px;position:relative;padding-top:6px}
 .ghost{pointer-events:none;position:absolute;right:-10px;top:-58px;font-family:var(--font-display);font-weight:400;
@@ -138,6 +144,19 @@ nav{flex:1;margin-top:26px;display:flex;flex-direction:column;gap:4px}
 .stat.is-hero{border-color:var(--accent)}
 .stat.is-hero::after{background:var(--accent)}
 .stat.is-hero .lab{color:var(--accent)}
+
+.readiness{display:flex;align-items:center;gap:16px;margin:20px 0 8px;padding:14px 16px;border:1px solid var(--line2);
+  background:linear-gradient(90deg,rgba(255,91,31,.09),rgba(255,91,31,.025) 48%,transparent);position:relative;overflow:hidden}
+.readiness::before{content:"";width:3px;align-self:stretch;background:var(--accent);flex:none}
+.readiness.is-resting{background:linear-gradient(90deg,rgba(255,203,46,.08),rgba(255,203,46,.025) 48%,transparent)}
+.readiness.is-resting::before{background:var(--accent2)}
+.readiness-mark{font-family:var(--font-display);font-size:18px;line-height:1;color:var(--accent);white-space:nowrap}
+.readiness.is-resting .readiness-mark{color:var(--accent2)}
+.readiness-copy{display:grid;gap:4px;min-width:0}
+.readiness-copy b{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink)}
+.readiness-copy span{font-size:10px;line-height:1.5;color:var(--ink-dim);letter-spacing:.04em}
+.readiness-action{margin-left:auto;padding:8px 11px;border:1px solid var(--line2);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-dim);white-space:nowrap;transition:all .15s}
+.readiness-action:hover{color:var(--accent);border-color:var(--accent)}
 
 .sec-head{display:flex;align-items:baseline;gap:16px;margin:44px 0 18px}
 .sec-head .idx{font-family:var(--font-display);font-size:17px;color:var(--accent)}
@@ -190,6 +209,44 @@ nav{flex:1;margin-top:26px;display:flex;flex-direction:column;gap:4px}
 .sr-delta.up{color:var(--good)}
 .sr-delta.down{color:var(--accent)}
 .sr-spark{height:46px;flex:1;min-width:0;position:relative}
+
+/* ——— exercise guide (view 05) ——— */
+.guide-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.guide-card{position:relative;border:1px solid var(--line);background:var(--panel);padding:16px 16px 14px;cursor:pointer;
+  display:flex;flex-direction:column;gap:8px;min-width:0;
+  transition:transform .16s,border-color .16s,box-shadow .16s}
+.guide-card:hover{transform:translateY(-2px);border-color:var(--line2);box-shadow:0 12px 30px rgba(0,0,0,.4)}
+.guide-top{display:flex;align-items:flex-start;gap:12px;min-width:0}
+.guide-no{font-family:var(--font-display);color:var(--accent);font-size:13px;line-height:1.3;flex:none}
+.guide-nm{font-family:var(--font-display);font-weight:400;font-size:17px;line-height:1;text-transform:uppercase;letter-spacing:.02em}
+.guide-tag{margin-left:auto;font-size:9px;letter-spacing:.14em;color:var(--ink-dim);border:1px solid var(--line2);padding:5px 8px;white-space:nowrap;flex:none}
+.guide-tag.ss{border-color:rgba(211,155,0,.5);color:var(--accent)}
+.guide-tar{font-size:9px;letter-spacing:.18em;color:var(--ink-faint);text-transform:uppercase}
+.guide-why{font-size:11px;line-height:1.55;color:var(--ink-dim);letter-spacing:.03em}
+.guide-foot{margin-top:auto;display:flex;align-items:center;gap:10px;padding-top:6px;border-top:1px dashed rgba(36,40,29,.6)}
+.guide-who{font-size:9px;letter-spacing:.2em;color:var(--ink-faint);text-transform:uppercase}
+.guide-cta{margin-left:auto;font-size:10px;letter-spacing:.24em;color:var(--ink-faint);text-transform:uppercase;white-space:nowrap}
+.guide-card:hover .guide-cta{color:var(--accent)}
+
+.g-pills{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.g-pill{font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-dim);border:1px solid var(--line2);padding:6px 10px}
+.g-pill b{color:var(--ink);font-weight:600}
+.g-pill.ss{color:var(--accent);border-color:rgba(211,155,0,.5)}
+.g-intro{font-size:12.5px;line-height:1.7;color:var(--ink-dim);letter-spacing:.04em;padding-bottom:16px;border-bottom:1px dashed rgba(36,40,29,.6)}
+.g-intro b{color:var(--ink);font-weight:600}
+.g-blk{margin-top:18px}
+.g-blk .g-lab{display:flex;align-items:center;gap:8px;font-size:9px;letter-spacing:.24em;color:var(--accent);text-transform:uppercase;margin-bottom:10px}
+.g-blk .g-lab::before{content:"";width:24px;height:1px;background:var(--accent)}
+.g-steps{display:grid;gap:0}
+.g-step{display:flex;gap:12px;padding:8px 0;border-bottom:1px dashed rgba(36,40,29,.6);font-size:13px;line-height:1.55;color:var(--ink-dim);letter-spacing:.02em}
+.g-step:last-child{border-bottom:none}
+.g-step .n{font-family:var(--font-display);color:var(--accent);font-size:13px;line-height:1.4;flex:none;min-width:18px}
+.g-why{border:1px solid var(--line2);background:var(--panel2);padding:14px 16px;font-size:12.5px;line-height:1.65;color:var(--ink-dim);letter-spacing:.02em}
+.g-why b{color:var(--ink);font-weight:600}
+
+.toast{position:fixed;right:26px;bottom:28px;z-index:140;max-width:min(360px,calc(100vw - 40px));padding:12px 15px;border:1px solid var(--accent);background:var(--panel2);color:var(--ink);
+  font-size:10px;letter-spacing:.12em;text-transform:uppercase;box-shadow:6px 6px 0 rgba(0,0,0,.35);opacity:0;transform:translateY(10px);pointer-events:none;transition:opacity .18s,transform .18s}
+.toast.is-on{opacity:1;transform:none}
 
 .controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:18px}
 .chip{padding:9px 14px;border:1px solid var(--line2);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-dim);
@@ -406,16 +463,20 @@ input{transition:background .15s,border-color .15s,color .15s}
 .mobile-head .mh-brand{display:flex;flex-direction:column;gap:3px;min-width:0;line-height:1}
 .mobile-head .mh-track{font-size:7.5px;letter-spacing:.28em;color:var(--ink-faint);text-transform:uppercase;line-height:1.4}
   .mobile-head .mh-date{font-size:9px;color:var(--ink-faint);letter-spacing:.16em;text-transform:uppercase;text-align:right;line-height:1.5}
-  .mobile-nav{position:fixed;left:0;right:0;bottom:0;z-index:55;display:grid;grid-template-columns:repeat(5,1fr);
+  .mobile-nav{position:fixed;left:0;right:0;bottom:0;z-index:55;display:grid;grid-template-columns:repeat(6,1fr);
     background:rgba(11,12,9,.97);border-top:1px solid var(--line);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
     padding-bottom:env(safe-area-inset-bottom)}
   .mobile-nav .mnav{padding:13px 4px 15px;display:flex;flex-direction:column;align-items:center;gap:6px;font-size:8.5px;letter-spacing:.18em;
     text-transform:uppercase;color:var(--ink-faint);transition:color .15s}
   .mobile-nav .mnav svg{opacity:.6}
-  .mobile-nav .mnav.is-on{color:var(--accent)}
+  .mobile-nav .mnav.is-on{color:var(--accent);background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,91,31,.06));box-shadow:inset 0 1px 0 rgba(255,255,255,.08)}
   .mobile-nav .mnav.is-on svg{opacity:1}
-  .mobile-nav .mnav.is-add{color:#0b0c09;background:var(--accent)}
-  .cards,.lift-grid{grid-template-columns:minmax(0,1fr)}
+.mobile-nav .mnav.is-add{color:#0b0c09;background:var(--accent)}
+  .readiness{align-items:flex-start;gap:10px;padding:13px 12px}
+  .readiness-mark{font-size:15px}
+  .readiness-action{margin-left:auto;padding:7px 8px;font-size:8px}
+  .toast{right:14px;bottom:calc(78px + env(safe-area-inset-bottom));left:14px;max-width:none;text-align:center}
+  .cards,.lift-grid,.guide-grid{grid-template-columns:minmax(0,1fr)}
   .ex-row .ex-name{white-space:normal;overflow:visible;text-overflow:clip;line-height:1.5;font-size:12px}
   .ex-row{align-items:flex-start}
   .delta{min-width:0}
@@ -438,6 +499,8 @@ input{transition:background .15s,border-color .15s,color .15s}
 </head>
 <body>
 <div class="grain"></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="tab-glass" id="tabGlass" aria-hidden="true"></div>
 
 <div class="mobile-head">
   <div class="mh-brand">
@@ -459,6 +522,7 @@ input{transition:background .15s,border-color .15s,color .15s}
       <button class="nav-item" data-view="lifts"><span class="idx">02</span>Lift Progress</button>
       <button class="nav-item" data-view="sessions"><span class="idx">03</span>Session Log</button>
       <button class="nav-item" data-view="strength"><span class="idx">04</span>Strength Index</button>
+      <button class="nav-item" data-view="guide"><span class="idx">05</span>Exercise Guide</button>
     </nav>
     <div class="rail-foot">
       <div class="rail-name" id="railName"></div>
@@ -481,6 +545,7 @@ input{transition:background .15s,border-color .15s,color .15s}
       </div>
       <div class="ruler" aria-hidden="true"></div>
       <div class="stats" id="ovStats"></div>
+      <div class="readiness" id="ovReadiness"></div>
       <div class="sec-head">
         <span class="idx">I&ndash;IV</span>
         <h3>The 4-Day Split</h3>
@@ -575,6 +640,26 @@ input{transition:background .15s,border-color .15s,color .15s}
       <div class="lift-grid" id="srGrid"></div>
     </section>
 
+    <section class="view" id="view-guide">
+      <div class="masthead">
+        <div class="ghost">FORM</div>
+        <div class="masthead-top">
+          <div class="ledger-title">
+            <div class="kicker">Section 05 &mdash; the how-to</div>
+            <h2>Exercise<br><em>Guide</em></h2>
+          </div>
+          <div class="meta-block" id="gdMeta"></div>
+        </div>
+      </div>
+      <div class="ruler" aria-hidden="true"></div>
+      <div class="sec-head">
+        <span class="idx">IDEAL ROUTINE</span>
+        <h3>Ideal Routine &mdash; how each lift is done</h3>
+        <span class="hint">tap an exercise for full form</span>
+      </div>
+      <div class="session-list" id="gdList"></div>
+    </section>
+
   </main>
 </div>
 
@@ -591,6 +676,9 @@ input{transition:background .15s,border-color .15s,color .15s}
   </button>
   <button class="mnav" data-view="strength">
     <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V10"/><path d="M10 20V4"/><path d="M16 20v-8"/><path d="M22 20H2"/></svg>Strength
+  </button>
+  <button class="mnav" data-view="guide">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V2H6.5A2.5 2.5 0 0 0 4 4.5v15z"/><path d="M22 19.5A2.5 2.5 0 0 0 19.5 17H8"/></svg>Guide
   </button>
   <button class="mnav is-add" id="mFab">+&nbsp;Session</button>
 </div>
@@ -642,7 +730,23 @@ input{transition:background .15s,border-color .15s,color .15s}
   </div>
 </div>
 
-<div class="modal" id="clearModal" role="dialog" aria-modal="true">
+<div class="modal" id="guideModal" role="dialog" aria-modal="true">
+  <div class="modal-scrim" data-close></div>
+  <div class="dialog">
+    <div class="dialog-head">
+      <div class="t">
+        <h4 id="gdName">Exercise</h4>
+        <span class="sub" id="gdSub">How to perform it</span>
+      </div>
+      <button class="dialog-x" data-close aria-label="Close">&times;</button>
+    </div>
+    <div class="dialog-body" id="gdBody"></div>
+    <div class="dialog-foot">
+      <button class="btn btn-prime" data-close>Close</button>
+    </div>
+  </div>
+</div>
+  <div class="modal" id="clearModal" role="dialog" aria-modal="true">
   <div class="modal-scrim" data-close></div>
   <div class="dialog">
     <div class="dialog-head">
@@ -784,6 +888,177 @@ ROUTINES.forEach(function(r){ r.exercises.forEach(function(e){
 var routineById = {};
 ROUTINES.forEach(function(r){ routineById[r.id] = r; });
 
+var TECH = {
+  "pec-deck": {
+    why:"Pre-exhausts the chest so the incline press that follows fails in the pecs, not the shoulders.",
+    tempo:"2\u20134 sec up / 2\u20134 sec down",
+    steps:[
+      "Adjust the seat so your arms meet the handles at chest height, elbows slightly bent.",
+      "Drive the handles together in front of you, squeezing the pecs hard at the middle \u2014 hold the squeeze a beat.",
+      "Return slowly under control until you feel a full stretch across the chest.",
+      "One set only \u2014 leave nothing on the next exercise in the superset."
+    ],
+    teach:"Machines keep constant tension through the whole stroke \u2014 no momentum, no resting points. Pre-exhausting with an isolation move first lets the press that follows load the chest even harder while keeping the total weight safer.",
+    ss:"A"
+  },
+  "incline-press": {
+    why:"The heavy compound finisher of the pre-exhausted chest \u2014 a 45\u00b0 incline biases the upper chest.",
+    tempo:"2\u20134 sec up / 2\u20134 sec down",
+    steps:[
+      "Set the bench to roughly 45\u00b0; grip the bar just outside shoulder width.",
+      "Unrack and lower the bar under control to your lower chest / sternum.",
+      "Drive back up and slightly backward over the shoulders, pressing the weight in a straight line.",
+      "One all-out set to failure; the pec-deck work before means this set ends the chest completely."
+    ],
+    teach:"\u201cDifficult but not impossible\u201d \u2014 you stop a rep early only when you literally cannot do another. The incline (not flat) press is the preferred chest press: an upward pressing line is easier on the front delts while the angle still biases the upper chest.",
+    ss:"A"
+  },
+  "pullover": {
+    why:"Works lats and the stretch across the whole ribcage \u2014 a machine pullover is a stretch-and-build for the back.",
+    tempo:"2\u20134 sec each way",
+    steps:[
+      "Sit with your back flat against the pad and the cam arms pulled down to the top position.",
+      "Keeping your arms lengthened, pull the handles down and back in a wide arc until they reach your hips.",
+      "Squeeze the lats at the bottom, then let the weight pull your arms high over your head for a deep stretch.",
+      "Slow tempo \u2014 the stretch on the way up is half the benefit."
+    ],
+    teach:"The pullover is what \u201copens\u201d the back after the pressing work \u2014 the machine removes momentum so the lats take constant tension through a long arc, and the deep stretch on every rep counts as much as the pull.",
+    ss:"B"
+  },
+  "pulldown": {
+    why:"Close-grip, underhand pulldown shows maximum lat recruitment with the biceps in their strongest position.",
+    tempo:"2\u20134 sec up / 2\u20134 sec down",
+    steps:[
+      "Take a close, underhand (palms facing you) grip on a narrow handle.",
+      "Sit, lock your thighs under the pads, and sit tall.",
+      "Pull the handle down to your upper chest, driving the elbows down and back.",
+      "Return under full control until the arms are straight overhead with a stretch."
+    ],
+    teach:"Close-grip underhand is the highest-activation lat grip \u2014 the biceps sit in their strongest mechanical position, so the lats carry the work and the grip never becomes the limiting factor.",
+    ss:"B"
+  },
+  "leg-ext": {
+    why:"Pre-exhausts the quads so the leg press after it works the quads, not the lower back.",
+    tempo:"2\u20134 sec up / 2\u20134 sec down",
+    steps:[
+      "Set the seat so your knees align with the machine\u2019s pivot point.",
+      "Hook your ankles under the pad and grip the handles.",
+      "Extend the legs until straight, squeezing the quads at the top.",
+      "Hold a half-second, then lower slowly \u2014 don\u2019t let the stack crash."
+    ],
+    teach:"The pre-exhaust superset makes the quads fire to failure before the leg press \u2014 then a single heavy press set finishes them at depth.",
+    ss:"A"
+  },
+  "leg-press": {
+    why:"High mechanical loading on quads/glutes with very little spinal compression.",
+    tempo:"2\u20134 sec up / 2\u20134 sec down",
+    steps:[
+      "Plant your feet shoulder-width, mid-height on the platform, toes slightly out.",
+      "Release the safeties and lower the sled until your knees track toward your chest \u2014 keep your lower back glued to the pad.",
+      "Drive through your whole foot back up, stopping just shy of locking out.",
+      "One set to failure \u2014 the leg extension right before left the quads already burning."
+    ],
+    teach:"Feet kept low and the sled driven deep load the quads hardest through the bottom half. The core rule applies everywhere here: one set, trained to the point where another rep is impossible.",
+    ss:"A"
+  },
+  "calf-raise": {
+    why:"Standing raises train both the gastrocnemius and the muscles behind the knee under full stretch.",
+    tempo:"2\u20134 sec up / 2\u20134 sec down",
+    steps:[
+      "Stand on the lower platform with the balls of your feet on it, shoulders under the pads.",
+      "Drop your heels as far down as the stretch allows.",
+      "Rise up onto your toes as high as possible, then squeeze at the top.",
+      "Lower under control to the deep stretch \u2014 no partial reps, no bouncing."
+    ],
+    teach:"Calves are trained on leg day, strict and to failure \u2014 full stretch, full squeeze, never rushed. They respond better to heavy, deliberate work than to quick bouncing reps.",
+    ss:""
+  },
+  "sit-ups": {
+    why:"Straight sit-ups early, cycling to decline later \u2014 slow and strict, not ballistic.",
+    tempo:"2\u20134 sec up / 2\u20134 sec down",
+    steps:[
+      "Lie with your knees bent and feet flat, hands crossed on your chest.",
+      "Curl up slowly, peeling your spine off the floor until your torso is upright.",
+      "Lower back down on the same slow tempo \u2014 no momentum, no throwing.",
+      "Breathe out on the way up; stop when you can\u2019t do another rep."
+    ],
+    teach:"Slow reps are the whole point \u2014 the floor version with knees bent keeps the hip flexors out so the abdominals do the work. In the research it ranked as the #1 overall exercise and #1 for the abdomen.",
+    ss:""
+  },
+  "lat-raise": {
+    why:"Isolates the middle deltoid, the muscle that makes the shoulders look wide.",
+    tempo:"2\u20134 sec up / 2\u20134 sec down",
+    steps:[
+      "Stand tall, dumbbells at your sides, elbows slightly bent.",
+      "Raise the dumbbells straight out to the sides until your arms are about parallel to the floor.",
+      "Lead with the elbows \u2014 the hands stay below them.",
+      "Lower slowly on a controlled negative; stop just short of touching the thighs and begin again."
+    ],
+    teach:"Lateral raises go to failure like everything else \u2014 machines and dumbbells both work. The load, not the tool, is what drives progress.",
+    ss:""
+  },
+  "rear-delt": {
+    why:"Targets the rear head of the deltoid, the upper-back muscle most lifters never train directly.",
+    tempo:"2\u20134 sec up / 2\u20134 sec down",
+    steps:[
+      "Hinge forward with a flat back, or use the rear-delt machine / one-arm cable for constant tension.",
+      "Raise your arms out to the sides and back, leading with the elbows and squeezing the shoulder blades.",
+      "Pause at the back when the rear delts are fully contracted.",
+      "Return under control to the stretch."
+    ],
+    teach:"Rear delts need direct isolation \u2014 pressing work hits them only glancingly. This dedicated move is what builds the back of the shoulder and the upper back\u2019s thickness.",
+    ss:""
+  },
+  "curl": {
+    why:"A straight-bar curl maximizes the supination that puts maximum load on the biceps.",
+    tempo:"2\u20134 sec up / 2\u20134 sec down",
+    steps:[
+      "Stand tall, holding a straight bar with a shoulder-width, palms-up grip.",
+      "Lock your elbows at your sides \u2014 no swinging from the hips.",
+      "Curl the bar up until the forearms are near vertical, squeezing the biceps.",
+      "Lower slowly until your arms are nearly straight again, keeping tension."
+    ],
+    teach:"Straight-bar, strict work to failure \u2014 the cheat curl defeats the whole point. If you have to swing to move the bar, the weight is too heavy \u2014 drop it.",
+    ss:""
+  },
+  "pressdown": {
+    why:"Bar or V-bar (not rope) pressdowns keep the load dense and the triceps under full tension.",
+    tempo:"2\u20134 sec up / 2\u20134 sec down",
+    steps:[
+      "Attach a straight or V-bar to a high cable; stand close with elbows pinned to your ribs.",
+      "Press the bar down until your arms are straight, extending fully through the triceps.",
+      "Keep your upper arms still \u2014 only the forearms move.",
+      "Return under control until the elbows are bent to a stretch, then repeat."
+    ],
+    teach:"Use a straight or V-bar, not rope \u2014 rope spreads the load and turns a strict pushdown into a pull. The bar keeps the tension dense and the triceps under full tension.",
+    ss:"A"
+  },
+  "dips": {
+    why:"The closing compound of the arms group \u2014 heavy, full-range pressing with the triceps as prime movers.",
+    tempo:"2\u20134 sec up / 2\u20134 sec down",
+    steps:[
+      "Grip the parallel bars and press up to a locked-out start, legs straight.",
+      "Lower under control until your shoulders sink toward the bars and elbows are slightly past 90\u00b0.",
+      "Drive back up to a full lockout without swinging.",
+      "Add weight via a belt when bodyweight dips stop making progress."
+    ],
+    teach:"Dips finish the triceps after the pressdown pre-exhausts them \u2014 one all-out heavy set to failure. Add a belt only when bodyweight stops making progress.",
+    ss:"A"
+  },
+  "leg-ext-hold": {
+    why:"A static hold on the leg extension brings the quads to absolute failure \u2014 the heavy-duty finisher of the leg session.",
+    tempo:"10\u201325 sec static hold",
+    steps:[
+      "Set the leg extension machine with a heavy stack, ankles under the pad.",
+      "Extend to straight and HOLD the position with the quads contracted at lockout.",
+      "Keep holding \u2014 as long as you possibly can, legs straight, no shaking off the pad (the +30 lb makes it burn fast).",
+      "Release only when the legs genuinely drop; that hold time is your score."
+    ],
+    teach:"A static hold takes the muscle past where a normal rep could end \u2014 once you reach failure, holding the legs straight at lockout burns the quads out completely.",
+    ss:"A"
+  }
+};
+
 var KEY = "ironlog.v1";
 var state = null;
 
@@ -819,6 +1094,11 @@ function fmtDYear(d){ var p = parseD(d); return fmtD(d)+", '"+String(p.getFullYe
 function todayStr(){ var d = new Date(); return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate()); }
 function addDays(d, n){ var p = parseD(d); p.setDate(p.getDate()+n); return p.getFullYear()+"-"+pad(p.getMonth()+1)+"-"+pad(p.getDate()); }
 function daysSince(dateStr){ return Math.floor((Date.now()-parseD(dateStr).getTime())/86400000); }
+function latestSession(){
+  var latest = null;
+  state.sessions.forEach(function(s){ if(!latest || s.date>latest.date) latest=s; });
+  return latest;
+}
 function nicer(v){ return (Math.round(v*10)/10).toString(); }
 function rounded(v){ return Math.round(v*10)/10; }
 
@@ -1072,6 +1352,7 @@ function deltaFor(exId, sessions){
 var currentView = "overview";
 var liftDayFilter = "all";
 var liftSearch = "";
+var tabGlassTimer = null;
 
 function e1rm(w, r){
   var rr = Number(r); if(isNaN(rr) || rr==null) rr = 0;
@@ -1208,7 +1489,97 @@ function renderStrength(){
   });
 }
 
+function renderGuide(){
+  var total = Object.keys(exIndex).length;
+  var withTech = 0;
+  Object.keys(exIndex).forEach(function(id){ if(TECH[id]) withTech++; });
+  qs("#gdMeta").innerHTML =
+    '<span class="lab">Exercises</span>'+
+    '<span class="val">'+total+' MOVEMENTS</span>'+
+    '<span class="sub">'+withTech+' with full form &middot; one all-out set to failure</span>';
+
+  var html = "";
+  ROUTINES.forEach(function(r){
+    html += '<div class="sec-head" style="margin-top:30px">'+
+      '<span class="idx">'+r.no+'</span>'+
+      '<h3>'+esc(r.name)+"</h3>"+
+      '<span class="hint">'+esc(r.tag)+"</span>"+
+    "</div>";
+    html += '<div class="guide-grid" data-day="'+r.id+'">';
+    r.exercises.forEach(function(ex){
+      if(!exIndex[ex.id]) return;
+      var t = TECH[ex.id];
+      var tags = '<span class="guide-tag'+(ex.ss?" ss":"")+'">'+(t&&t.ss?"SUPERSET "+esc(t.ss):"SOLO")+'</span>'+
+        '<span class="guide-tag">'+esc(ex.target)+"</span>"+
+        (t&&t.tempo?'<span class="guide-tag">TEMPO '+esc(t.tempo)+"</span>":"");
+      html += '<button class="guide-card rise" style="animation-delay:'+indexOfGuide(ex.id)*40+'ms" data-ex="'+ex.id+'">'+
+        '<div class="guide-top">'+
+          '<span class="guide-no">'+dayNoFor(ex.id)+"</span>"+
+          '<div style="min-width:0"><div class="guide-nm">'+esc(ex.name)+"</div></div>"+
+        "</div>"+
+        '<div style="display:flex;gap:8px;flex-wrap:wrap">'+tags+"</div>"+
+        '<div class="guide-why">'+(t? esc(t.why): "No form notes yet")+"</div>"+
+        '<div class="guide-foot">'+
+          '<span class="guide-who">ONE SET</span>'+
+          '<span class="guide-cta">VIEW &rarr;</span>'+
+        "</div>"+
+      "</button>";
+    });
+    html += "</div>";
+  });
+  qs("#gdList").innerHTML = html;
+  qsa("#gdList .guide-card").forEach(function(c){
+    c.addEventListener("click", function(){ openGuideDetail(c.getAttribute("data-ex")); });
+  });
+}
+
+var guideOrd = {};
+Object.keys(exIndex).forEach(function(id, i){ guideOrd[id] = i; });
+function indexOfGuide(id){ return guideOrd[id]||0; }
+
+function dayNoFor(exId){
+  var e = exIndex[exId];
+  return e.days.length>1? e.days.map(dayNo).join(" / ") : dayNo(e.day);
+}
+
+function openGuideDetail(id){
+  var e = exIndex[id];
+  if(!e) return;
+  var t = TECH[id];
+  qs("#gdName").textContent = e.name;
+  qs("#gdSub").innerHTML = esc(e.target)+" &middot; DAY "+dayNoFor(id);
+  var pills = '<div class="g-pills">'+
+    '<span class="g-pill">DAY <b>'+dayNoFor(id)+"</b></span>"+
+    '<span class="g-pill">TARGET <b>'+esc(e.target)+"</b></span>"+
+    (t&&t.tempo?'<span class="g-pill">TEMPO <b>'+esc(t.tempo)+"</b></span>":"")+
+    (t&&t.ss?'<span class="g-pill ss">SUPERSET <b>'+esc(t.ss)+"</b></span>":"")+
+    '<span class="g-pill">ONE ALL-OUT SET</span>'+
+  "</div>";
+  var body = "";
+  if(t && t.steps){
+    body += '<div class="g-intro">'+(t.how||t.why||"")+"<br><br><b>Tempo guide:</b> use the listed pace as a controlled range, not a race. Keep the weight moving smoothly and do not use momentum.</div>";
+    body += '<div class="g-blk"><div class="g-lab">How to perform it</div><div class="g-steps">'+
+      t.steps.map(function(s, i){ return '<div class="g-step"><span class="n">'+(i+1)+"</span><span>"+esc(s)+"</span></div>"; }).join("")+
+    "</div></div>";
+    if(t.teach) body += '<div class="g-blk"><div class="g-lab">The thinking behind it</div><div class="g-why">'+esc(t.teach)+"</div></div>";
+  } else {
+    body = '<div class="g-intro">'+esc(e.name)+" &mdash; log your single all-out set to failure, exactly as in the Ideal Routine.</div>";
+  }
+  qs("#gdBody").innerHTML = pills+body;
+  openModal("guideModal");
+}
+
 function goView(name){
+  if(name!==currentView){
+    var glass = qs("#tabGlass");
+    if(glass){
+      glass.classList.remove("is-flashing");
+      void glass.offsetWidth;
+      glass.classList.add("is-flashing");
+      clearTimeout(tabGlassTimer);
+      tabGlassTimer = setTimeout(function(){ glass.classList.remove("is-flashing"); }, 400);
+    }
+  }
   currentView = name;
   qsa(".view").forEach(function(v){ v.classList.toggle("is-active", v.id==="view-"+name); });
   qsa(".nav-item").forEach(function(b){ b.classList.toggle("is-active", b.getAttribute("data-view")===name); });
@@ -1218,6 +1589,7 @@ function goView(name){
   if(name==="lifts") renderLifts();
   if(name==="sessions") renderSessions();
   if(name==="strength") renderStrength();
+  if(name==="guide") renderGuide();
 }
 
 function renderAll(){ renderOverview(); renderLifts(); renderSessions(); updateMeta(); renderName(); renderStrength(); }
@@ -1272,6 +1644,21 @@ function renderOverview(){
     stat("LIFTS AT ALL-TIME PR", atPB, "", "current strength = your best")+
     stat("LEG PRESS PR", lpShow, "", "started at "+(lpPts.length&&lpPts[0]?nicer(lpPts[0].v)+" LB":"—"))+
     stat("LEG EXT PR", leShow, "", "started at "+(lePts.length&&lePts[0]?nicer(lePts[0].v)+" LB":"—"));
+
+  var recent = latestSession();
+  var readiness = qs("#ovReadiness");
+  if(!recent){
+    readiness.className = "readiness";
+    readiness.innerHTML = '<span class="readiness-mark">01</span><div class="readiness-copy"><b>Ready when you are</b><span>Start with Day I. One focused session is enough to begin building your ledger.</span></div><button class="readiness-action">Log Day I &rarr;</button>';
+  } else {
+    var age = Math.max(0, daysSince(recent.date));
+    var recentIdx = ROUTINES.findIndex(function(r){ return r.id===recent.day; });
+    var next = ROUTINES[(recentIdx+1+ROUTINES.length)%ROUTINES.length];
+    var resting = age<4;
+    readiness.className = "readiness"+(resting?" is-resting":"");
+    readiness.innerHTML = '<span class="readiness-mark">'+(resting?"REST":"GO")+'</span><div class="readiness-copy"><b>'+(resting?"Recover before the next session":"Ready for the next session")+'</b><span>'+(resting?"Day "+next.no+" follows Day "+routineById[recent.day].no+". Give the work room to recover; check back in "+(4-age)+" day"+((4-age)===1?"":"s")+".":"Next up: Day "+next.no+" &mdash; "+esc(next.name)+". Log the session when strength feels recovered.")+'</span></div><button class="readiness-action">Log session &rarr;</button>';
+  }
+  qs("#ovReadiness .readiness-action").addEventListener("click", function(){ openLogModal(); });
 
   var html = "";
   ROUTINES.forEach(function(r, ri){
@@ -1632,8 +2019,14 @@ function saveSession(){
   toast(editId? "Session updated":"Session logged");
 }
 
+var toastTimer = null;
 function toast(msg){
-  void msg;
+  var el = qs("#toast");
+  if(!el) return;
+  el.textContent = msg;
+  el.classList.add("is-on");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function(){ el.classList.remove("is-on"); }, 2600);
 }
 
 function exportData(){

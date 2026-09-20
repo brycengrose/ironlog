@@ -97,8 +97,8 @@ nav{flex:1;margin-top:26px;display:flex;flex-direction:column;gap:4px}
 
 .stage{padding:0 46px 90px;max-width:1500px;width:100%;margin:0 auto;min-width:0}
 .view{display:none;padding-top:34px}
-.view.is-active{display:block;animation:viewIn .34s cubic-bezier(.2,.75,.25,1) both}
-@keyframes viewIn{from{opacity:0;filter:blur(1px);transform:translateY(3px)}to{opacity:1;filter:blur(0);transform:none}}
+.view.is-active{display:block;animation:viewIn .3s cubic-bezier(.2,.75,.25,1) both}
+@keyframes viewIn{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}
 .tab-glass{position:fixed;inset:0;z-index:65;pointer-events:none;opacity:0;background:rgba(237,234,222,.008);backdrop-filter:blur(0) saturate(1);-webkit-backdrop-filter:blur(0) saturate(1)}
 .tab-glass.is-flashing{animation:tabGlass .36s ease-out both}
 .tab-glass::before{content:"";position:absolute;inset:0;background:linear-gradient(120deg,rgba(255,255,255,.018),transparent 42%);opacity:0}
@@ -317,8 +317,69 @@ nav{flex:1;margin-top:26px;display:flex;flex-direction:column;gap:4px}
 .toast{position:fixed;right:26px;bottom:28px;z-index:140;max-width:min(360px,calc(100vw - 40px));padding:12px 15px;border:1px solid var(--accent);background:var(--panel2);color:var(--ink);
   font-size:10px;letter-spacing:.12em;text-transform:uppercase;box-shadow:6px 6px 0 rgba(0,0,0,.35);opacity:0;transform:translateY(10px);pointer-events:none;transition:opacity .18s,transform .18s}
 .toast.is-on{opacity:1;transform:none}
+.program-switch{display:flex;align-items:center;gap:8px;margin:26px 0 -8px;padding:6px;border:1px solid var(--line);background:rgba(19,21,16,.72);width:max-content;max-width:100%;position:relative;z-index:2}
+.program-switch .label{padding:0 8px;font-size:8px;letter-spacing:.2em;color:var(--ink-faint);text-transform:uppercase}
+.program-choice{padding:8px 11px;border:1px solid transparent;font-size:9px;letter-spacing:.14em;color:var(--ink-dim);text-transform:uppercase;white-space:nowrap;transition:all .15s}
+.program-choice:hover{color:var(--ink);border-color:var(--line2)}
+.program-choice.is-on{background:var(--accent);border-color:var(--accent);color:#0b0c09;font-weight:600}
+.audio-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:30px}
+.audio-card{display:flex;flex-direction:column;gap:12px;border:1px solid var(--line);background:var(--panel);padding:16px;min-width:0}
+.audio-card.is-current{border-color:var(--accent)}
+.audio-card.is-current::before{content:"CURRENT PROGRAM";display:inline-block;align-self:flex-start;font-size:8px;letter-spacing:.18em;color:var(--accent);text-transform:uppercase;padding:3px 6px;border:1px solid rgba(255,91,31,.4)}
+.audio-head{display:flex;align-items:flex-start;gap:12px;min-width:0}
+.audio-no{font-family:var(--font-display);color:var(--accent);font-size:16px;line-height:1.2;flex:none}
+.audio-nm{font-family:var(--font-display);font-weight:400;font-size:19px;line-height:1;text-transform:uppercase;letter-spacing:.02em}
+.audio-tag{font-size:8px;letter-spacing:.16em;color:var(--ink-faint);text-transform:uppercase;margin-top:6px}
+.audio-desc{font-size:10.5px;line-height:1.6;color:var(--ink-dim);letter-spacing:.03em}
+.audio-actions{display:flex;align-items:center;gap:10px;justify-content:center}
+.audio-play{display:inline-flex;align-items:center;justify-content:center;gap:11px;padding:12px 20px;border-radius:999px;color:var(--ink);
+  background:rgba(255,255,255,.07);backdrop-filter:blur(16px) saturate(1.5);-webkit-backdrop-filter:blur(16px) saturate(1.5);
+  border:1px solid rgba(255,255,255,.14);box-shadow:inset 0 1px 0 rgba(255,255,255,.1),0 10px 26px rgba(0,0,0,.3);
+  font-size:10px;letter-spacing:.18em;text-transform:uppercase;transition:all .18s}
+.audio-play:hover{background:rgba(255,255,255,.13);border-color:rgba(255,255,255,.22);transform:translateY(-1px)}
+.audio-play.is-on{background:rgba(255,91,31,.28);border-color:rgba(255,91,31,.55);color:#fff;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.15),0 10px 30px rgba(255,91,31,.25)}
+.audio-play .ap-ico{display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.2);box-shadow:inset 0 1px 0 rgba(255,255,255,.15)}
+.audio-play.is-on .ap-ico{background:var(--accent);border-color:rgba(255,255,255,.35)}
+.audio-play .ap-ico svg{display:block}
+.audio-playing-note{font-size:8.5px;letter-spacing:.14em;color:var(--accent);text-transform:uppercase;white-space:nowrap}
+.audio-src{font-size:8.5px;line-height:1.5;color:var(--ink-faint);letter-spacing:.06em}
+.audio-src b{color:var(--ink-dim);font-weight:500}
+.audio-stage{position:fixed;left:-9999px;top:0;width:1px;height:1px;opacity:0;pointer-events:none;z-index:0}
+.audio-bar{position:fixed;top:12px;left:50%;z-index:80;display:flex;align-items:center;gap:14px;padding:10px 12px 10px 16px;
+  width:min(540px,calc(100vw - 28px));border-radius:22px;transform:translate(-50%,-160%);transition:transform .32s cubic-bezier(.2,.75,.2,1);
+  background:rgba(22,24,18,.5);backdrop-filter:blur(24px) saturate(1.6);-webkit-backdrop-filter:blur(24px) saturate(1.6);
+  border:1px solid rgba(255,255,255,.12);box-shadow:0 20px 55px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.06)}
+.audio-bar.is-on{transform:translate(-50%,0)}
+.audio-bar-toggle{width:46px;height:46px;flex:none;border-radius:50%;display:grid;place-items:center;color:var(--ink);
+  background:rgba(255,255,255,.12);backdrop-filter:blur(20px) saturate(1.6);-webkit-backdrop-filter:blur(20px) saturate(1.6);
+  border:1px solid rgba(255,255,255,.2);box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 8px 22px rgba(0,0,0,.35);
+  transition:background .15s,border-color .15s,transform .15s}
+.audio-bar-toggle:hover{background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.3);transform:scale(1.05)}
+.audio-bar-toggle:active{transform:scale(.96)}
+.audio-bar-toggle svg{display:block;margin-left:2px}
+.audio-bar.is-paused .audio-bar-toggle svg{margin-left:0}
+.audio-bar-meta{display:flex;flex-direction:column;gap:3px;min-width:0}
+.audio-bar-lab{font-size:7.5px;letter-spacing:.22em;color:var(--accent);text-transform:uppercase}
+.audio-bar-title{font-size:12px;font-weight:600;letter-spacing:.03em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.audio-bar-prog{font-size:8px;letter-spacing:.16em;color:var(--ink-faint);text-transform:uppercase}
+.audio-bar-stop{margin-left:auto;flex:none;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;color:var(--ink-dim);
+  background:rgba(255,255,255,.07);backdrop-filter:blur(16px) saturate(1.5);-webkit-backdrop-filter:blur(16px) saturate(1.5);
+  border:1px solid rgba(255,255,255,.14);box-shadow:inset 0 1px 0 rgba(255,255,255,.1);transition:all .15s}
+.audio-bar-stop:hover{color:var(--accent);border-color:rgba(255,91,31,.5);background:rgba(255,91,31,.15)}
+.audio-bar-stop svg{display:block}
+.audio-eq{display:inline-flex;align-items:flex-end;gap:2px;height:12px;flex:none}
+.audio-eq i{width:2px;background:var(--accent);animation:eqBounce 1s ease-in-out infinite}
+.audio-eq i:nth-child(1){height:40%;animation-delay:0s}
+.audio-eq i:nth-child(2){height:90%;animation-delay:.2s}
+.audio-eq i:nth-child(3){height:60%;animation-delay:.4s}
+.audio-eq i:nth-child(4){height:100%;animation-delay:.1s}
+.audio-bar.is-paused .audio-eq i{animation-play-state:paused;background:var(--ink-faint)}
+@keyframes eqBounce{0%,100%{transform:scaleY(.5)}50%{transform:scaleY(1)}}
 
 .controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+.controls #liftDayFilters{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .chip{padding:9px 14px;border:1px solid var(--line2);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-dim);
   transition:all .15s ease}
 .chip:hover{color:var(--ink);border-color:var(--ink-faint)}
@@ -504,7 +565,6 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 .tbl tbody tr:hover{background:rgba(255,91,31,.045)}
 .day-card,.lift-card,.session,.sr-card{transition:transform .16s,border-color .16s,box-shadow .16s}
 .lift-card:hover,.day-card:hover,.session:hover,.sr-card:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(0,0,0,.35)}
-.rise:hover,.rise.playing-card:hover{animation:none}
 .stat{transition:border-color .16s}
 .ex-row{transition:background .12s}
 .ex-row:hover{background:rgba(255,91,31,.04)}
@@ -556,6 +616,7 @@ input{transition:background .15s,border-color .15s,color .15s}
   .guide-filter-label{min-width:48px}
   .guide-chip{flex:none}
   .cards,.lift-grid,.guide-grid{grid-template-columns:minmax(0,1fr)}
+  .audio-grid{grid-template-columns:minmax(0,1fr)}
   .map-layout{grid-template-columns:1fr}
   .map-stage{padding:12px}
   .map-panel{padding:13px}
@@ -594,6 +655,17 @@ input{transition:background .15s,border-color .15s,color .15s}
 <div class="grain"></div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <div class="tab-glass" id="tabGlass" aria-hidden="true"></div>
+<div class="audio-stage" id="audioStage"></div>
+<div class="audio-bar" id="audioBar" aria-hidden="true">
+  <div class="audio-eq"><i></i><i></i><i></i><i></i></div>
+  <button class="audio-bar-toggle" id="audioBarToggle" aria-label="Play or pause"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg></button>
+  <div class="audio-bar-meta">
+    <span class="audio-bar-lab">Now playing</span>
+    <span class="audio-bar-title" id="audioBarTitle">—</span>
+    <span class="audio-bar-prog" id="audioBarProg">—</span>
+  </div>
+  <button class="audio-bar-stop" id="audioBarStop" aria-label="Stop audio"><svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true"><path d="M6.4 6.4l11.2 11.2-1.4 1.4L5 7.8zM17.6 6.4L6.4 17.6 5 16.2 16.2 5z"/></svg></button>
+</div>
 
 <div class="mobile-head">
   <div class="mh-brand">
@@ -617,6 +689,7 @@ input{transition:background .15s,border-color .15s,color .15s}
       <button class="nav-item" data-view="strength"><span class="idx">04</span>Strength Index</button>
       <button class="nav-item" data-view="guide"><span class="idx">05</span>Exercise Guide</button>
       <button class="nav-item" data-view="muscles"><span class="idx">06</span>Muscle Map</button>
+      <button class="nav-item" data-view="audio"><span class="idx">07</span>Audio</button>
     </nav>
     <div class="rail-foot">
       <div class="rail-name" id="railName"></div>
@@ -625,6 +698,11 @@ input{transition:background .15s,border-color .15s,color .15s}
   </aside>
 
   <main class="stage">
+    <div class="program-switch" id="programSwitch" aria-label="Training program">
+      <span class="label">Program</span>
+      <button class="program-choice is-on" data-program="ideal">Ideal Routine</button>
+      <button class="program-choice" data-program="consolidation">Consolidation</button>
+    </div>
 
     <section class="view is-active" id="view-overview">
       <div class="masthead">
@@ -662,11 +740,7 @@ input{transition:background .15s,border-color .15s,color .15s}
       </div>
       <div class="ruler" aria-hidden="true"></div>
       <div class="controls" style="margin-top:34px">
-        <button class="chip is-on" data-day="all">All Lifts</button>
-        <button class="chip" data-day="d1">Day I</button>
-        <button class="chip" data-day="d2">Day II</button>
-        <button class="chip" data-day="d3">Day III</button>
-        <button class="chip" data-day="d4">Day IV</button>
+        <div id="liftDayFilters"></div>
         <label class="search">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
           <input id="liftSearch" type="text" placeholder="SEARCH LIFT">
@@ -747,12 +821,12 @@ input{transition:background .15s,border-color .15s,color .15s}
       </div>
       <div class="ruler" aria-hidden="true"></div>
       <div class="sec-head">
-        <span class="idx">IDEAL ROUTINE</span>
-        <h3>Ideal Routine &mdash; how each lift is done</h3>
+        <span class="idx" id="guideIdx">IDEAL ROUTINE</span>
+        <h3 id="guideTitle">Ideal Routine &mdash; how each lift is done</h3>
         <span class="hint">tap an exercise for full form</span>
       </div>
       <div class="guide-controls" id="guideControls">
-        <div class="guide-filter-row">
+        <div class="guide-filter-row" id="guideDayFilters">
           <span class="guide-filter-label">Day</span>
           <button class="guide-chip is-on" data-guide-day="all">All</button>
           <button class="guide-chip" data-guide-day="d1">I</button>
@@ -760,7 +834,7 @@ input{transition:background .15s,border-color .15s,color .15s}
           <button class="guide-chip" data-guide-day="d3">III</button>
           <button class="guide-chip" data-guide-day="d4">IV</button>
         </div>
-        <div class="guide-filter-row">
+        <div class="guide-filter-row" id="guideMuscleFilters">
           <span class="guide-filter-label">Focus</span>
           <button class="guide-chip is-on" data-guide-muscle="all">All</button>
           <button class="guide-chip" data-guide-muscle="chest">Chest</button>
@@ -848,6 +922,55 @@ input{transition:background .15s,border-color .15s,color .15s}
       </div>
     </section>
 
+    <section class="view" id="view-audio">
+      <div class="masthead">
+        <div class="ghost">SOUND</div>
+        <div class="masthead-top">
+          <div class="ledger-title">
+            <div class="kicker">Section 07 &mdash; in his own voice</div>
+            <h2>Audio<br><em>Guide</em></h2>
+          </div>
+          <div class="meta-block" id="auMeta"></div>
+        </div>
+      </div>
+      <div class="ruler" aria-hidden="true"></div>
+      <div class="sec-head">
+        <span class="idx">HEAVY DUTY</span>
+        <h3>Hear the routine, from the source</h3>
+        <span class="hint">audio from the videos the guide is based on</span>
+      </div>
+      <div class="audio-grid">
+        <div class="audio-card" id="auIdeal">
+          <div class="audio-head">
+            <span class="audio-no">IDEAL</span>
+            <div style="min-width:0">
+              <div class="audio-nm">The Ideal Routine</div>
+              <div class="audio-tag">4-workout protocol &middot; recovery-based</div>
+            </div>
+          </div>
+          <div class="audio-desc">Mike explains the structure, exercise selection, rep ranges, and why recovery — not more training — drives growth.</div>
+          <div class="audio-actions">
+            <button class="audio-play" data-audio-play="ideal"><span class="ap-ico"><svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg></span><span>Play audio</span></button>
+          </div>
+          <div class="audio-src"><b>Source</b> &middot; Heavy Duty College &mdash; &ldquo;Mike Mentzer: The Ideal Routine&rdquo;</div>
+        </div>
+        <div class="audio-card" id="auConsol">
+          <div class="audio-head">
+            <span class="audio-no">CONSOL</span>
+            <div style="min-width:0">
+              <div class="audio-nm">The Consolidation Program</div>
+              <div class="audio-tag">four compounds &middot; indirect effect</div>
+            </div>
+          </div>
+          <div class="audio-desc">Mike walks through the most refined version of the routine: squats, pulldowns, deadlifts and dips, trained to failure and spaced for full recovery.</div>
+          <div class="audio-actions">
+            <button class="audio-play" data-audio-play="consolidation"><span class="ap-ico"><svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg></span><span>Play audio</span></button>
+          </div>
+          <div class="audio-src"><b>Source</b> &middot; Heavy Duty College &mdash; &ldquo;Consolidated Routine: Four Exercises&rdquo;</div>
+        </div>
+      </div>
+    </section>
+
   </main>
 </div>
 
@@ -870,6 +993,9 @@ input{transition:background .15s,border-color .15s,color .15s}
   </button>
   <button class="mnav" data-view="muscles">
     <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="4" r="2"/><path d="M8 21v-7l-2-3 2-3 4 2 4-2 2 3-2 3v7"/><path d="M8 14h8"/></svg>Map
+  </button>
+  <button class="mnav" data-view="audio">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>Audio
   </button>
   <button class="mnav is-add" id="mFab">+&nbsp;Session</button>
 </div>
@@ -1268,7 +1394,7 @@ var GUIDE_META = {
 };
 
 var MUSCLE_LABELS = {
-  chest:"Chest", front_delt:"Front Delts", side_delt:"Side Delts", biceps:"Biceps", forearm_front:"Forearms",
+  chest:"Chest", front_delt:"Front Delts", side_delt:"Side Delts", biceps:"Biceps", forearm_front:"Forearms", forearm_back:"Forearms",
   abs:"Abs", obliques:"Obliques", hip_flexors:"Hip Flexors", quads:"Quads", adductors:"Adductors", tibialis:"Tibialis",
   upper_traps:"Upper Traps", mid_traps:"Mid Traps", lats:"Lats", rear_delt:"Rear Delts", triceps:"Triceps",
   lower_back:"Lower Back", glute_max:"Glutes", glute_med:"Glute Medius", hamstrings:"Hamstrings", calves:"Calves"
@@ -1309,9 +1435,208 @@ var EXERCISE_MEDIA = {
   "dips": {url:"https://raw.githubusercontent.com/shahanbutt/exercises-dataset/main/videos/1767-K1vlode.gif", label:"Weighted triceps dip on parallel bars"},
   "leg-ext-hold": {url:"https://raw.githubusercontent.com/shahanbutt/exercises-dataset/main/videos/0585-my33uHU.gif", label:"Lever leg extension", note:"Use this as a movement reference; the static hold is performed at lockout."}
 };
+
+var CONSOLIDATION_ROUTINES = [
+  {id:"ca", no:"A", name:"SQUAT & PULL", tag:"LOW VOLUME / FULL BODY", exercises:[
+    {id:"squat", name:"Squat", target:"8\u201315 reps", unit:"lb"},
+    {id:"pulldown", name:"Close-Grip Palms-Up Pulldown", target:"6\u201310 reps", unit:"lb"}
+  ]},
+  {id:"cb", no:"B", name:"DEADLIFT & DIP", tag:"POSTERIOR / PRESS", exercises:[
+    {id:"deadlift", name:"Deadlift", target:"5\u20138 reps", unit:"lb"},
+    {id:"dips", name:"Parallel Dips", target:"6\u201310 reps", unit:"lb"}
+  ]}
+];
+var CONSOLIDATION_TECH = {
+  squat:{why:"A high-recruitment lower-body compound that trains the largest amount of muscle with one focused working set.",tempo:"2\u20134 sec up / 4\u20135 sec down",steps:["Set the bar securely across the upper back and brace before unracking.","Descend under control with knees tracking over the toes and the whole foot planted.","Reach a depth you can own without the lower back losing position.","Drive up smoothly; stop the set when another clean rep is impossible."],teach:"The movement is deliberately simple and demanding: one hard set, strict depth, and enough recovery to let strength rise before repeating it."},
+  pulldown:{why:"A close, palms-up pull trains the lats while placing the biceps in a strong mechanical position.",tempo:"2\u20134 sec pull / 4\u20135 sec return",steps:["Take a close underhand grip with palms facing you and sit tall.","Pull the bar toward the upper chest by driving the elbows down and back.","Pause briefly without leaning or swinging.","Return slowly to a full overhead stretch."],teach:"This replaces several smaller back and arm movements with one controlled compound pull that covers lats, upper back, and biceps together."},
+  deadlift:{why:"A full posterior-chain pull that loads the glutes, hamstrings, back, traps, and grip in one movement.",tempo:"2\u20134 sec up / 4\u20135 sec down",steps:["Set the bar over mid-foot, hinge to it, brace hard, and keep the spine neutral.","Push the floor away while keeping the bar close to the legs.","Stand tall by extending the hips; do not lean back at lockout.","Lower the bar under control and reset each rep."],teach:"Because the deadlift creates a large systemic demand, it stays at one hard set with a lower rep range and longer recovery."},
+  dips:{why:"A heavy upper-body compound for the chest, triceps, and front delts.",tempo:"2\u20134 sec up / 4\u20135 sec down",steps:["Brace on the parallel bars with shoulders packed and elbows softly unlocked.","Lower under control only as far as the shoulders stay comfortable.","Drive back up without bouncing or kicking.","Use assistance or controlled negatives if full reps are not yet stable."],teach:"Dips act as the pressing half of the program: one demanding set can cover several upper-body muscles without adding isolation work."}
+};
+var CONSOLIDATION_GUIDE_META = {
+  squat:{muscle:"legs",mistakes:["Losing the brace or letting the knees collapse inward.","Cutting depth short because the load is too heavy."],stop:"Use safeties or a rack. Stop if your back position or knee tracking changes."},
+  pulldown:{muscle:"back",mistakes:["Pulling behind the neck.","Leaning back and turning the movement into a row."],stop:"Stop before swinging or yanking the bar becomes necessary."},
+  deadlift:{muscle:"back",mistakes:["Starting with the bar away from the shins.","Rounding the back or jerking the bar from the floor."],stop:"Stop immediately if the spine loses neutral position or the bar drifts away."},
+  dips:{muscle:"arms",mistakes:["Dropping deeper than the shoulders can control.","Bouncing or kipping out of the bottom."],stop:"Stop for sharp shoulder or sternum pain; switch to assistance or negatives."}
+};
+var CONSOLIDATION_MUSCLE_MAP = {
+  squat:{primary:["quads","glute_max"],secondary:["hamstrings","adductors","lower_back"]},
+  pulldown:{primary:["lats"],secondary:["biceps","rear_delt"]},
+  deadlift:{primary:["hamstrings","glute_max","lower_back"],secondary:["lats","upper_traps","forearm_back"]},
+  dips:{primary:["chest","triceps"],secondary:["front_delt"]}
+};
+var CONSOLIDATION_MEDIA = {
+  squat:{url:"https://raw.githubusercontent.com/shahanbutt/exercises-dataset/main/videos/0043-qXTaZnJ.gif",label:"Barbell full squat"},
+  pulldown:{url:"https://raw.githubusercontent.com/shahanbutt/exercises-dataset/main/videos/0673-ecpY0rH.gif",label:"Reverse-grip machine lat pulldown",note:"Palms-facing-you reference for the close-grip pull."},
+  deadlift:{url:"https://raw.githubusercontent.com/shahanbutt/exercises-dataset/main/videos/0032-ila4NZS.gif",label:"Barbell deadlift"},
+  dips:{url:"https://raw.githubusercontent.com/shahanbutt/exercises-dataset/main/videos/1767-K1vlode.gif",label:"Weighted triceps dip on parallel bars"}
+};
+var IDEAL_ROUTINES = ROUTINES;
+var IDEAL_TECH = TECH;
+var IDEAL_GUIDE_META = GUIDE_META;
+var IDEAL_MUSCLE_MAP = MUSCLE_MAP;
+var IDEAL_EXERCISE_MEDIA = EXERCISE_MEDIA;
+var activeProgram = "ideal";
+var PROGRAMS = {
+  ideal:{id:"ideal",label:"Ideal Routine",shortLabel:"Ideal",routines:IDEAL_ROUTINES,tech:IDEAL_TECH,guideMeta:IDEAL_GUIDE_META,muscleMap:IDEAL_MUSCLE_MAP,media:IDEAL_EXERCISE_MEDIA,recovery:"Every 4 days to start; add rest as strength and recovery require."},
+  consolidation:{id:"consolidation",label:"Consolidation Program",shortLabel:"Consolidation",routines:CONSOLIDATION_ROUTINES,tech:CONSOLIDATION_TECH,guideMeta:CONSOLIDATION_GUIDE_META,muscleMap:CONSOLIDATION_MUSCLE_MAP,media:CONSOLIDATION_MEDIA,recovery:"Alternate A and B every 5\u201310 days; repeat only when strength has recovered."}
+};
+
+var AUDIO_TRACKS = {
+  ideal:{vid:"vJbeAqnN5zQ", start:0, title:"Mike Mentzer: The Ideal Routine", prog:"Ideal Routine"},
+  consolidation:{vid:"quGsdhWWmrM", start:0, title:"Mike Mentzer's Consolidated Routine: Four Exercises", prog:"Consolidation Program"}
+};
+var audioPlayer = null;
+var audioApiLoaded = false;
+var audioCurrent = null;
+var audioQueued = null;
+
+function ensureYoutubeApi(){
+  if(audioApiLoaded || window.YT && window.YT.Player) { audioApiLoaded = true; return; }
+  var s = document.createElement("script");
+  s.src = "https://www.youtube.com/iframe_api";
+  document.head.appendChild(s);
+  window.onYouTubeIframeAPIReady = function(){
+    audioApiLoaded = true;
+    if(audioQueued){ var q=audioQueued; audioQueued=null; playAudio(q); }
+  };
+}
+
+function audioIcon(play){
+  return play
+    ? '<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>'
+    : '<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>';
+}
+function audioStopIcon(){
+  return '<svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true"><path d="M6.4 6.4l11.2 11.2-1.4 1.4L5 7.8zM17.6 6.4L6.4 17.6 5 16.2 16.2 5z"/></svg>';
+}
+
+function audioSyncUI(){
+  var playing = audioPlayer && audioCurrent && audioPlayer.getPlayerState && audioPlayer.getPlayerState()===1;
+  qsa(".audio-play").forEach(function(b){
+    var on = b.getAttribute("data-audio-play")===audioCurrent;
+    b.classList.toggle("is-on", on);
+    b.querySelector(".ap-ico").innerHTML = on && playing ? audioIcon(false) : audioIcon(true);
+    b.querySelector("span:nth-child(2)").textContent = on && playing ? "Pause audio" : (on ? "Resume audio" : "Play audio");
+  });
+  var bar = qs("#audioBar");
+  var show = !!audioCurrent;
+  bar.classList.toggle("is-on", show);
+  bar.setAttribute("aria-hidden", show ? "false" : "true");
+  bar.classList.toggle("is-paused", !!audioCurrent && !playing);
+  qs("#audioBarTitle").textContent = audioCurrent ? AUDIO_TRACKS[audioCurrent].title : "—";
+  qs("#audioBarProg").textContent = audioCurrent ? AUDIO_TRACKS[audioCurrent].prog : "—";
+  qs("#audioBarToggle").innerHTML = audioCurrent && playing ? audioIcon(false) : audioIcon(true);
+}
+
+function playAudio(prog){
+  var track = AUDIO_TRACKS[prog];
+  if(!track) return;
+  if(!window.YT || !window.YT.Player){
+    audioQueued = prog;
+    ensureYoutubeApi();
+    return;
+  }
+  if(!audioPlayer){
+    audioPlayer = new YT.Player(qs("#audioStage"), {
+      videoId: track.vid,
+      playerVars: { start: track.start, playsinline: 1, rel: 0 },
+      events: {
+        onStateChange: function(){ audioSyncUI(); },
+        onError: function(){ audioCurrent=null; audioSyncUI(); toast("Audio unavailable"); }
+      }
+    });
+    audioCurrent = prog;
+    audioSyncUI();
+    return;
+  }
+  if(audioCurrent === prog){
+    var st = audioPlayer.getPlayerState ? audioPlayer.getPlayerState() : -1;
+    if(st===1) audioPlayer.pauseVideo();
+    else audioPlayer.playVideo();
+    audioSyncUI();
+    return;
+  }
+  audioCurrent = prog;
+  audioPlayer.loadVideoById({videoId:track.vid, startSeconds:track.start});
+  audioPlayer.playVideo();
+  audioSyncUI();
+}
+
+function stopAudio(){
+  if(!audioPlayer) return;
+  audioPlayer.pauseVideo();
+  audioCurrent = null;
+  audioSyncUI();
+}
+
+function renderAudio(){
+  ensureYoutubeApi();
+  qs("#auMeta").innerHTML =
+    '<span class="lab">Audio tracks</span>'+
+    '<span class="val">2 SESSIONS</span>'+
+    '<span class="sub">audio keeps playing while you browse</span>';
+  var idealCard = qs("#auIdeal");
+  var consolCard = qs("#auConsol");
+  if(activeProgram==="ideal"){ idealCard.classList.add("is-current"); consolCard.classList.remove("is-current"); }
+  else { consolCard.classList.add("is-current"); idealCard.classList.remove("is-current"); }
+  audioSyncUI();
+}
+
+function rebuildProgram(id){
+  var p = PROGRAMS[id] || PROGRAMS.ideal;
+  activeProgram = p.id;
+  ROUTINES = p.routines;
+  TECH = p.tech;
+  GUIDE_META = p.guideMeta;
+  MUSCLE_MAP = p.muscleMap;
+  EXERCISE_MEDIA = p.media;
+  routineById = {};
+  exIndex = {};
+  ROUTINES.forEach(function(r){
+    routineById[r.id] = r;
+    r.exercises.forEach(function(e){
+      if(exIndex[e.id]){ exIndex[e.id].days.push(r.id); return; }
+      exIndex[e.id] = {id:e.id,name:e.name,target:e.target,unit:e.unit,time:!!e.time,day:r.id,days:[r.id]};
+    });
+  });
+  guideOrd = {};
+  Object.keys(exIndex).forEach(function(exId, i){ guideOrd[exId] = i; });
+  guideDayFilter = "all";
+  guideMuscleFilter = "all";
+  guideSearch = "";
+  liftDayFilter = "all";
+  liftSearch = "";
+  muscleMapDay = ROUTINES[0].id;
+  muscleMapExercise = "all";
+  if(qs("#programSwitch")) qsa("[data-program]", qs("#programSwitch")).forEach(function(b){ b.classList.toggle("is-on", b.getAttribute("data-program")===activeProgram); });
+  renderProgramControls();
+}
+
+function setProgram(id){
+  if(!PROGRAMS[id] || id===activeProgram) return;
+  rebuildProgram(id);
+  state.program = activeProgram;
+  persist(state);
+  renderAll();
+  if(currentView==="guide") renderGuide();
+  if(currentView==="muscles") renderMuscleMap();
+  updateMeta();
+  toast(PROGRAMS[id].label+" active");
+}
+
+function renderProgramControls(){
+  if(qs("#liftDayFilters")){
+    qs("#liftDayFilters").innerHTML = '<button class="chip is-on" data-day="all">All Lifts</button>'+ROUTINES.map(function(r){ return '<button class="chip" data-day="'+r.id+'">Day '+r.no+'</button>'; }).join("");
+    qsa("#liftDayFilters .chip").forEach(function(c){ c.addEventListener("click", function(){ liftDayFilter=c.getAttribute("data-day"); qsa("#liftDayFilters .chip").forEach(function(x){ x.classList.toggle("is-on",x===c); }); renderLifts(); }); });
+  }
+  if(qs("#guideDayFilters")){
+    qs("#guideDayFilters").innerHTML = '<span class="guide-filter-label">Day</span><button class="guide-chip is-on" data-guide-day="all">All</button>'+ROUTINES.map(function(r){ return '<button class="guide-chip" data-guide-day="'+r.id+'">'+r.no+'</button>'; }).join("");
+    qsa("#guideDayFilters [data-guide-day]").forEach(function(b){ b.addEventListener("click", function(){ guideDayFilter=b.getAttribute("data-guide-day"); qsa("#guideDayFilters [data-guide-day]").forEach(function(x){ x.classList.toggle("is-on",x===b); }); renderGuide(); }); });
+  }
+}
 var MUSCLE_SVG_GROUPS = {
   chest:["upper-pectoralis","mid-lower-pectoralis"], front_delt:["anterior-deltoid"], side_delt:["lateral-deltoid"],
-  biceps:["long-head-bicep","short-head-bicep"], forearm_front:["wrist-flexors","wrist-extensors"], abs:["upper-abdominals","lower-abdominals"],
+  biceps:["long-head-bicep","short-head-bicep"], forearm_front:["wrist-flexors","wrist-extensors"], forearm_back:["wrist-extensors"], abs:["upper-abdominals","lower-abdominals"],
   obliques:["obliques"], quads:["outer-quadricep","rectus-femoris","inner-quadricep"], tibialis:["tibialis"],
   upper_traps:["upper-trapezius"], mid_traps:["traps-middle","lower-trapezius"], lats:["lats"], rear_delt:["posterior-deltoid"],
   triceps:["long-head-triceps","lateral-head-triceps","medial-head-triceps"], lower_back:["lowerback"], glute_max:["gluteus-maximus"],
@@ -1350,19 +1675,32 @@ var KEY = "ironlog.v1";
 var state = null;
 
 function loadSeed(){
-  return SEED.map(function(s){ return {id:s.id, date:s.date, day:s.day, est:!!s.est, note:s.note||"", lifts:s.lifts.map(function(l){
+  return SEED.map(function(s){ return {id:s.id, date:s.date, day:s.day, program:"ideal", est:!!s.est, note:s.note||"", lifts:s.lifts.map(function(l){
     if(Array.isArray(l)) return {ex:l[0], w:l[1], r:l[2], n:typeof l[3]==="string"?l[3]:(l[3]?"Press":"")};
     return null;
   }).filter(Boolean)}; });
 }
+function normalizeSession(s){
+  if(s && s.program==null) s.program = "ideal";
+  return s;
+}
 function load(){
   try{
     var raw = localStorage.getItem(KEY);
-    if(raw){ var parsed = JSON.parse(raw); if(parsed && parsed.sessions){ parsed.name = parsed.name||""; return parsed; } }
+    if(raw){ var parsed = JSON.parse(raw); if(parsed && parsed.sessions){
+      parsed.name = parsed.name||"";
+      if(parsed.program==null) parsed.program = "ideal";
+      parsed.sessions.forEach(normalizeSession);
+      return parsed;
+    } }
   }catch(e){}
-  var s = {sessions: loadSeed(), name:""};
+  var s = {sessions: loadSeed(), name:"", program:"ideal"};
   persist(s);
   return s;
+}
+function sessionsFor(program){
+  var p = program || activeProgram || "ideal";
+  return state.sessions.filter(function(s){ return (s.program||"ideal")===p; });
 }
 function persist(s){
   try{ localStorage.setItem(KEY, JSON.stringify(s)); }catch(e){}
@@ -1383,11 +1721,13 @@ function addDays(d, n){ var p = parseD(d); p.setDate(p.getDate()+n); return p.ge
 function daysSince(dateStr){ return Math.floor((Date.now()-parseD(dateStr).getTime())/86400000); }
 function latestSession(){
   var latest = null;
-  state.sessions.forEach(function(s){ if(!latest || s.date>latest.date) latest=s; });
+  sessionsFor().forEach(function(s){ if(!latest || s.date>latest.date) latest=s; });
   return latest;
 }
 function nicer(v){ return (Math.round(v*10)/10).toString(); }
 function rounded(v){ return Math.round(v*10)/10; }
+function riseCls(){ return entranceDone ? "" : "rise"; }
+function riseDelay(ms){ return entranceDone ? "" : " style=\"animation-delay:"+ms+"ms\""; }
 
 function liftInSession(session, exId){
   for(var i=0;i<session.lifts.length;i++){ if(session.lifts[i].ex===exId) return session.lifts[i]; }
@@ -1643,6 +1983,7 @@ var tabGlassTimer = null;
 var guideDayFilter = "all";
 var guideMuscleFilter = "all";
 var guideSearch = "";
+var entranceDone = false;
 
 function e1rm(w, r){
   var rr = Number(r); if(isNaN(rr) || rr==null) rr = 0;
@@ -1696,7 +2037,7 @@ function srTip(pt){
 }
 
 function renderStrength(){
-  var s = state.sessions;
+  var s = sessionsFor();
   var series = {};
 
   Object.keys(exIndex).forEach(function(ex){
@@ -1763,7 +2104,7 @@ function renderStrength(){
     return exIndex[a].name.localeCompare(exIndex[b].name);
   }).map(function(ex, i){
     var e = exIndex[ex], d = diffE(series[ex]);
-    return '<article class="sr-card rise" style="animation-delay:'+(i*40)+'ms">'+
+    return '<article class="sr-card '+riseCls()+'"'+riseDelay(i*40)+'>'+
       '<div class="sr-top">'+
         '<span class="sr-no">'+dayNo(e.day)+"</span>"+
         '<span class="sr-nm">'+esc(e.name.toUpperCase())+"</span>"+
@@ -1800,12 +2141,13 @@ function renderMuscleMap(){
   var stateMap = muscleMapState();
   var activeCount = stateMap.primary.length+stateMap.secondary.length;
   qs("#mmMeta").innerHTML = '<span class="lab">Muscle coverage</span><span class="val">'+activeCount+' GROUPS ACTIVE</span><span class="sub">primary + secondary activation</span>';
-  qs("#mmTitle").innerHTML = selected ? esc(selected.name) : "Day "+routine.no+" &mdash; "+esc(routine.name);
-  qs("#mmMode").textContent = selected ? "EXERCISE DETAIL" : "DAY OVERVIEW";
-  qs("#mmSelection").textContent = selected ? "Selected movement" : "Day "+routine.no;
+  var unit = activeProgram==="consolidation" ? "Workout" : "Day";
+  qs("#mmTitle").innerHTML = selected ? esc(selected.name) : unit+" "+routine.no+" &mdash; "+esc(routine.name);
+  qs("#mmMode").textContent = selected ? "EXERCISE DETAIL" : "WORKOUT OVERVIEW";
+  qs("#mmSelection").textContent = selected ? "Selected movement" : unit+" "+routine.no;
   qs("#mmCount").textContent = activeCount+" MUSCLES";
-  qs("#mmDays").innerHTML = ROUTINES.map(function(r){ return '<button class="map-day-tab'+(r.id===muscleMapDay?" is-on":"")+'" data-map-day="'+r.id+'">DAY '+r.no+'</button>'; }).join("");
-  var exs = '<button class="map-exercise'+(muscleMapExercise==="all"?" is-on":"")+'" data-map-ex="all"><span class="dot"></span>All movements in Day '+routine.no+'</button>';
+  qs("#mmDays").innerHTML = ROUTINES.map(function(r){ return '<button class="map-day-tab'+(r.id===muscleMapDay?" is-on":"")+'" data-map-day="'+r.id+'">'+unit+' '+r.no+'</button>'; }).join("");
+  var exs = '<button class="map-exercise'+(muscleMapExercise==="all"?" is-on":"")+'" data-map-ex="all"><span class="dot"></span>All movements in '+unit+' '+routine.no+'</button>';
   routine.exercises.forEach(function(ex){
     exs += '<button class="map-exercise'+(muscleMapExercise===ex.id?" is-on":"")+'" data-map-ex="'+ex.id+'"><span class="dot"></span>'+esc(ex.name)+"</button>";
   });
@@ -1846,7 +2188,7 @@ function renderGuide(){
       var tags = '<span class="guide-tag'+(ex.ss?" ss":"")+'">'+(t&&t.ss?"SUPERSET "+esc(t.ss):"SOLO")+'</span>'+
         '<span class="guide-tag">'+esc(ex.target)+"</span>"+
         (t&&t.tempo?'<span class="guide-tag">TEMPO '+esc(t.tempo)+"</span>":"");
-      cards += '<button class="guide-card rise" style="animation-delay:'+indexOfGuide(ex.id)*40+'ms" data-ex="'+ex.id+'">'+
+      cards += '<button class="guide-card '+riseCls()+'"'+riseDelay(indexOfGuide(ex.id)*40)+' data-ex="'+ex.id+'">'+
         '<div class="guide-top">'+
           '<span class="guide-no">'+dayNoFor(ex.id)+"</span>"+
           '<div style="min-width:0"><div class="guide-nm">'+esc(ex.name)+"</div></div>"+
@@ -1871,6 +2213,10 @@ function renderGuide(){
     '<span class="lab">Guide view</span>'+
     '<span class="val">'+(visible===totalCards?total:""+visible)+(visible===totalCards?" MOVEMENTS":" SHOWN")+'</span>'+
     '<span class="sub">'+total+' unique exercises &middot; '+withTech+' with full form</span>';
+  if(qs("#guideIdx")){
+    qs("#guideIdx").textContent = activeProgram==="consolidation" ? "CONSOLIDATION" : "IDEAL ROUTINE";
+    qs("#guideTitle").textContent = activeProgram==="consolidation" ? "Consolidation Program &mdash; four compounds" : "Ideal Routine &mdash; how each lift is done";
+  }
   qs("#gdList").innerHTML = html || '<div class="empty">No movements match those filters</div>';
   qsa("#gdList .guide-card").forEach(function(c){
     c.addEventListener("click", function(){ openGuideDetail(c.getAttribute("data-ex")); });
@@ -1944,9 +2290,10 @@ function goView(name){
   if(name==="strength") renderStrength();
   if(name==="guide") renderGuide();
   if(name==="muscles") renderMuscleMap();
+  if(name==="audio") renderAudio();
 }
 
-function renderAll(){ renderOverview(); renderLifts(); renderSessions(); updateMeta(); renderName(); renderStrength(); }
+function renderAll(){ renderOverview(); renderLifts(); renderSessions(); updateMeta(); renderName(); renderStrength(); renderAudio(); }
 
 function renderName(){
   var n = state.name||"";
@@ -1955,7 +2302,8 @@ function renderName(){
 }
 
 function updateMeta(){
-  var last = state.sessions[state.sessions.length-1];
+  var sl = sessionsFor();
+  var last = sl[sl.length-1];
   var d = new Date();
   var dt = d.toLocaleDateString("en-US",{weekday:"long", year:"numeric", month:"long", day:"numeric"});
   qs("#railDate").innerHTML = "TODAY<br><b>"+esc(dt.toUpperCase())+"</b><br><br>LAST LOG<br><b>"+(last?esc(fmtDYear(last.date)):"—")+"</b>";
@@ -1963,17 +2311,18 @@ function updateMeta(){
 }
 
 function renderOverview(){
-  var s = state.sessions;
+  var s = sessionsFor();
   var last = s[s.length-1];
   var hasS = s.length>0;
-  var nm = state.name? esc(state.name)+" &middot; 4-DAY SPLIT" : "4-DAY SPLIT";
+  var progLabel = PROGRAMS[activeProgram].label.toUpperCase();
+  var nm = state.name? esc(state.name)+" &middot; "+progLabel : progLabel;
   var edit = hasS
     ? '<button class="meta-edit" id="ovNameBtn" aria-label="Rename">&#9998;</button>'
     : '<button class="meta-edit hero" id="ovNameBtn">Enter a name to start &rarr;</button>';
   qs("#ovMeta").innerHTML =
     '<span class="lab">Profile</span>'+
     '<span class="val">'+nm+edit+'</span>'+
-    '<span class="sub">'+(hasS? "Every 5\u20137 days &middot; no streaks required" : "Name this device \u2014 each phone keeps its own ledger")+'</span>'+
+    '<span class="sub">'+(hasS? "Recovery-driven &middot; no streaks required" : "Name this device \u2014 each phone keeps its own ledger")+'</span>'+
     '<span class="lab" style="margin-top:10px;color:var(--accent)">Last session</span>'+
     '<span class="val" style="font-family:var(--font-display);font-size:22px">'+(last?esc(fmtDYear(last.date)):"—")+'</span>'+
     '<span class="sub">'+(last?esc(routineById[last.day].name):"")+"</span>";
@@ -1988,29 +2337,42 @@ function renderOverview(){
     }
   });
 
-  var lpPts = pointsFor("leg-press","w",s);
-  var lePts = pointsFor("leg-ext","w",s);
-  var lpShow = lpPts.length? Math.max.apply(null,lpPts.map(function(p){return p.v;}))+" LB": "—";
-  var leShow = lePts.length? Math.max.apply(null,lePts.map(function(p){return p.v;}))+" LB": "—";
+  var topEx = [];
+  ROUTINES.forEach(function(r){ r.exercises.forEach(function(ex){
+    if(exIndex[ex.id] && exIndex[ex.id].unit!=="bw") topEx.push(ex.id);
+  }); });
+  var exCounts = {};
+  s.forEach(function(ses){ ses.lifts.forEach(function(l){ if(topEx.indexOf(l.ex)!==-1) exCounts[l.ex]=(exCounts[l.ex]||0)+1; }); });
+  var ranked = topEx.sort(function(a,b){ return (exCounts[b]||0)-(exCounts[a]||0); });
+  var pr1 = ranked[0], pr2 = ranked[1];
+  var pr1Pts = pr1? pointsFor(pr1,"w",s) : [];
+  var pr2Pts = pr2? pointsFor(pr2,"w",s) : [];
+  var pr1Show = pr1Pts.length? Math.max.apply(null,pr1Pts.map(function(p){return p.v;}))+" LB": "—";
+  var pr2Show = pr2Pts.length? Math.max.apply(null,pr2Pts.map(function(p){return p.v;}))+" LB": "—";
+  var pr1Name = pr1? exIndex[pr1].name.toUpperCase().slice(0,14): "—";
+  var pr2Name = pr2? exIndex[pr2].name.toUpperCase().slice(0,14): "—";
 
   qs("#ovStats").innerHTML =
     stat("SESSIONS LOGGED", s.length, "", "since "+(s.length?esc(fmtDYear(s[0].date)):"—"))+
     stat("LIFTS AT ALL-TIME PR", atPB, "", "current strength = your best")+
-    stat("LEG PRESS PR", lpShow, "", "started at "+(lpPts.length&&lpPts[0]?nicer(lpPts[0].v)+" LB":"—"))+
-    stat("LEG EXT PR", leShow, "", "started at "+(lePts.length&&lePts[0]?nicer(lePts[0].v)+" LB":"—"));
+    stat(pr1Name+" PR", pr1Show, "", "top tracked lift")+
+    stat(pr2Name+" PR", pr2Show, "", "second most logged");
 
   var recent = latestSession();
   var readiness = qs("#ovReadiness");
   if(!recent){
     readiness.className = "readiness";
-    readiness.innerHTML = '<span class="readiness-mark">01</span><div class="readiness-copy"><b>Ready when you are</b><span>Start with Day I. One focused session is enough to begin building your ledger.</span></div><button class="readiness-action">Log Day I &rarr;</button>';
+    var first = ROUTINES[0];
+    readiness.innerHTML = '<span class="readiness-mark">01</span><div class="readiness-copy"><b>Ready when you are</b><span>Start with '+(activeProgram==="consolidation"?"Workout "+first.no+" &mdash; "+esc(first.name):"Day I")+'. One focused session is enough to begin building your ledger.</span></div><button class="readiness-action">Log '+(activeProgram==="consolidation"?"Workout "+first.no+" &rarr;":"Day I &rarr;")+'</button>';
   } else {
     var age = Math.max(0, daysSince(recent.date));
     var recentIdx = ROUTINES.findIndex(function(r){ return r.id===recent.day; });
+    if(recentIdx<0) recentIdx = 0;
     var next = ROUTINES[(recentIdx+1+ROUTINES.length)%ROUTINES.length];
-    var resting = age<4;
+    var minRest = activeProgram==="consolidation" ? 5 : 4;
+    var resting = age<minRest;
     readiness.className = "readiness"+(resting?" is-resting":"");
-    readiness.innerHTML = '<span class="readiness-mark">'+(resting?"REST":"GO")+'</span><div class="readiness-copy"><b>'+(resting?"Recover before the next session":"Ready for the next session")+'</b><span>'+(resting?"Day "+next.no+" follows Day "+routineById[recent.day].no+". Give the work room to recover; check back in "+(4-age)+" day"+((4-age)===1?"":"s")+".":"Next up: Day "+next.no+" &mdash; "+esc(next.name)+". Log the session when strength feels recovered.")+'</span></div><button class="readiness-action">Log session &rarr;</button>';
+    readiness.innerHTML = '<span class="readiness-mark">'+(resting?"REST":"GO")+'</span><div class="readiness-copy"><b>'+(resting?"Recover before the next session":"Ready for the next session")+'</b><span>'+(resting?"Workout "+next.no+" follows Workout "+routineById[recent.day].no+". Give the work room to recover; check back in "+(minRest-age)+" day"+((minRest-age)===1?"":"s")+".":"Next up: Workout "+next.no+" &mdash; "+esc(next.name)+". Log the session when strength feels recovered.")+'</span></div><button class="readiness-action">Log session &rarr;</button>';
   }
   qs("#ovReadiness .readiness-action").addEventListener("click", function(){ openLogModal(); });
 
@@ -2039,7 +2401,7 @@ function renderOverview(){
     var when = lastDay? fmtDYear(lastDay.date): "never";
     var since = lastDay? daysSince(lastDay.date) : null;
     var sinceTxt = since===null? "—" : since<=0? "TODAY" : since+"D";
-    html += '<div class="day-card rise" style="animation-delay:'+(ri*80)+'ms" data-day="'+r.id+'">'+
+    html += '<div class="day-card '+riseCls()+'"'+riseDelay(ri*80)+' data-day="'+r.id+'">'+
       '<div class="card-top">'+
         '<span class="day-no">DAY '+r.no+"</span>"+
         '<div><div class="day-name">'+esc(r.name)+'</div><div class="day-tag">'+esc(r.tag)+" &middot; last: "+esc(when)+'</div></div>'+
@@ -2060,7 +2422,7 @@ function renderOverview(){
   qsa("#ovCards .day-card").forEach(function(c){
     c.addEventListener("click", function(){
       liftDayFilter = c.getAttribute("data-day");
-      qsa("#view-lifts .chip").forEach(function(ch){ ch.classList.toggle("is-on", ch.getAttribute("data-day")===liftDayFilter); });
+      qsa("#liftDayFilters .chip").forEach(function(ch){ ch.classList.toggle("is-on", ch.getAttribute("data-day")===liftDayFilter); });
       goView("lifts");
     });
   });
@@ -2075,7 +2437,7 @@ function renderLifts(){
   qs("#lfMeta").innerHTML =
     '<span class="lab">Tracked lifts</span>'+
     '<span class="val">'+total+' EXERCISES</span>'+
-    '<span class="sub">tap a card for full history</span>';
+    '<span class="sub">tap a card for full history &middot; '+esc(PROGRAMS[activeProgram].shortLabel)+'</span>';
 
   var ids;
   if(liftDayFilter==="all"){
@@ -2088,7 +2450,7 @@ function renderLifts(){
   if(q) ids = ids.filter(function(id){ return exIndex[id].name.toLowerCase().indexOf(q)!==-1; });
 
   var html = "";
-  var s = state.sessions;
+  var s = sessionsFor();
   ids.forEach(function(id, i){
     var e = exIndex[id];
     var ptsS = strengthFor(id,s);
@@ -2096,7 +2458,7 @@ function renderLifts(){
     var maxV = ptsS.length? Math.max.apply(null, ptsS.map(function(p){return p.v;})): null;
     var best = latest && maxV!==null ? ptsS.filter(function(p){return p.v===maxV;}).pop() : null;
     var atPR = latest && maxV!==null && latest.v===maxV;
-    html += '<article class="lift-card rise" style="animation-delay:'+(i*40)+'ms" data-ex="'+id+'">'+
+    html += '<article class="lift-card '+riseCls()+'"'+riseDelay(i*40)+' data-ex="'+id+'">'+
       '<div class="lift-head">'+
         '<span class="no">'+(e.days.length>1? e.days.map(dayNo).join(" / "): dayNo(e.day))+'</span>'+
         '<div style="min-width:0"><div class="lift-name">'+esc(e.name)+'</div>'+
@@ -2120,7 +2482,7 @@ function renderLifts(){
   });
 }
 function renderSessions(){
-  var s = state.sessions.slice().sort(function(a,b){ return a.date<b.date?1:a.date>b.date?-1:0; });
+  var s = sessionsFor().slice().sort(function(a,b){ return a.date<b.date?1:a.date>b.date?-1:0; });
   qs("#ssCount").innerHTML = s.length+" SESSIONS &middot; NEWEST FIRST";
   qs("#ssMeta").innerHTML =
     '<span class="lab">Span</span>'+
@@ -2128,6 +2490,7 @@ function renderSessions(){
     '<span class="sub">'+(s.length? s.length+" logged workouts":"")+"</span>";
 
   var html = "";
+  var seshUnit = activeProgram==="consolidation" ? "WORKOUT" : "DAY";
   s.forEach(function(ses){
     var r = routineById[ses.day];
     var lifts = "";
@@ -2141,7 +2504,7 @@ function renderSessions(){
       '<div class="sesh-head">'+
         '<div class="sesh-date"><span class="m">'+pd.toLocaleDateString("en-US",{month:"short"}).toUpperCase()+'</span>'+
           '<span class="d">'+pd.getDate()+'</span><span class="y">\u2019'+String(pd.getFullYear()).slice(2)+'</span></div>'+
-        '<div class="sesh-day">DAY '+r.no+' &middot; '+esc(r.name)+(ses.est?'<span class="estim-badge"><span class="dot"></span><span class="tip">Approximate date \u2014 early entries had none, placed at cadence</span></span>':"")+
+        '<div class="sesh-day">'+seshUnit+' '+r.no+' &middot; '+esc(r.name)+(ses.est?'<span class="estim-badge"><span class="dot"></span><span class="tip">Approximate date \u2014 early entries had none, placed at cadence</span></span>':"")+
           (ses.note?'<small>'+esc(ses.note)+"</small>":"")+'</div>'+
         '<div class="sesh-actions">'+
           '<button class="sesh-btn" data-edit>EDIT</button>'+
@@ -2184,7 +2547,7 @@ function openDetail(exId){
   var r = routineById[e.day];
   qs("#detSub").textContent = "DAY "+r.no+" \u2014 "+r.name+" \u00b7 TARGET "+e.target;
 
-  var s = state.sessions;
+  var s = sessionsFor();
   var ptsW = pointsFor(exId,"w",s);
   var maxW = ptsW.length? Math.max.apply(null, ptsW.map(function(p){return p.v;})) : null;
   var maxR = null;
@@ -2286,17 +2649,19 @@ function openLogModal(sessionId){
   openModal("logModal");
 }
 function logRoutinePref(){
-  var last = state.sessions[state.sessions.length-1];
-  if(!last) return "d1";
-  var order = ["d1","d2","d3","d4"];
+  var sl = sessionsFor();
+  var last = sl[sl.length-1];
+  if(!last) return ROUTINES[0].id;
+  var order = ROUTINES.map(function(r){ return r.id; });
   var idx = order.indexOf(last.day);
   return order[(idx+1)%order.length];
 }
 function renderDaysTab(){
   var html = "";
+  var unit = activeProgram==="consolidation" ? "WORKOUT" : "DAY";
   ROUTINES.forEach(function(r){
     html += '<button class="day-tab'+(r.id===logDay?" is-on":"")+'" data-d="'+r.id+'">'+
-      '<div class="dt-no">DAY '+r.no+"</div><div class=\"dt-name\">"+esc(r.name)+"</div></button>";
+      '<div class="dt-no">'+unit+' '+r.no+"</div><div class=\"dt-name\">"+esc(r.name)+"</div></button>";
   });
   qs("#daysTab").innerHTML = html;
   qsa("#daysTab .day-tab").forEach(function(b){
@@ -2304,9 +2669,9 @@ function renderDaysTab(){
   });
 }
 function lastLift(exId){
-  var s = state.sessions;
-  for(var i=s.length-1;i>=0;i--){
-    var l = liftInSession(s[i], exId);
+  var sl = sessionsFor();
+  for(var i=sl.length-1;i>=0;i--){
+    var l = liftInSession(sl[i], exId);
     if(l) return l;
   }
   return null;
@@ -2360,7 +2725,7 @@ function saveSession(){
   if(!date){ toast("Pick a date"); qs("#logDate").focus(); return; }
   var lifts = collectLifts();
   if(!lifts.length){ toast("Enter at least one lift"); return; }
-  var session = {id: editId || "x"+Date.now(), date:date, day:logDay, est:false, note:"", lifts:lifts};
+  var session = {id: editId || "x"+Date.now(), date:date, day:logDay, program:activeProgram, est:false, note:"", lifts:lifts};
   if(editId){
     state.sessions = state.sessions.map(function(x){ return x.id===editId? session : x; });
   } else {
@@ -2403,7 +2768,8 @@ function importData(file){
       var parsed = JSON.parse(fr.result);
       var arr = parsed && parsed.sessions ? parsed.sessions : parsed;
       if(!Array.isArray(arr) || !arr.length || !arr[0].lifts){ toast("Not a valid backup"); return; }
-      state = {sessions: arr, name: state.name||""};
+      arr.forEach(normalizeSession);
+      state = {sessions: arr, name: state.name||"", program: activeProgram};
       sortSessions(); persist(state); renderAll();
       toast("Backup imported");
     }catch(e){ toast("Import failed"); }
@@ -2420,7 +2786,7 @@ function openClearModal(){
 }
 function clearAll(){
   try{ localStorage.removeItem(KEY); }catch(e){}
-  state = {sessions: [], name: ""};
+  state = {sessions: [], name: "", program: activeProgram};
   persist(state);
   renderAll();
   closeModal("clearModal");
@@ -2438,6 +2804,9 @@ function saveName(){
   closeModal("nameModal");
 }
 function bindGlobal(){
+  qsa(".audio-play").forEach(function(b){ b.addEventListener("click", function(){ playAudio(b.getAttribute("data-audio-play")); }); });
+  qs("#audioBarToggle").addEventListener("click", function(){ if(audioCurrent) playAudio(audioCurrent); });
+  qs("#audioBarStop").addEventListener("click", stopAudio);
   qs("#exportBtn").addEventListener("click", exportData);
   qs("#importBtn").addEventListener("click", function(){ qs("#importFile").click(); });
   qs("#importFile").addEventListener("change", function(){
@@ -2472,25 +2841,14 @@ function bindGlobal(){
   });
   qs("#fab").addEventListener("click", function(){ openLogModal(); });
 
-  qsa("#view-lifts .chip").forEach(function(c){
-    c.addEventListener("click", function(){
-      liftDayFilter = c.getAttribute("data-day");
-      qsa("#view-lifts .chip").forEach(function(x){ x.classList.toggle("is-on", x===c); });
-      renderLifts();
-    });
+  qsa("[data-program]", qs("#programSwitch")).forEach(function(b){
+    b.addEventListener("click", function(){ setProgram(b.getAttribute("data-program")); });
   });
   qs("#liftSearch").addEventListener("input", function(){
     liftSearch = qs("#liftSearch").value;
     renderLifts();
   });
 
-  qsa("[data-guide-day]").forEach(function(b){
-    b.addEventListener("click", function(){
-      guideDayFilter = b.getAttribute("data-guide-day");
-      qsa("[data-guide-day]").forEach(function(x){ x.classList.toggle("is-on", x===b); });
-      renderGuide();
-    });
-  });
   qsa("[data-guide-muscle]").forEach(function(b){
     b.addEventListener("click", function(){
       guideMuscleFilter = b.getAttribute("data-guide-muscle");
@@ -2522,13 +2880,16 @@ function bindGlobal(){
 (function init(){
   state = load();
   sortSessions();
+  rebuildProgram(state.program || "ideal");
   bindGlobal();
+  renderProgramControls();
   if("serviceWorker" in navigator && /^https?:$/.test(location.protocol)){
     navigator.serviceWorker.register("./sw.js").catch(function(){});
   }
   updateMeta();
   renderOverview();
   renderName();
+  entranceDone = true;
 })();
 </script>
 </body>

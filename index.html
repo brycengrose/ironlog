@@ -12,7 +12,7 @@
 <meta name="apple-mobile-web-app-title" content="IronLog">
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="icon" type="image/png" href="./icon-192.png" sizes="192x192">
-<link rel="apple-touch-icon" href="./icon-180.png">
+<link rel="apple-touch-icon" href="./app-icon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=IBM+Plex+Mono:wght@400;500;600&family=Spectral:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
@@ -34,6 +34,9 @@
   --font-display:'Anton',Impact,sans-serif;
   --font-mono:'IBM Plex Mono',ui-monospace,monospace;
   --font-note:'Spectral',Georgia,serif;
+  color-scheme:dark;
+  accent-color:var(--accent);
+  --ring:rgba(255,91,31,.14);
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -264,7 +267,7 @@ nav{flex:1;margin-top:26px;display:flex;flex-direction:column;gap:4px}
 
 .modal{position:fixed;inset:0;z-index:100;display:none;align-items:flex-start;justify-content:center;overflow-y:auto;padding:6vh 20px 60px}
 .modal.is-open{display:flex}
-.modal-scrim{position:fixed;inset:0;background:rgba(5,6,4,.78);backdrop-filter:blur(3px);animation:fadeIn .2s ease both}
+.modal-scrim{position:fixed;inset:0;background:rgba(5,6,4,.78);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);animation:fadeIn .2s ease both}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 .dialog{position:relative;width:100%;max-width:860px;background:var(--panel);border:1px solid var(--line2);margin-top:auto;margin-bottom:auto;
   box-shadow:0 24px 80px rgba(0,0,0,.6);animation:pop .32s cubic-bezier(.2,.8,.2,1) both}
@@ -284,6 +287,20 @@ nav{flex:1;margin-top:26px;display:flex;flex-direction:column;gap:4px}
 .pr-chip small{display:block;font-size:8px;letter-spacing:.22em;color:var(--ink-faint);text-transform:uppercase;margin-bottom:5px}
 .pr-chip b{font-family:var(--font-display);font-weight:400;font-size:21px;line-height:1}
 .pr-chip b em{font-style:normal;font-size:12px;color:var(--ink-faint)}
+
+.ss{display:inline-flex;align-items:center;gap:4px;font-size:8px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:var(--accent);border:1px solid var(--line2);padding:1px 6px;border-radius:999px;white-space:nowrap;vertical-align:middle}
+.ss:hover{border-color:var(--accent)}
+.ss-note{display:flex;gap:7px;align-items:flex-start;font-size:9px;letter-spacing:.06em;color:var(--ink-dim);line-height:1.5;border:1px dashed var(--line2);background:var(--panel2);padding:8px 10px;margin:0 12px 12px}
+.ss-note b{color:var(--accent);letter-spacing:.14em}
+.ss-pair .f-row{background:linear-gradient(90deg,rgba(211,155,0,.09),rgba(211,155,0,0) 44%)}
+.ss-pair .f-row + .f-row{margin-top:6px}
+.ss-pair .ex-row{background:linear-gradient(90deg,rgba(211,155,0,.09),rgba(211,155,0,0) 44%)}
+.ss-pair .ex-row:last-child{border-bottom:1px dashed rgba(36,40,29,.7)}
+.ss-pair .ss-hdr{display:flex;align-items:center;gap:6px;margin:0 11px 5px}
+.ss-pair .ss-hdr svg{stroke:var(--accent);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.ss-pair .ss-hdr span{font-size:6.5px;letter-spacing:.26em;font-weight:700;text-transform:uppercase;color:var(--accent);white-space:nowrap}
+.ss-pair .ss-hdr i{flex:1;min-width:8px;height:1px;align-self:center;background:linear-gradient(90deg,rgba(211,155,0,.5),rgba(211,155,0,0))}
+.ss-pair .ss-hdr-o{margin-left:15px;margin-right:15px}
 
 .seg{display:inline-flex;border:1px solid var(--line2);margin-bottom:14px}
 .seg button{padding:9px 16px;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-dim);border-right:1px solid var(--line2);transition:all .15s}
@@ -348,6 +365,31 @@ table.tbl{width:100%;border-collapse:collapse;font-size:11.5px}
 .mobile-head{display:none}
 .mobile-nav{display:none}
 
+/* ——— polish: consistency & motion ——— */
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+::selection{background:var(--accent);color:#0b0c09;text-shadow:none}
+.stat b,.ex-val,.delta,.ls-val,.val,.sub,.sl-val,.sesh-date .d,.tbl .w,.sr-no,.lift-head .no,.ex-no,.title-no,.d-no{font-variant-numeric:tabular-nums}
+html{scrollbar-gutter:stable}
+:root{color-scheme:dark;accent-color:var(--accent)}
+body{text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased}
+.tbl tbody tr{transition:background .12s}
+.tbl tbody tr:hover{background:rgba(255,91,31,.045)}
+.day-card,.lift-card,.session,.sr-card{transition:transform .16s,border-color .16s,box-shadow .16s}
+.lift-card:hover,.day-card:hover,.session:hover,.sr-card:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(0,0,0,.35)}
+.rise:hover,.rise.playing-card:hover{animation:none}
+.stat{transition:border-color .16s}
+.ex-row{transition:background .12s}
+.ex-row:hover{background:rgba(255,91,31,.04)}
+button{transition:transform .12s,background .15s,border-color .15s,color .15s}
+button:active:not(:disabled){transform:scale(.97)}
+input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+input:hover:not(:focus),select:hover{background:var(--panel2);border-color:var(--line2)}
+input{transition:background .15s,border-color .15s,color .15s}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+@media (max-width:860px){
+  .tab-grid button:active{transform:none}
+}
+
 @media (max-width:1080px){
   .stats{grid-template-columns:repeat(2,1fr)}
   .ghost{font-size:150px;right:-40px}
@@ -358,14 +400,15 @@ table.tbl{width:100%;border-collapse:collapse;font-size:11.5px}
   .fab{display:none}
   .stage{padding:0 18px 120px}
   .mobile-head{display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;
-    background:rgba(11,12,9,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:14px 18px;gap:10px}
+    background:rgba(11,12,9,.94);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:calc(14px + env(safe-area-inset-top)) 18px 14px;gap:10px}
 .mobile-head .brand-inline{font-family:var(--font-display);font-size:20px;letter-spacing:.02em}
 .mobile-head .brand-inline b{color:var(--accent)}
 .mobile-head .mh-brand{display:flex;flex-direction:column;gap:3px;min-width:0;line-height:1}
 .mobile-head .mh-track{font-size:7.5px;letter-spacing:.28em;color:var(--ink-faint);text-transform:uppercase;line-height:1.4}
   .mobile-head .mh-date{font-size:9px;color:var(--ink-faint);letter-spacing:.16em;text-transform:uppercase;text-align:right;line-height:1.5}
   .mobile-nav{position:fixed;left:0;right:0;bottom:0;z-index:55;display:grid;grid-template-columns:repeat(5,1fr);
-    background:rgba(11,12,9,.97);border-top:1px solid var(--line);backdrop-filter:blur(8px)}
+    background:rgba(11,12,9,.97);border-top:1px solid var(--line);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+    padding-bottom:env(safe-area-inset-bottom)}
   .mobile-nav .mnav{padding:13px 4px 15px;display:flex;flex-direction:column;align-items:center;gap:6px;font-size:8.5px;letter-spacing:.18em;
     text-transform:uppercase;color:var(--ink-faint);transition:color .15s}
   .mobile-nav .mnav svg{opacity:.6}
@@ -377,6 +420,8 @@ table.tbl{width:100%;border-collapse:collapse;font-size:11.5px}
   .ex-row{align-items:flex-start}
   .delta{min-width:0}
   .f-row{grid-template-columns:1fr 84px 64px}
+  .ss-pair .ss-hdr{margin-left:9px;margin-right:9px}
+  .ss-pair .ss-hdr-o{margin-left:13px;margin-right:13px}
   .f-note{grid-column:1/-1}
   .masthead h2{font-size:46px}
   .ghost{display:none}
@@ -654,30 +699,30 @@ table.tbl{width:100%;border-collapse:collapse;font-size:11.5px}
 var ROUTINES = [
   {id:"d1", no:"I", name:"CHEST & BACK", tag:"PUSH + PULL",
    exercises:[
-     {id:"pec-deck", name:"Pec Deck", target:"6\u201310 reps", unit:"lb"},
-     {id:"incline-press", name:"Incline Press", target:"1\u20133 reps", unit:"lb"},
-     {id:"pullover", name:"Nautilus Pullovers (superset)", target:"6\u201310 reps", unit:"lb"},
-     {id:"pulldown", name:"Close-Grip Pulldown", target:"6\u201310 reps", unit:"lb"}
+     {id:"pec-deck", name:"Pec Deck", target:"6\u201310 reps", unit:"lb", ss:"A"},
+     {id:"incline-press", name:"Incline Press", target:"1\u20133 reps", unit:"lb", ss:"A"},
+     {id:"pullover", name:"Nautilus Pullovers", target:"6\u201310 reps", unit:"lb", ss:"B"},
+     {id:"pulldown", name:"Close-Grip Pulldown", target:"6\u201310 reps", unit:"lb", ss:"B"}
    ]},
   {id:"d2", no:"II", name:"LEGS", tag:"VOLUME DAY",
    exercises:[
-     {id:"leg-ext", name:"Leg Extension", target:"8\u201315 reps", unit:"lb"},
-     {id:"leg-press", name:"Leg Press", target:"8\u201315 reps", unit:"lb"},
+{id:"leg-ext", name:"Leg Extension", target:"8\u201315 reps", unit:"lb", ss:"A"},
+     {id:"leg-press", name:"Leg Press", target:"8\u201315 reps", unit:"lb", ss:"A"},
      {id:"calf-raise", name:"Standing Calf Raise", target:"12\u201320 reps", unit:"lb"},
      {id:"sit-ups", name:"Sit Ups", target:"reps", unit:"bw"}
-   ]},
-  {id:"d3", no:"III", name:"DELTS & ARMS", tag:"ISOLATION",
-   exercises:[
-     {id:"lat-raise", name:"DB Lateral Raise", target:"6\u201310 reps", unit:"lb"},
-     {id:"rear-delt", name:"Rear Delt", target:"6\u201310 reps", unit:"lb"},
-     {id:"curl", name:"Barbell Curl", target:"6\u201310 reps", unit:"lb"},
-     {id:"pressdown", name:"Tricep Pressdown", target:"6\u201310 reps", unit:"lb"},
-     {id:"dips", name:"Parallel Dips (+weight)", target:"3\u20135 reps", unit:"lb"}
-   ]},
-  {id:"d4", no:"IV", name:"LEGS HEAVY", tag:"LOW-REP STRENGTH",
-   exercises:[
-     {id:"leg-ext-hold", name:"Leg Extension Hold (+30 LB)", target:"hold max \u2014 as long as possible", unit:"stack", time:true},
-     {id:"leg-press", name:"Leg Press", target:"8\u201315 reps", unit:"lb"},
+    ]},
+   {id:"d3", no:"III", name:"DELTS & ARMS", tag:"ISOLATION",
+    exercises:[
+      {id:"lat-raise", name:"DB Lateral Raise", target:"6\u201310 reps", unit:"lb"},
+      {id:"rear-delt", name:"Rear Delt", target:"6\u201310 reps", unit:"lb"},
+      {id:"curl", name:"Barbell Curl", target:"6\u201310 reps", unit:"lb"},
+      {id:"pressdown", name:"Tricep Pressdown", target:"6\u201310 reps", unit:"lb", ss:"A"},
+      {id:"dips", name:"Parallel Dips (+weight)", target:"3\u20135 reps", unit:"lb", ss:"A"}
+    ]},
+   {id:"d4", no:"IV", name:"LEGS HEAVY", tag:"LOW-REP STRENGTH",
+    exercises:[
+      {id:"leg-ext-hold", name:"Leg Extension Hold (+30 LB)", target:"hold max \u2014 as long as possible", unit:"stack", time:true, ss:"A"},
+      {id:"leg-press", name:"Leg Press", target:"8\u201315 reps", unit:"lb", ss:"A"},
      {id:"calf-raise", name:"Standing Calf Raise", target:"12\u201320 reps", unit:"lb"},
      {id:"sit-ups", name:"Sit Ups", target:"reps", unit:"bw"}
    ]}
@@ -782,6 +827,23 @@ function liftInSession(session, exId){
   return null;
 }
 function dayNo(dayId){ return routineById[dayId] ? routineById[dayId].no : dayId.toUpperCase(); }
+function ssFor(exObj, routine){
+  if(!exObj.ss) return null;
+  var same = routine.exercises.filter(function(x){ return x.ss && x.ss===exObj.ss; });
+  if(same.length<2) return null;
+  return {exs: same, ord: same.indexOf(exObj)};
+}
+function ssPartner(exObj, routine){
+  var ss = ssFor(exObj, routine);
+  if(!ss) return null;
+  return ss.exs[ss.ord===0 ? 1 : 0];
+}
+function ssPill(exObj, routine){
+  var ss = ssFor(exObj, routine);
+  if(!ss) return "";
+  var p = ss.exs[ss.ord===0 ? 1 : 0];
+  return '<span class="ss" title="Superset \u2014 back-to-back, no rest">\u2937 SUPERSET \u00b7 '+esc(p.name)+'</span> ';
+}
 function metricIsReps(exId){ return exId==="sit-ups"; }
 function valueFor(exId, lift){ return metricIsReps(exId) ? lift.r : lift.w; }
 function repLabel(exId){ return exIndex[exId].time ? "SEC" : "REPS"; }
@@ -991,13 +1053,14 @@ function buildTip(pt){
   var main = e.time ? wStr+" / "+rStr : (e.unit==="bw" ? (pt.lift.r!=null?nicer(pt.lift.r)+" REPS":wStr) : (pt.lift.w!=null? wStr+" \u00d7 "+rStr : rStr));
   var html = '<div class="t-date">'+esc(fmtDYear(pt.s.date))+(pt.s.est?' <span style="color:#ffcb2e">&#8776;</span>':"")+"</div>";
   html += '<div class="t-val">'+esc(main)+'</div>';
+  if(!e.time && e.unit!=="bw" && pt.lift.w!=null && pt.lift.r!=null) html += '<div class="t-note">EST 1RM '+nicer(e1rm(pt.lift.w, pt.lift.r))+' LB</div>';
   if(pt.lift.n) html += '<div class="t-note">'+esc(pt.lift.n)+"</div>";
   if(pt.s.note) html += '<div class="t-note">'+esc(pt.s.note)+"</div>";
   return {html:html};
 }
 
 function deltaFor(exId, sessions){
-  var pts = pointsFor(exId, "w", sessions);
+  var pts = strengthFor(exId, sessions);
   if(pts.length<2) return {txt:"FIRST", cls:"flat"};
   var prev = pts[pts.length-2].v, cur = pts[pts.length-1].v;
   var diff = rounded(cur-prev);
@@ -1014,6 +1077,22 @@ function e1rm(w, r){
   var rr = Number(r); if(isNaN(rr) || rr==null) rr = 0;
   var ww = Number(w); if(isNaN(ww) || ww==null) ww = 0;
   return Math.round(ww*(1+rr/30)*10)/10;
+}
+
+function strengthFor(exId, sessions){
+  var e = exIndex[exId];
+  var pts = [];
+  (sessions||state.sessions).forEach(function(s){
+    var lift = liftInSession(s, exId);
+    if(!lift) return;
+    var v;
+    if(e.unit==="bw") v = lift.r;
+    else if(e.time) v = lift.r;
+    else v = lift.w!=null ? e1rm(lift.w, lift.r) : null;
+    if(v==null) return;
+    pts.push({s:s, lift:lift, v:rounded(v), date:s.date});
+  });
+  return pts;
 }
 
 function paceFor(pts){
@@ -1176,7 +1255,7 @@ function renderOverview(){
   var liftIds = Object.keys(exIndex);
   var atPB = 0;
   liftIds.forEach(function(id){
-    var pts = pointsFor(id,"w",s);
+    var pts = strengthFor(id,s);
     if(pts.length){
       var max = Math.max.apply(null, pts.map(function(p){return p.v;}));
       if(pts[pts.length-1].v===max && pts.length>1) atPB++;
@@ -1190,7 +1269,7 @@ function renderOverview(){
 
   qs("#ovStats").innerHTML =
     stat("SESSIONS LOGGED", s.length, "", "since "+(s.length?esc(fmtDYear(s[0].date)):"—"))+
-    stat("LIFTS AT ALL-TIME PR", atPB, "", "current working weight = your best")+
+    stat("LIFTS AT ALL-TIME PR", atPB, "", "current strength = your best")+
     stat("LEG PRESS PR", lpShow, "", "started at "+(lpPts.length&&lpPts[0]?nicer(lpPts[0].v)+" LB":"—"))+
     stat("LEG EXT PR", leShow, "", "started at "+(lePts.length&&lePts[0]?nicer(lePts[0].v)+" LB":"—"));
 
@@ -1199,17 +1278,22 @@ function renderOverview(){
     var lastDay = null;
     for(var i=s.length-1;i>=0;i--){ if(s[i].day===r.id){ lastDay=s[i]; break; } }
     var rows = "";
+    var inPair = false;
     r.exercises.forEach(function(ex){
       var lift = lastDay? liftInSession(lastDay, ex.id): null;
       var d = deltaFor(ex.id, s);
+      var ss = ssFor(ex, r);
+      if(ss && ss.ord===0){ rows += '<div class="ss-pair"><div class="ss-hdr ss-hdr-o"><svg viewBox="0 0 24 24" width="10" height="10" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span>Superset</span><i></i></div>'; inPair = true; }
       rows += '<div class="ex-row">'+
         '<span class="ex-name">'+esc(ex.name)+'</span>'+
         '<span class="delta '+d.cls+'">'+d.txt+'</span>'+
         '<span class="ex-val">'+(lift? esc(displayVal(ex.id,lift)) : '<small>— not logged</small>')+'</span>'+
       '</div>';
+      if(ss && ss.ord===1 && inPair){ rows += '</div>'; inPair = false; }
     });
+    if(inPair) rows += '</div>';
     var fc = r.exercises[0];
-    var fpts = pointsFor(fc.id,"w",s);
+    var fpts = strengthFor(fc.id,s);
     var spark = fpts.length ? '<div class="spark" data-spark="'+fc.id+'"></div>' : "";
     var when = lastDay? fmtDYear(lastDay.date): "never";
     var since = lastDay? daysSince(lastDay.date) : null;
@@ -1229,7 +1313,7 @@ function renderOverview(){
   });
   qs("#ovCards").innerHTML = html;
   qsa("#ovCards [data-spark]").forEach(function(sp){
-    var pts = pointsFor(sp.getAttribute("data-spark"),"w",s);
+    var pts = strengthFor(sp.getAttribute("data-spark"),s);
     chart(sp, pts, {height:46, thin:true, noAnim:true, noLabel:true, tight:true, id:"sp"+sp.getAttribute("data-spark")});
   });
   qsa("#ovCards .day-card").forEach(function(c){
@@ -1266,9 +1350,10 @@ function renderLifts(){
   var s = state.sessions;
   ids.forEach(function(id, i){
     var e = exIndex[id];
-    var ptsW = pointsFor(id,"w",s);
-    var latest = ptsW.length? ptsW[ptsW.length-1]: null;
-    var maxV = ptsW.length? Math.max.apply(null, ptsW.map(function(p){return p.v;})): null;
+    var ptsS = strengthFor(id,s);
+    var latest = ptsS.length? ptsS[ptsS.length-1]: null;
+    var maxV = ptsS.length? Math.max.apply(null, ptsS.map(function(p){return p.v;})): null;
+    var best = latest && maxV!==null ? ptsS.filter(function(p){return p.v===maxV;}).pop() : null;
     var atPR = latest && maxV!==null && latest.v===maxV;
     html += '<article class="lift-card rise" style="animation-delay:'+(i*40)+'ms" data-ex="'+id+'">'+
       '<div class="lift-head">'+
@@ -1280,8 +1365,8 @@ function renderLifts(){
       '<div class="chartbox" data-cb="'+id+'"></div>'+
       '<div class="lift-stats">'+
         '<div class="lift-stat"><div class="ls-lab">Latest</div><div class="ls-val">'+(latest?esc(displayVal(id,latest.lift)):"—")+'</div></div>'+
-        '<div class="lift-stat"><div class="ls-lab">All-time PR</div><div class="ls-val">'+(maxV!==null?nicer(maxV)+(metricIsReps(id)?" REPS":(e.unit==="lb"?" LB":"")):"—")+'</div></div>'+
-        '<div class="lift-stat"><div class="ls-lab">Sessions</div><div class="ls-val">'+ptsW.length+'</div></div>'+
+        '<div class="lift-stat"><div class="ls-lab">All-time PR</div><div class="ls-val">'+(maxV!==null?(e.time? nicer(maxV)+" SEC" : metricIsReps(id)? nicer(maxV)+" REPS" : (best? esc(displayVal(id,best.lift)) : nicer(maxV)+" LB")):"—")+'</div></div>'+
+        '<div class="lift-stat"><div class="ls-lab">Sessions</div><div class="ls-val">'+ptsS.length+'</div></div>'+
       '</div>'+
     '</article>';
   });
@@ -1289,7 +1374,7 @@ function renderLifts(){
 
   qsa("#liftGrid .lift-card").forEach(function(card){
     var id = card.getAttribute("data-ex");
-    chart(qs("[data-cb='"+id+"']", card), pointsFor(id,"w",s), {height:140, id:"lv"+id});
+    chart(qs("[data-cb='"+id+"']", card), strengthFor(id,s), {height:140, id:"lv"+id});
     card.addEventListener("click", function(){ openDetail(id); });
   });
 }
@@ -1308,7 +1393,7 @@ function renderSessions(){
     ses.lifts.forEach(function(l){
       var e = exIndex[l.ex];
       if(!e) return;
-      lifts += '<div class="sesh-lift"><div class="sl-name">'+esc(e.name.toUpperCase())+'</div><div class="sl-val">'+esc(displayVal(l.ex,l))+"</div>"+(l.n?'<div class="sesh-note">'+esc(l.n)+"</div>":"")+'</div>';
+      lifts += '<div class="sesh-lift"><div class="sl-name">'+ssPill(e, r)+esc(e.name.toUpperCase())+'</div><div class="sl-val">'+esc(displayVal(l.ex,l))+"</div>"+(l.n?'<div class="sesh-note">'+esc(l.n)+"</div>":"")+'</div>';
     });
     var pd = parseD(ses.date);
     html += '<div class="session" data-id="'+esc(ses.id)+'">'+
@@ -1488,6 +1573,9 @@ function lastLift(exId){
 function renderLogForm(ses){
   var r = routineById[logDay];
   var html = "";
+  var paired = false;
+  for(var i=0;i<r.exercises.length;i++){ if(ssFor(r.exercises[i], r)){ paired = true; break; } }
+  if(paired) html += '<div class="ss-note"><b>\u2937 SUPERSETS</b> run back-to-back, no rest between &mdash; the first pre-exhausts you, the second is pushed to failure. Rest only between pairs.</div>';
   r.exercises.forEach(function(ex){
     var lift = ses? liftInSession(ses, ex.id) : lastLift(ex.id);
     var w = lift && lift.w!=null? lift.w : "";
@@ -1495,12 +1583,18 @@ function renderLogForm(ses){
     var note = ses && lift && lift.n? lift.n : "";
     var wLab = ex.unit==="bw" ? "BW" : ex.unit==="stack" ? "STACK" : "LB";
     var rLab = ex.time? "SEC":"REPS";
+    var ss = ssFor(ex, r);
+    var part = ss? ss.exs[ss.ord===0? 1: 0] : null;
+    var tar = "Target "+ex.target;
+    if(ss) tar += (ss.ord===0? " \u00b7 PRE-EXHAUST \u2192 FAIL" : " \u00b7 AFTER "+part.name+" \u2192 FAIL");
+    if(ss && ss.ord===0) html += '<div class="ss-pair"><div class="ss-hdr"><svg viewBox="0 0 24 24" width="10" height="10" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span>Superset</span><i></i></div>';
     html += '<div class="f-row" data-ex="'+ex.id+'">'+
-      '<div class="f-info"><div class="f-name">'+esc(ex.name)+"</div><div class=\"f-tar\">Target "+esc(ex.target)+"</div></div>"+
+      '<div class="f-info"><div class="f-name">'+esc(ex.name)+"</div><div class=\"f-tar\">"+tar+"</div></div>"+
       '<div><input type="number" step="any" inputmode="decimal" class="f-w" data-ex="'+ex.id+'" placeholder="'+wLab+'" value="'+esc(w)+'"><div class="f-unit">'+wLab+'</div></div>'+
       '<div><input type="number" step="any" inputmode="decimal" class="f-r" data-ex="'+ex.id+'" placeholder="'+rLab+'" value="'+esc(rep)+'"><div class="f-unit">'+rLab+'</div></div>'+
       '<div class="f-note"><input type="text" class="f-nt" data-ex="'+ex.id+'" placeholder="NOTE \u2014 pressed, felt heavy, machine..." value="'+esc(note)+'"></div>'+
     '</div>';
+    if(ss && ss.ord===1) html += '</div>';
   });
   qs("#logForm").innerHTML = html;
 }

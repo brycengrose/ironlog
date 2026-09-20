@@ -1,11 +1,14 @@
-var CACHE = "ironlog-v2";
+var CACHE = "ironlog-v3";
 var ASSETS = [
   "./",
   "./index.html",
   "./manifest.webmanifest",
   "./icon-192.png",
   "./icon-512.png",
-  "./icon-180.png"
+  "./icon-180.png",
+  "./app-icon-512.png",
+  "./app-icon-192.png",
+  "./app-icon-180.png"
 ];
 
 self.addEventListener("install", function(e){

@@ -657,13 +657,12 @@ var ROUTINES = [
      {id:"pec-deck", name:"Pec Deck", target:"6\u201310 reps", unit:"lb"},
      {id:"incline-press", name:"Incline Press", target:"1\u20133 reps", unit:"lb"},
      {id:"pullover", name:"Nautilus Pullovers (superset)", target:"6\u201310 reps", unit:"lb"},
-     {id:"pulldown", name:"Close-Grip Pulldown", target:"6\u201310 reps", unit:"lb"},
-     {id:"deadlift", name:"Deadlift", target:"5\u20138 reps", unit:"lb"}
+     {id:"pulldown", name:"Close-Grip Pulldown", target:"6\u201310 reps", unit:"lb"}
    ]},
   {id:"d2", no:"II", name:"LEGS", tag:"VOLUME DAY",
    exercises:[
      {id:"leg-ext", name:"Leg Extension", target:"8\u201315 reps", unit:"lb"},
-     {id:"leg-press", name:"Leg Press / Smith Squat", target:"8\u201315 reps", unit:"lb"},
+     {id:"leg-press", name:"Leg Press", target:"8\u201315 reps", unit:"lb"},
      {id:"calf-raise", name:"Standing Calf Raise", target:"12\u201320 reps", unit:"lb"},
      {id:"sit-ups", name:"Sit Ups", target:"reps", unit:"bw"}
    ]},
@@ -677,8 +676,8 @@ var ROUTINES = [
    ]},
   {id:"d4", no:"IV", name:"LEGS HEAVY", tag:"LOW-REP STRENGTH",
    exercises:[
-     {id:"leg-ext-hold", name:"Leg Extension Static Hold", target:"10\u201325 sec", unit:"stack", time:true},
-     {id:"squat", name:"Back Squat", target:"8\u201315 reps", unit:"lb"},
+     {id:"leg-ext-hold", name:"Leg Extension Hold (+30 LB)", target:"hold max \u2014 as long as possible", unit:"stack", time:true},
+     {id:"leg-press", name:"Leg Press", target:"8\u201315 reps", unit:"lb"},
      {id:"calf-raise", name:"Standing Calf Raise", target:"12\u201320 reps", unit:"lb"},
      {id:"sit-ups", name:"Sit Ups", target:"reps", unit:"bw"}
    ]}
@@ -733,7 +732,10 @@ var SEED = [
 ];
 
 var exIndex = {};
-ROUTINES.forEach(function(r){ r.exercises.forEach(function(e){ exIndex[e.id] = {id:e.id, name:e.name, target:e.target, unit:e.unit, time:!!e.time, day:r.id}; }); });
+ROUTINES.forEach(function(r){ r.exercises.forEach(function(e){
+  if(exIndex[e.id]){ exIndex[e.id].days.push(r.id); return; }
+  exIndex[e.id] = {id:e.id, name:e.name, target:e.target, unit:e.unit, time:!!e.time, day:r.id, days:[r.id]};
+}); });
 var routineById = {};
 ROUTINES.forEach(function(r){ routineById[r.id] = r; });
 
@@ -1181,18 +1183,16 @@ function renderOverview(){
     }
   });
 
-  var squat = last? liftInSession(last, "squat") : null;
-  var dead = last? liftInSession(last, "deadlift") : null;
-  var squatPts = pointsFor("squat","w",s);
-  var deadPts = pointsFor("deadlift","w",s);
-  var sqShow = squatPts.length? Math.max.apply(null,squatPts.map(function(p){return p.v;}))+" LB": "—";
-  var dlShow = deadPts.length? Math.max.apply(null,deadPts.map(function(p){return p.v;}))+" LB": "—";
+  var lpPts = pointsFor("leg-press","w",s);
+  var lePts = pointsFor("leg-ext","w",s);
+  var lpShow = lpPts.length? Math.max.apply(null,lpPts.map(function(p){return p.v;}))+" LB": "—";
+  var leShow = lePts.length? Math.max.apply(null,lePts.map(function(p){return p.v;}))+" LB": "—";
 
   qs("#ovStats").innerHTML =
     stat("SESSIONS LOGGED", s.length, "", "since "+(s.length?esc(fmtDYear(s[0].date)):"—"))+
     stat("LIFTS AT ALL-TIME PR", atPB, "", "current working weight = your best")+
-    stat("SQUAT PR", sqShow, "", "started at "+(squatPts.length&&squatPts[0]?nicer(squatPts[0].v)+" LB":"—"))+
-    stat("DEADLIFT PR", dlShow, "", "started at "+(deadPts.length&&deadPts[0]?nicer(deadPts[0].v)+" LB":"—"), dead? true:false);
+    stat("LEG PRESS PR", lpShow, "", "started at "+(lpPts.length&&lpPts[0]?nicer(lpPts[0].v)+" LB":"—"))+
+    stat("LEG EXT PR", leShow, "", "started at "+(lePts.length&&lePts[0]?nicer(lePts[0].v)+" LB":"—"));
 
   var html = "";
   ROUTINES.forEach(function(r, ri){
@@ -1252,12 +1252,15 @@ function renderLifts(){
     '<span class="val">'+total+' EXERCISES</span>'+
     '<span class="sub">tap a card for full history</span>';
 
-  var ids = Object.keys(exIndex).filter(function(id){
-    if(liftDayFilter!=="all" && exIndex[id].day!==liftDayFilter) return false;
-    var q = liftSearch.trim().toLowerCase();
-    if(q && exIndex[id].name.toLowerCase().indexOf(q)===-1) return false;
-    return true;
-  });
+  var ids;
+  if(liftDayFilter==="all"){
+    ids = Object.keys(exIndex);
+  } else {
+    var r = routineById[liftDayFilter];
+    ids = r? r.exercises.map(function(ex){ return ex.id; }).filter(function(id){ return exIndex[id]; }) : [];
+  }
+  var q = liftSearch.trim().toLowerCase();
+  if(q) ids = ids.filter(function(id){ return exIndex[id].name.toLowerCase().indexOf(q)!==-1; });
 
   var html = "";
   var s = state.sessions;
@@ -1269,7 +1272,7 @@ function renderLifts(){
     var atPR = latest && maxV!==null && latest.v===maxV;
     html += '<article class="lift-card rise" style="animation-delay:'+(i*40)+'ms" data-ex="'+id+'">'+
       '<div class="lift-head">'+
-        '<span class="no">'+dayNo(e.day)+'</span>'+
+        '<span class="no">'+(e.days.length>1? e.days.map(dayNo).join(" / "): dayNo(e.day))+'</span>'+
         '<div style="min-width:0"><div class="lift-name">'+esc(e.name)+'</div>'+
         '<div class="lift-target">TARGET '+esc(e.target)+(e.unit==="stack"?" &middot; stack weight":"")+'</div></div>'+
         '<span class="lift-tag'+(atPR?" pr":"")+'">'+(atPR?"AT PR":"CURRENT")+'</span>'+

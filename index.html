@@ -212,6 +212,17 @@ nav{flex:1;margin-top:26px;display:flex;flex-direction:column;gap:4px}
 
 /* ——— exercise guide (view 05) ——— */
 .guide-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.guide-controls{display:grid;gap:10px;margin:30px 0 18px;padding:14px;border:1px solid var(--line);background:rgba(19,21,16,.72)}
+.guide-filter-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.guide-filter-label{font-size:8px;letter-spacing:.22em;color:var(--ink-faint);text-transform:uppercase;min-width:52px}
+.guide-chip{padding:7px 10px;border:1px solid var(--line2);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-dim);transition:all .15s}
+.guide-chip:hover{color:var(--ink);border-color:var(--ink-faint)}
+.guide-chip.is-on{background:var(--accent);border-color:var(--accent);color:#0b0c09;font-weight:600}
+.guide-search{display:flex;align-items:center;gap:9px;height:34px;padding:0 10px;border:1px solid var(--line2);background:var(--bg);color:var(--ink-faint)}
+.guide-search svg{flex:none;opacity:.65}
+.guide-search input{width:100%;min-width:0;border:0;background:none;color:var(--ink);font-size:10px;letter-spacing:.1em;text-transform:uppercase}
+.guide-search input:focus{outline:none}
+.guide-search input::placeholder{color:var(--ink-faint)}
 .guide-card{position:relative;border:1px solid var(--line);background:var(--panel);padding:16px 16px 14px;cursor:pointer;
   display:flex;flex-direction:column;gap:8px;min-width:0;
   transition:transform .16s,border-color .16s,box-shadow .16s}
@@ -234,6 +245,12 @@ nav{flex:1;margin-top:26px;display:flex;flex-direction:column;gap:4px}
 .g-pill.ss{color:var(--accent);border-color:rgba(211,155,0,.5)}
 .g-intro{font-size:12.5px;line-height:1.7;color:var(--ink-dim);letter-spacing:.04em;padding-bottom:16px;border-bottom:1px dashed rgba(36,40,29,.6)}
 .g-intro b{color:var(--ink);font-weight:600}
+.g-media{display:flex;align-items:center;gap:14px;margin:0 0 18px;padding:10px;border:1px solid var(--line);background:var(--panel2)}
+.g-media img{display:block;width:112px;height:112px;object-fit:cover;background:var(--bg);border:1px solid var(--line2);image-rendering:auto}
+.g-media-copy{display:grid;gap:6px;min-width:0}
+.g-media-copy b{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);font-weight:500}
+.g-media-copy span{font-size:10px;line-height:1.55;color:var(--ink-dim)}
+.g-media-copy small{font-size:8px;line-height:1.4;color:var(--ink-faint);letter-spacing:.04em}
 .g-blk{margin-top:18px}
 .g-blk .g-lab{display:flex;align-items:center;gap:8px;font-size:9px;letter-spacing:.24em;color:var(--accent);text-transform:uppercase;margin-bottom:10px}
 .g-blk .g-lab::before{content:"";width:24px;height:1px;background:var(--accent)}
@@ -243,6 +260,59 @@ nav{flex:1;margin-top:26px;display:flex;flex-direction:column;gap:4px}
 .g-step .n{font-family:var(--font-display);color:var(--accent);font-size:13px;line-height:1.4;flex:none;min-width:18px}
 .g-why{border:1px solid var(--line2);background:var(--panel2);padding:14px 16px;font-size:12.5px;line-height:1.65;color:var(--ink-dim);letter-spacing:.02em}
 .g-why b{color:var(--ink);font-weight:600}
+.g-list{display:grid;gap:0;border:1px solid var(--line2);background:var(--panel2);padding:4px 14px}
+.g-list div{padding:8px 0;border-bottom:1px dashed rgba(36,40,29,.6);font-size:12px;line-height:1.55;color:var(--ink-dim)}
+.g-list div:last-child{border-bottom:0}
+.g-list div::before{content:"/";color:var(--accent);font-weight:600;margin-right:9px}
+.g-safety{border:1px solid rgba(255,203,46,.38);background:rgba(255,203,46,.055);padding:13px 15px;font-size:12px;line-height:1.6;color:var(--ink-dim)}
+.g-safety b{display:block;margin-bottom:5px;color:var(--accent2);font-size:9px;letter-spacing:.2em;text-transform:uppercase}
+
+/* --- muscle map (view 06) --- */
+.map-layout{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(300px,.65fr);gap:14px;margin-top:30px}
+.map-stage,.map-panel{border:1px solid var(--line);background:var(--panel);min-width:0}
+.map-stage{padding:18px}
+.map-stage-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:14px}
+.map-stage-head h4{font-family:var(--font-display);font-weight:400;font-size:20px;line-height:1;text-transform:uppercase;letter-spacing:.03em}
+.map-stage-head p{font-size:9px;line-height:1.5;color:var(--ink-faint);letter-spacing:.1em;text-transform:uppercase;text-align:right}
+.map-bodies{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;background:radial-gradient(ellipse at center,rgba(255,91,31,.05),transparent 62%);border:1px solid var(--line);padding:12px}
+.map-body{display:grid;justify-items:center;gap:6px;min-width:0}
+.map-body svg{width:100%;max-width:220px;height:auto;display:block}
+.map-asset{width:100%;max-width:260px;min-height:390px;display:grid;place-items:center}
+.map-asset svg{width:100%;height:auto;max-height:450px;display:block;color:#2c3545}
+.map-asset .bodymap{color:#2c3545;opacity:.92;cursor:pointer;transition:color .2s,opacity .2s,filter .2s}
+.map-asset .bodymap:hover{color:#68758b;opacity:1}
+.map-asset .bodymap.is-secondary{color:#b17a25;opacity:1}
+.map-asset .bodymap.is-primary{color:var(--accent);opacity:1;filter:drop-shadow(0 0 7px rgba(255,91,31,.32))}
+.map-body-label{font-size:9px;letter-spacing:.22em;color:var(--ink-faint);text-transform:uppercase}
+.map-silhouette{fill:#191d27;stroke:#3a4039;stroke-width:1.5}
+.map-muscle{fill:#2c3545;stroke:#596579;stroke-width:1;opacity:.9;cursor:pointer;transition:fill .18s,stroke .18s,filter .18s,opacity .18s}
+.map-muscle:hover{fill:#64718a;stroke:var(--ink);opacity:1}
+.map-muscle.is-secondary{fill:#b17a25;stroke:#e0a83a;opacity:1}
+.map-muscle.is-primary{fill:var(--accent);stroke:#ffb18d;opacity:1;filter:drop-shadow(0 0 5px rgba(255,91,31,.35))}
+.map-legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:12px;font-size:9px;color:var(--ink-faint);letter-spacing:.12em;text-transform:uppercase}
+.map-legend span{display:inline-flex;align-items:center;gap:6px}
+.map-legend i{width:8px;height:8px;border-radius:50%;background:#2c3545;border:1px solid #596579}
+.map-legend .primary{background:var(--accent);border-color:#ffb18d}.map-legend .secondary{background:#b17a25;border-color:#e0a83a}
+.map-panel{padding:16px;display:flex;flex-direction:column;gap:16px}
+.map-panel-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.map-panel-head h4{font-family:var(--font-display);font-weight:400;font-size:19px;line-height:1;text-transform:uppercase}
+.map-panel-head span{font-size:9px;letter-spacing:.18em;color:var(--accent);text-transform:uppercase}
+.map-day-tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.map-day-tab{padding:9px 5px;border:1px solid var(--line2);color:var(--ink-dim);font-size:9px;letter-spacing:.14em;text-transform:uppercase;text-align:center;transition:all .15s}
+.map-day-tab:hover{color:var(--ink);border-color:var(--ink-faint)}
+.map-day-tab.is-on{background:var(--accent);border-color:var(--accent);color:#0b0c09;font-weight:600}
+.map-section-label{font-size:8px;letter-spacing:.22em;color:var(--ink-faint);text-transform:uppercase}
+.map-exercises{display:grid;gap:6px;max-height:270px;overflow:auto;padding-right:2px}
+.map-exercise{display:flex;align-items:center;gap:9px;text-align:left;padding:9px 10px;border:1px solid var(--line);background:var(--bg);color:var(--ink-dim);font-size:10px;letter-spacing:.04em;transition:all .15s}
+.map-exercise:hover{border-color:var(--line2);color:var(--ink)}
+.map-exercise.is-on{border-color:var(--accent);background:rgba(255,91,31,.08);color:var(--ink)}
+.map-exercise .dot{width:6px;height:6px;background:var(--line2);border-radius:50%;flex:none}.map-exercise.is-on .dot{background:var(--accent)}
+.map-muscles{display:grid;gap:5px}
+.map-muscle-row{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px dashed rgba(36,40,29,.6);font-size:10px;color:var(--ink-dim)}
+.map-muscle-row:last-child{border-bottom:0}
+.map-muscle-row b{margin-left:auto;font-size:8px;letter-spacing:.15em;text-transform:uppercase;font-weight:500}
+.map-muscle-row b.primary{color:var(--accent)}.map-muscle-row b.secondary{color:var(--accent2)}
+.map-empty{padding:15px;border:1px dashed var(--line2);color:var(--ink-faint);font-size:10px;line-height:1.5;letter-spacing:.08em;text-transform:uppercase}
 
 .toast{position:fixed;right:26px;bottom:28px;z-index:140;max-width:min(360px,calc(100vw - 40px));padding:12px 15px;border:1px solid var(--accent);background:var(--panel2);color:var(--ink);
   font-size:10px;letter-spacing:.12em;text-transform:uppercase;box-shadow:6px 6px 0 rgba(0,0,0,.35);opacity:0;transform:translateY(10px);pointer-events:none;transition:opacity .18s,transform .18s}
@@ -429,6 +499,7 @@ table.tbl{width:100%;border-collapse:collapse;font-size:11.5px}
 html{scrollbar-gutter:stable}
 :root{color-scheme:dark;accent-color:var(--accent)}
 body{text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 .tbl tbody tr{transition:background .12s}
 .tbl tbody tr:hover{background:rgba(255,91,31,.045)}
 .day-card,.lift-card,.session,.sr-card{transition:transform .16s,border-color .16s,box-shadow .16s}
@@ -445,6 +516,9 @@ input{transition:background .15s,border-color .15s,color .15s}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
 @media (max-width:860px){
   .tab-grid button:active{transform:none}
+}
+@supports not (backdrop-filter:blur(1px)){
+  .mobile-head,.mobile-nav{background:rgba(11,12,9,.99)}
 }
 
 @media (max-width:1080px){
@@ -463,7 +537,7 @@ input{transition:background .15s,border-color .15s,color .15s}
 .mobile-head .mh-brand{display:flex;flex-direction:column;gap:3px;min-width:0;line-height:1}
 .mobile-head .mh-track{font-size:7.5px;letter-spacing:.28em;color:var(--ink-faint);text-transform:uppercase;line-height:1.4}
   .mobile-head .mh-date{font-size:9px;color:var(--ink-faint);letter-spacing:.16em;text-transform:uppercase;text-align:right;line-height:1.5}
-  .mobile-nav{position:fixed;left:0;right:0;bottom:0;z-index:55;display:grid;grid-template-columns:repeat(6,1fr);
+  .mobile-nav{position:fixed;left:0;right:0;bottom:0;z-index:55;display:grid;grid-template-columns:repeat(7,1fr);
     background:rgba(11,12,9,.97);border-top:1px solid var(--line);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
     padding-bottom:env(safe-area-inset-bottom)}
   .mobile-nav .mnav{padding:13px 4px 15px;display:flex;flex-direction:column;align-items:center;gap:6px;font-size:8.5px;letter-spacing:.18em;
@@ -476,7 +550,15 @@ input{transition:background .15s,border-color .15s,color .15s}
   .readiness-mark{font-size:15px}
   .readiness-action{margin-left:auto;padding:7px 8px;font-size:8px}
   .toast{right:14px;bottom:calc(78px + env(safe-area-inset-bottom));left:14px;max-width:none;text-align:center}
+  .guide-controls{margin-top:24px;padding:11px}
+  .guide-filter-row{flex-wrap:nowrap;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}
+  .guide-filter-row::-webkit-scrollbar{display:none}
+  .guide-filter-label{min-width:48px}
+  .guide-chip{flex:none}
   .cards,.lift-grid,.guide-grid{grid-template-columns:minmax(0,1fr)}
+  .map-layout{grid-template-columns:1fr}
+  .map-stage{padding:12px}
+  .map-panel{padding:13px}
   .ex-row .ex-name{white-space:normal;overflow:visible;text-overflow:clip;line-height:1.5;font-size:12px}
   .ex-row{align-items:flex-start}
   .delta{min-width:0}
@@ -494,6 +576,17 @@ input{transition:background .15s,border-color .15s,color .15s}
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;animation-iteration-count:1!important}
   html{scroll-behavior:auto}
+}
+@media (max-width:480px){
+  .stage{padding-left:14px;padding-right:14px;padding-bottom:calc(132px + env(safe-area-inset-bottom))}
+  .mobile-head{padding-left:14px;padding-right:14px}
+  .mobile-nav{display:flex;justify-content:flex-start;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;padding-left:3px;padding-right:3px}
+  .mobile-nav::-webkit-scrollbar{display:none}
+  .mobile-nav .mnav{flex:0 0 62px;min-width:62px}
+  .mobile-nav .mnav.is-add{flex-basis:82px;min-width:82px}
+  .g-media{align-items:flex-start}
+  .g-media img{width:96px;height:96px}
+  .g-media-copy{padding-top:2px}
 }
 </style>
 </head>
@@ -523,6 +616,7 @@ input{transition:background .15s,border-color .15s,color .15s}
       <button class="nav-item" data-view="sessions"><span class="idx">03</span>Session Log</button>
       <button class="nav-item" data-view="strength"><span class="idx">04</span>Strength Index</button>
       <button class="nav-item" data-view="guide"><span class="idx">05</span>Exercise Guide</button>
+      <button class="nav-item" data-view="muscles"><span class="idx">06</span>Muscle Map</button>
     </nav>
     <div class="rail-foot">
       <div class="rail-name" id="railName"></div>
@@ -657,7 +751,101 @@ input{transition:background .15s,border-color .15s,color .15s}
         <h3>Ideal Routine &mdash; how each lift is done</h3>
         <span class="hint">tap an exercise for full form</span>
       </div>
+      <div class="guide-controls" id="guideControls">
+        <div class="guide-filter-row">
+          <span class="guide-filter-label">Day</span>
+          <button class="guide-chip is-on" data-guide-day="all">All</button>
+          <button class="guide-chip" data-guide-day="d1">I</button>
+          <button class="guide-chip" data-guide-day="d2">II</button>
+          <button class="guide-chip" data-guide-day="d3">III</button>
+          <button class="guide-chip" data-guide-day="d4">IV</button>
+        </div>
+        <div class="guide-filter-row">
+          <span class="guide-filter-label">Focus</span>
+          <button class="guide-chip is-on" data-guide-muscle="all">All</button>
+          <button class="guide-chip" data-guide-muscle="chest">Chest</button>
+          <button class="guide-chip" data-guide-muscle="back">Back</button>
+          <button class="guide-chip" data-guide-muscle="legs">Legs</button>
+          <button class="guide-chip" data-guide-muscle="shoulders">Shoulders</button>
+          <button class="guide-chip" data-guide-muscle="arms">Arms</button>
+          <button class="guide-chip" data-guide-muscle="core">Core</button>
+        </div>
+        <label class="guide-search">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+          <input id="guideSearch" type="search" placeholder="Search movement or cue">
+        </label>
+      </div>
       <div class="session-list" id="gdList"></div>
+    </section>
+
+    <section class="view" id="view-muscles">
+      <div class="masthead">
+        <div class="ghost">MAP</div>
+        <div class="masthead-top">
+          <div class="ledger-title">
+            <div class="kicker">Section 06 &mdash; the anatomy view</div>
+            <h2>Muscle<br><em>Map</em></h2>
+          </div>
+          <div class="meta-block" id="mmMeta"></div>
+        </div>
+      </div>
+      <div class="ruler" aria-hidden="true"></div>
+      <div class="sec-head">
+        <span class="idx">PRIMARY / SECONDARY</span>
+        <h3>What each movement hits</h3>
+        <span class="hint">select a day or exercise</span>
+      </div>
+      <div class="map-layout">
+        <div class="map-stage">
+          <div class="map-stage-head">
+            <h4 id="mmTitle">Day I &mdash; Chest &amp; Back</h4>
+            <p>Click a region<br>to inspect the map</p>
+          </div>
+          <div class="map-bodies">
+            <div class="map-body">
+              <svg viewBox="0 0 200 480" role="img" aria-label="Front muscle map">
+                <path class="map-silhouette" d="M100 12c14 0 23 12 23 27 0 12-5 21-12 27l5 13c19 5 35 12 44 25 8 13 6 37 2 59l-8 48c-2 15-4 31-5 46l-10 102c-1 9 3 16 5 20H56c2-4 6-11 5-20L51 257c-1-15-3-31-5-46l-8-48c-4-22-6-46 2-59 9-13 25-20 44-25l5-13C87 60 82 51 82 39c0-15 9-27 18-27Z"/>
+                <path class="map-muscle" data-map-muscle="front_delt" d="M42 91c-10 3-15 14-11 28 8-1 16-9 18-20Z"/><path class="map-muscle" data-map-muscle="front_delt" d="M158 91c10 3 15 14 11 28-8-1-16-9-18-20Z"/>
+                <path class="map-muscle" data-map-muscle="side_delt" d="M31 108c-5 10-4 23 2 31 6-8 7-21 4-31Z"/><path class="map-muscle" data-map-muscle="side_delt" d="M169 108c5 10 4 23-2 31-6-8-7-21-4-31Z"/>
+                <path class="map-muscle" data-map-muscle="chest" d="M99 91c-18 0-29 9-27 25 2 13 14 18 27 11Zm2 0c18 0 29 9 27 25-2 13-14 18-27 11Z"/>
+                <path class="map-muscle" data-map-muscle="biceps" d="M39 137c-5 11-4 34 2 48 6-5 7-33 4-48Z"/><path class="map-muscle" data-map-muscle="biceps" d="M161 137c5 11 4 34-2 48-6-5-7-33-4-48Z"/>
+                <path class="map-muscle" data-map-muscle="abs" d="M91 145h18v17H91Zm0 22h18v17H91Zm0 22h18v17H91Z"/>
+                <path class="map-muscle" data-map-muscle="obliques" d="M84 148c-7 13-7 32 1 49l5-48Zm32 0c7 13 7 32-1 49l-5-48Z"/>
+                <path class="map-muscle" data-map-muscle="hip_flexors" d="M90 217c-4 10-1 19 8 27l1-27Zm20 0c4 10 1 19-8 27l-1-27Z"/>
+                <path class="map-muscle" data-map-muscle="quads" d="M91 251c-17 9-20 49-12 87 4 18 11 29 20 30l1-117Zm18 0c17 9 20 49 12 87-4 18-11 29-20 30l-1-117Z"/>
+                <path class="map-muscle" data-map-muscle="adductors" d="M98 254c-5 23-4 62 2 89l1-89Zm4 0c5 23 4 62-2 89l-1-89Z"/>
+                <path class="map-muscle" data-map-muscle="tibialis" d="M84 384c-3 26 0 49 8 65l7-65Zm32 0c3 26 0 49-8 65l-7-65Z"/>
+              </svg>
+              <span class="map-body-label">Front</span>
+            </div>
+            <div class="map-body">
+              <svg viewBox="0 0 200 480" role="img" aria-label="Back muscle map">
+                <path class="map-silhouette" d="M100 12c14 0 23 12 23 27 0 12-5 21-12 27l5 13c19 5 35 12 44 25 8 13 6 37 2 59l-8 48c-2 15-4 31-5 46l-10 102c-1 9 3 16 5 20H56c2-4 6-11 5-20L51 257c-1-15-3-31-5-46l-8-48c-4-22-6-46 2-59 9-13 25-20 44-25l5-13C87 60 82 51 82 39c0-15 9-27 18-27Z"/>
+                <path class="map-muscle" data-map-muscle="upper_traps" d="M100 72c14 0 25 10 24 25-14 8-34 8-48 0-1-15 10-25 24-25Z"/>
+                <path class="map-muscle" data-map-muscle="rear_delt" d="M42 91c-10 3-15 14-11 28 8-1 16-9 18-20Z"/><path class="map-muscle" data-map-muscle="rear_delt" d="M158 91c10 3 15 14 11 28-8-1-16-9-18-20Z"/>
+                <path class="map-muscle" data-map-muscle="mid_traps" d="M100 99c15 4 23 20 14 43-8 7-20 7-28 0-9-23-1-39 14-43Z"/>
+                <path class="map-muscle" data-map-muscle="lats" d="M88 111c-18 9-18 42-8 71 7-7 14-33 15-65Zm24 0c18 9 18 42 8 71-7-7-14-33-15-65Z"/>
+                <path class="map-muscle" data-map-muscle="triceps" d="M39 131c-5 12-4 35 2 51 6-7 7-36 4-51Zm122 0c5 12 4 35-2 51-6-7-7-36-4-51Z"/>
+                <path class="map-muscle" data-map-muscle="lower_back" d="M90 153c-4 18-2 39 10 52 12-13 14-34 10-52-7-5-13-5-20 0Z"/>
+                <path class="map-muscle" data-map-muscle="glute_med" d="M77 205c-10 5-11 18-3 25 8-2 15-12 17-23Zm46 0c10 5 11 18 3 25-8-2-15-12-17-23Z"/>
+                <path class="map-muscle" data-map-muscle="glute_max" d="M79 224c-3 22 5 39 21 43 16-4 24-21 21-43-15-9-27-9-42 0Z"/>
+                <path class="map-muscle" data-map-muscle="hamstrings" d="M91 267c-16 11-17 55-9 87 4 17 11 27 18 28l1-115Zm18 0c16 11 17 55 9 87-4 17-11 27-18 28l-1-115Z"/>
+                <path class="map-muscle" data-map-muscle="calves" d="M84 384c-3 27 0 50 9 66l7-66Zm32 0c3 27 0 50-9 66l-7-66Z"/>
+              </svg>
+              <span class="map-body-label">Back</span>
+            </div>
+          </div>
+          <div class="map-legend"><span><i class="primary"></i>Primary mover</span><span><i class="secondary"></i>Secondary / synergist</span><span><i></i>Not selected</span></div>
+        </div>
+        <aside class="map-panel">
+          <div class="map-panel-head"><div><span id="mmMode">DAY OVERVIEW</span><h4 id="mmSelection">Day I</h4></div><span id="mmCount">0 MUSCLES</span></div>
+          <div class="map-day-tabs" id="mmDays"></div>
+          <div class="map-section-label">Movements</div>
+          <div class="map-exercises" id="mmExercises"></div>
+          <div class="map-section-label">Muscles hit</div>
+          <div class="map-muscles" id="mmMuscles"></div>
+        </aside>
+      </div>
     </section>
 
   </main>
@@ -679,6 +867,9 @@ input{transition:background .15s,border-color .15s,color .15s}
   </button>
   <button class="mnav" data-view="guide">
     <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V2H6.5A2.5 2.5 0 0 0 4 4.5v15z"/><path d="M22 19.5A2.5 2.5 0 0 0 19.5 17H8"/></svg>Guide
+  </button>
+  <button class="mnav" data-view="muscles">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="4" r="2"/><path d="M8 21v-7l-2-3 2-3 4 2 4-2 2 3-2 3v7"/><path d="M8 14h8"/></svg>Map
   </button>
   <button class="mnav is-add" id="mFab">+&nbsp;Session</button>
 </div>
@@ -1059,6 +1250,102 @@ var TECH = {
   }
 };
 
+var GUIDE_META = {
+  "pec-deck": {muscle:"chest", mistakes:["Letting the shoulders roll forward at the stretch.","Bouncing the handles together instead of owning the squeeze."], stop:"Stop if you feel sharp pain in the front of the shoulder; reduce the stretch or adjust the seat."},
+  "incline-press": {muscle:"chest", mistakes:["Lowering the bar toward the neck.","Letting the elbows flare while the bar loses its path."], stop:"Use safeties or a spotter. Stop the set when the bar path or shoulder position breaks down."},
+  "pullover": {muscle:"back", mistakes:["Turning the movement into a triceps extension.","Letting the ribs flare and the lower back arch."], stop:"Stop if the shoulder feels pinched at the overhead stretch; shorten the range and reset."},
+  "pulldown": {muscle:"back", mistakes:["Pulling behind the neck.","Leaning back and turning the rep into a row."], stop:"Stop if you need to swing or yank the handle to finish the rep."},
+  "leg-ext": {muscle:"legs", mistakes:["Raising the hips off the seat.","Letting the stack crash between reps."], stop:"Stop if the knees hurt sharply; check the pivot alignment and reduce load."},
+  "leg-press": {muscle:"legs", mistakes:["Allowing the lower back to round at the bottom.","Locking the knees hard at the top."], stop:"Keep the safety stops engaged. Stop before your pelvis lifts or your back loses contact with the pad."},
+  "calf-raise": {muscle:"legs", mistakes:["Bouncing out of the bottom.","Cutting off the stretch or skipping the top squeeze."], stop:"Stop if the Achilles or ankle feels sharp pain; use a smaller range and slower load."},
+  "sit-ups": {muscle:"core", mistakes:["Throwing the torso up with momentum.","Pulling on the neck or letting the feet anchor the movement."], stop:"Stop if the lower back or neck becomes painful; reduce range and keep the ribs controlled."},
+  "lat-raise": {muscle:"shoulders", mistakes:["Shrugging the shoulders toward the ears.","Swinging the dumbbells above shoulder height."], stop:"Stop if the shoulder pinches; lower the arms slightly and reduce the weight."},
+  "rear-delt": {muscle:"shoulders", mistakes:["Turning the rep into a row by driving the elbows behind the body.","Using momentum from the torso."], stop:"Stop if the shoulder joint pinches; use a lighter load and a shorter range."},
+  "curl": {muscle:"arms", mistakes:["Swinging the hips to start the bar.","Letting the elbows drift forward on every rep."], stop:"Stop if the elbow or wrist hurts sharply; lower the weight and keep the wrist neutral."},
+  "pressdown": {muscle:"arms", mistakes:["Flaring the elbows away from the ribs.","Leaning over the bar and using bodyweight."], stop:"Stop if the elbow feels sharp pain or the shoulders take over the movement."},
+  "dips": {muscle:"arms", mistakes:["Dropping too deep after shoulder control is lost.","Kipping or bouncing out of the bottom."], stop:"Stop if you feel shoulder or sternum pain. Use assisted dips or controlled negatives instead."},
+  "leg-ext-hold": {muscle:"legs", mistakes:["Holding with the knees bent instead of fully contracting.","Continuing after the position has collapsed."], stop:"Release the hold when the knee position or posture fails; do not force a painful lockout."}
+};
+
+var MUSCLE_LABELS = {
+  chest:"Chest", front_delt:"Front Delts", side_delt:"Side Delts", biceps:"Biceps", forearm_front:"Forearms",
+  abs:"Abs", obliques:"Obliques", hip_flexors:"Hip Flexors", quads:"Quads", adductors:"Adductors", tibialis:"Tibialis",
+  upper_traps:"Upper Traps", mid_traps:"Mid Traps", lats:"Lats", rear_delt:"Rear Delts", triceps:"Triceps",
+  lower_back:"Lower Back", glute_max:"Glutes", glute_med:"Glute Medius", hamstrings:"Hamstrings", calves:"Calves"
+};
+var MUSCLE_MAP = {
+  "pec-deck": {primary:["chest"], secondary:["front_delt"]},
+  "incline-press": {primary:["chest"], secondary:["front_delt","triceps"]},
+  "pullover": {primary:["lats"], secondary:["chest","triceps"]},
+  "pulldown": {primary:["lats"], secondary:["biceps","rear_delt"]},
+  "leg-ext": {primary:["quads"], secondary:[]},
+  "leg-press": {primary:["quads","glute_max"], secondary:["hamstrings","adductors"]},
+  "calf-raise": {primary:["calves"], secondary:["tibialis"]},
+  "sit-ups": {primary:["abs"], secondary:["obliques","hip_flexors"]},
+  "lat-raise": {primary:["side_delt"], secondary:["upper_traps"]},
+  "rear-delt": {primary:["rear_delt"], secondary:["mid_traps"]},
+  "curl": {primary:["biceps"], secondary:["forearm_front"]},
+  "pressdown": {primary:["triceps"], secondary:["front_delt"]},
+  "dips": {primary:["triceps","chest"], secondary:["front_delt"]},
+  "leg-ext-hold": {primary:["quads"], secondary:[]}
+};
+var muscleMapDay = "d1";
+var muscleMapExercise = "all";
+var muscleAssetsLoading = false;
+var muscleAssetsReady = false;
+var EXERCISE_MEDIA = {
+  "pec-deck": {url:"https://raw.githubusercontent.com/shahanbutt/exercises-dataset/main/videos/0596-v3xmPAR.gif", label:"Lever seated fly", note:"Closest dataset match for pec deck."},
+  "incline-press": {url:"https://raw.githubusercontent.com/shahanbutt/exercises-dataset/main/videos/0047-3TZduzM.gif", label:"Barbell incline bench press"},
+  "pullover": {url:"https://raw.githubusercontent.com/shahanbutt/exercises-dataset/main/videos/2285-4U7iLb5.gif", label:"Lever pullover", note:"Machine pullover reference for the Nautilus-style movement."},
+  "pulldown": {url:"https://raw.githubusercontent.com/shahanbutt/exercises-dataset/main/videos/0673-ecpY0rH.gif", label:"Reverse-grip machine lat pulldown", note:"Palms-facing-you reference for the close-grip pulldown."},
+  "leg-ext": {url:"https://raw.githubusercontent.com/shahanbutt/exercises-dataset/main/videos/0585-my33uHU.gif", label:"Lever leg extension"},
+  "leg-press": {url:"https://raw.githubusercontent.com/shahanbutt/exercises-dataset/main/videos/0739-10Z2DXU.gif", label:"Sled 45-degree leg press"},
+  "calf-raise": {url:"https://raw.githubusercontent.com/shahanbutt/exercises-dataset/main/videos/1373-bJYHBIN.gif", label:"Standing calf raise"},
+  "sit-ups": {url:"https://raw.githubusercontent.com/shahanbutt/exercises-dataset/main/videos/0735-Bn6TXyO.gif", label:"Sit-up v. 2"},
+  "lat-raise": {url:"https://raw.githubusercontent.com/shahanbutt/exercises-dataset/main/videos/0334-DsgkuIt.gif", label:"Dumbbell lateral raise"},
+  "rear-delt": {url:"https://raw.githubusercontent.com/shahanbutt/exercises-dataset/main/videos/0602-myfUsKf.gif", label:"Lever seated reverse fly", note:"Reverse chest-fly machine reference for rear delts."},
+  "curl": {url:"https://raw.githubusercontent.com/shahanbutt/exercises-dataset/main/videos/0031-25GPyDY.gif", label:"Barbell curl"},
+  "pressdown": {url:"https://raw.githubusercontent.com/shahanbutt/exercises-dataset/main/videos/0201-3ZflifB.gif", label:"Cable pushdown", note:"Closest dataset match for the triceps pressdown."},
+  "dips": {url:"https://raw.githubusercontent.com/shahanbutt/exercises-dataset/main/videos/1767-K1vlode.gif", label:"Weighted triceps dip on parallel bars"},
+  "leg-ext-hold": {url:"https://raw.githubusercontent.com/shahanbutt/exercises-dataset/main/videos/0585-my33uHU.gif", label:"Lever leg extension", note:"Use this as a movement reference; the static hold is performed at lockout."}
+};
+var MUSCLE_SVG_GROUPS = {
+  chest:["upper-pectoralis","mid-lower-pectoralis"], front_delt:["anterior-deltoid"], side_delt:["lateral-deltoid"],
+  biceps:["long-head-bicep","short-head-bicep"], forearm_front:["wrist-flexors","wrist-extensors"], abs:["upper-abdominals","lower-abdominals"],
+  obliques:["obliques"], quads:["outer-quadricep","rectus-femoris","inner-quadricep"], tibialis:["tibialis"],
+  upper_traps:["upper-trapezius"], mid_traps:["traps-middle","lower-trapezius"], lats:["lats"], rear_delt:["posterior-deltoid"],
+  triceps:["long-head-triceps","lateral-head-triceps","medial-head-triceps"], lower_back:["lowerback"], glute_max:["gluteus-maximus"],
+  glute_med:["gluteus-medius"], hamstrings:["lateral-hamstrings","medial-hamstrings"], calves:["gastrocnemius","soleus"]
+};
+
+function loadMuscleAssets(){
+  if(muscleAssetsLoading || muscleAssetsReady) return;
+  muscleAssetsLoading = true;
+  var bodies = qsa(".map-bodies .map-body");
+  if(bodies.length<2) return;
+  bodies[0].innerHTML = '<div class="map-asset" id="mmFront"><span class="map-empty">Loading anatomy</span></div><span class="map-body-label">Front</span>';
+  bodies[1].innerHTML = '<div class="map-asset" id="mmBack"><span class="map-empty">Loading anatomy</span></div><span class="map-body-label">Back</span>';
+  Promise.all([
+    fetch("./assets/male_front_muscle_anatomy.svg").then(function(r){ return r.text(); }),
+    fetch("./assets/male_back_muscle_anatomy.svg").then(function(r){ return r.text(); })
+  ]).then(function(svg){
+    qs("#mmFront").innerHTML = svg[0];
+    qs("#mmBack").innerHTML = svg[1];
+    qsa("#mmFront svg, #mmBack svg").forEach(function(el){ el.removeAttribute("class"); el.setAttribute("role","img"); });
+    Object.keys(MUSCLE_SVG_GROUPS).forEach(function(muscle){
+      MUSCLE_SVG_GROUPS[muscle].forEach(function(groupId){
+        qsa("#mmFront #"+groupId+", #mmBack #"+groupId).forEach(function(group){ group.setAttribute("data-map-muscle",muscle); group.classList.add("map-muscle"); });
+      });
+    });
+    muscleAssetsReady = true;
+    renderMuscleMap();
+  }).catch(function(){
+    muscleAssetsLoading = false;
+    qs("#mmFront").innerHTML = '<span class="map-empty">Anatomy asset could not load</span>';
+    qs("#mmBack").innerHTML = '<span class="map-empty">Anatomy asset could not load</span>';
+  });
+}
+
 var KEY = "ironlog.v1";
 var state = null;
 
@@ -1353,6 +1640,9 @@ var currentView = "overview";
 var liftDayFilter = "all";
 var liftSearch = "";
 var tabGlassTimer = null;
+var guideDayFilter = "all";
+var guideMuscleFilter = "all";
+var guideSearch = "";
 
 function e1rm(w, r){
   var rr = Number(r); if(isNaN(rr) || rr==null) rr = 0;
@@ -1489,30 +1779,74 @@ function renderStrength(){
   });
 }
 
+function muscleMapState(){
+  var primary = [], secondary = [];
+  var ids = muscleMapExercise==="all" ? (routineById[muscleMapDay]||{exercises:[]}).exercises.map(function(ex){ return ex.id; }) : [muscleMapExercise];
+  ids.forEach(function(id){
+    var map = MUSCLE_MAP[id];
+    if(!map) return;
+    map.primary.forEach(function(m){ if(primary.indexOf(m)===-1) primary.push(m); });
+    map.secondary.forEach(function(m){ if(primary.indexOf(m)===-1 && secondary.indexOf(m)===-1) secondary.push(m); });
+  });
+  secondary = secondary.filter(function(m){ return primary.indexOf(m)===-1; });
+  return {primary:primary, secondary:secondary};
+}
+
+function renderMuscleMap(){
+  var routine = routineById[muscleMapDay];
+  if(!routine) return;
+  loadMuscleAssets();
+  var selected = muscleMapExercise!=="all" ? exIndex[muscleMapExercise] : null;
+  var stateMap = muscleMapState();
+  var activeCount = stateMap.primary.length+stateMap.secondary.length;
+  qs("#mmMeta").innerHTML = '<span class="lab">Muscle coverage</span><span class="val">'+activeCount+' GROUPS ACTIVE</span><span class="sub">primary + secondary activation</span>';
+  qs("#mmTitle").innerHTML = selected ? esc(selected.name) : "Day "+routine.no+" &mdash; "+esc(routine.name);
+  qs("#mmMode").textContent = selected ? "EXERCISE DETAIL" : "DAY OVERVIEW";
+  qs("#mmSelection").textContent = selected ? "Selected movement" : "Day "+routine.no;
+  qs("#mmCount").textContent = activeCount+" MUSCLES";
+  qs("#mmDays").innerHTML = ROUTINES.map(function(r){ return '<button class="map-day-tab'+(r.id===muscleMapDay?" is-on":"")+'" data-map-day="'+r.id+'">DAY '+r.no+'</button>'; }).join("");
+  var exs = '<button class="map-exercise'+(muscleMapExercise==="all"?" is-on":"")+'" data-map-ex="all"><span class="dot"></span>All movements in Day '+routine.no+'</button>';
+  routine.exercises.forEach(function(ex){
+    exs += '<button class="map-exercise'+(muscleMapExercise===ex.id?" is-on":"")+'" data-map-ex="'+ex.id+'"><span class="dot"></span>'+esc(ex.name)+"</button>";
+  });
+  qs("#mmExercises").innerHTML = exs;
+  var rows = stateMap.primary.map(function(id){ return '<div class="map-muscle-row"><span>'+MUSCLE_LABELS[id]+'</span><b class="primary">Primary</b></div>'; });
+  rows = rows.concat(stateMap.secondary.map(function(id){ return '<div class="map-muscle-row"><span>'+MUSCLE_LABELS[id]+'</span><b class="secondary">Secondary</b></div>'; }));
+  qs("#mmMuscles").innerHTML = rows.join("") || '<div class="map-empty">Select a movement to light up the muscles it trains.</div>';
+  qsa("[data-map-muscle]").forEach(function(el){
+    var id = el.getAttribute("data-map-muscle");
+    el.classList.toggle("is-primary", stateMap.primary.indexOf(id)!==-1);
+    el.classList.toggle("is-secondary", stateMap.primary.indexOf(id)===-1 && stateMap.secondary.indexOf(id)!==-1);
+  });
+  qsa("[data-map-day]").forEach(function(b){ b.addEventListener("click", function(){ muscleMapDay=b.getAttribute("data-map-day"); muscleMapExercise="all"; renderMuscleMap(); }); });
+  qsa("[data-map-ex]").forEach(function(b){ b.addEventListener("click", function(){ muscleMapExercise=b.getAttribute("data-map-ex"); renderMuscleMap(); }); });
+  qsa("[data-map-muscle]").forEach(function(el){ el.addEventListener("click", function(){ var id=el.getAttribute("data-map-muscle"); var row=qsa(".map-muscle-row").find(function(x){ return x.textContent.indexOf(MUSCLE_LABELS[id])!==-1; }); if(row) row.scrollIntoView({block:"nearest"}); }); });
+}
+
 function renderGuide(){
   var total = Object.keys(exIndex).length;
   var withTech = 0;
   Object.keys(exIndex).forEach(function(id){ if(TECH[id]) withTech++; });
-  qs("#gdMeta").innerHTML =
-    '<span class="lab">Exercises</span>'+
-    '<span class="val">'+total+' MOVEMENTS</span>'+
-    '<span class="sub">'+withTech+' with full form &middot; one all-out set to failure</span>';
-
+  var query = guideSearch.trim().toLowerCase();
+  var visible = 0;
+  var totalCards = 0;
+  ROUTINES.forEach(function(r){ r.exercises.forEach(function(ex){ if(exIndex[ex.id]) totalCards++; }); });
   var html = "";
   ROUTINES.forEach(function(r){
-    html += '<div class="sec-head" style="margin-top:30px">'+
-      '<span class="idx">'+r.no+'</span>'+
-      '<h3>'+esc(r.name)+"</h3>"+
-      '<span class="hint">'+esc(r.tag)+"</span>"+
-    "</div>";
-    html += '<div class="guide-grid" data-day="'+r.id+'">';
+    if(guideDayFilter!=="all" && guideDayFilter!==r.id) return;
+    var cards = "";
     r.exercises.forEach(function(ex){
       if(!exIndex[ex.id]) return;
       var t = TECH[ex.id];
+      var meta = GUIDE_META[ex.id]||{};
+      var searchText = (ex.name+" "+(t?t.why:"")+" "+(t?t.teach:"")+" "+(meta.muscle||"")).toLowerCase();
+      if(guideMuscleFilter!=="all" && meta.muscle!==guideMuscleFilter) return;
+      if(query && searchText.indexOf(query)===-1) return;
+      visible++;
       var tags = '<span class="guide-tag'+(ex.ss?" ss":"")+'">'+(t&&t.ss?"SUPERSET "+esc(t.ss):"SOLO")+'</span>'+
         '<span class="guide-tag">'+esc(ex.target)+"</span>"+
         (t&&t.tempo?'<span class="guide-tag">TEMPO '+esc(t.tempo)+"</span>":"");
-      html += '<button class="guide-card rise" style="animation-delay:'+indexOfGuide(ex.id)*40+'ms" data-ex="'+ex.id+'">'+
+      cards += '<button class="guide-card rise" style="animation-delay:'+indexOfGuide(ex.id)*40+'ms" data-ex="'+ex.id+'">'+
         '<div class="guide-top">'+
           '<span class="guide-no">'+dayNoFor(ex.id)+"</span>"+
           '<div style="min-width:0"><div class="guide-nm">'+esc(ex.name)+"</div></div>"+
@@ -1525,9 +1859,19 @@ function renderGuide(){
         "</div>"+
       "</button>";
     });
-    html += "</div>";
+    if(!cards) return;
+    html += '<div class="sec-head" style="margin-top:30px">'+
+      '<span class="idx">'+r.no+'</span>'+
+      '<h3>'+esc(r.name)+"</h3>"+
+      '<span class="hint">'+esc(r.tag)+"</span>"+
+    "</div>";
+    html += '<div class="guide-grid" data-day="'+r.id+'">'+cards+"</div>";
   });
-  qs("#gdList").innerHTML = html;
+  qs("#gdMeta").innerHTML =
+    '<span class="lab">Guide view</span>'+
+    '<span class="val">'+(visible===totalCards?total:""+visible)+(visible===totalCards?" MOVEMENTS":" SHOWN")+'</span>'+
+    '<span class="sub">'+total+' unique exercises &middot; '+withTech+' with full form</span>';
+  qs("#gdList").innerHTML = html || '<div class="empty">No movements match those filters</div>';
   qsa("#gdList .guide-card").forEach(function(c){
     c.addEventListener("click", function(){ openGuideDetail(c.getAttribute("data-ex")); });
   });
@@ -1540,6 +1884,12 @@ function indexOfGuide(id){ return guideOrd[id]||0; }
 function dayNoFor(exId){
   var e = exIndex[exId];
   return e.days.length>1? e.days.map(dayNo).join(" / ") : dayNo(e.day);
+}
+
+function exerciseMedia(id){
+  var m = EXERCISE_MEDIA[id];
+  if(!m) return "";
+  return '<div class="g-media"><img src="'+m.url+'" alt="Animated reference: '+esc(m.label)+'" loading="lazy"><div class="g-media-copy"><b>Motion reference</b><span>'+esc(m.label)+(m.note?" &mdash; "+esc(m.note):"")+'</span><small>&copy; Gym visual &middot; media via exercises-dataset</small></div></div>';
 }
 
 function openGuideDetail(id){
@@ -1555,12 +1905,15 @@ function openGuideDetail(id){
     (t&&t.ss?'<span class="g-pill ss">SUPERSET <b>'+esc(t.ss)+"</b></span>":"")+
     '<span class="g-pill">ONE ALL-OUT SET</span>'+
   "</div>";
-  var body = "";
+  var body = exerciseMedia(id);
   if(t && t.steps){
     body += '<div class="g-intro">'+(t.how||t.why||"")+"<br><br><b>Tempo guide:</b> use the listed pace as a controlled range, not a race. Keep the weight moving smoothly and do not use momentum.</div>";
     body += '<div class="g-blk"><div class="g-lab">How to perform it</div><div class="g-steps">'+
       t.steps.map(function(s, i){ return '<div class="g-step"><span class="n">'+(i+1)+"</span><span>"+esc(s)+"</span></div>"; }).join("")+
     "</div></div>";
+    var meta = GUIDE_META[id];
+    if(meta && meta.mistakes) body += '<div class="g-blk"><div class="g-lab">Common mistakes</div><div class="g-list">'+meta.mistakes.map(function(m){ return '<div>'+esc(m)+"</div>"; }).join("")+"</div></div>";
+    if(meta && meta.stop) body += '<div class="g-blk"><div class="g-lab">Know when to stop</div><div class="g-safety"><b>Safety cue</b>'+esc(meta.stop)+"</div></div>";
     if(t.teach) body += '<div class="g-blk"><div class="g-lab">The thinking behind it</div><div class="g-why">'+esc(t.teach)+"</div></div>";
   } else {
     body = '<div class="g-intro">'+esc(e.name)+" &mdash; log your single all-out set to failure, exactly as in the Ideal Routine.</div>";
@@ -1590,6 +1943,7 @@ function goView(name){
   if(name==="sessions") renderSessions();
   if(name==="strength") renderStrength();
   if(name==="guide") renderGuide();
+  if(name==="muscles") renderMuscleMap();
 }
 
 function renderAll(){ renderOverview(); renderLifts(); renderSessions(); updateMeta(); renderName(); renderStrength(); }
@@ -2128,6 +2482,25 @@ function bindGlobal(){
   qs("#liftSearch").addEventListener("input", function(){
     liftSearch = qs("#liftSearch").value;
     renderLifts();
+  });
+
+  qsa("[data-guide-day]").forEach(function(b){
+    b.addEventListener("click", function(){
+      guideDayFilter = b.getAttribute("data-guide-day");
+      qsa("[data-guide-day]").forEach(function(x){ x.classList.toggle("is-on", x===b); });
+      renderGuide();
+    });
+  });
+  qsa("[data-guide-muscle]").forEach(function(b){
+    b.addEventListener("click", function(){
+      guideMuscleFilter = b.getAttribute("data-guide-muscle");
+      qsa("[data-guide-muscle]").forEach(function(x){ x.classList.toggle("is-on", x===b); });
+      renderGuide();
+    });
+  });
+  qs("#guideSearch").addEventListener("input", function(){
+    guideSearch = qs("#guideSearch").value;
+    renderGuide();
   });
 
   qsa("[data-goto]").forEach(function(b){

@@ -1,4 +1,4 @@
-var CACHE = "ironlog-v3";
+var CACHE = "ironlog-v4";
 var ASSETS = [
   "./",
   "./index.html",
@@ -8,7 +8,9 @@ var ASSETS = [
   "./icon-180.png",
   "./app-icon-512.png",
   "./app-icon-192.png",
-  "./app-icon-180.png"
+  "./app-icon-180.png",
+  "./assets/male_front_muscle_anatomy.svg",
+  "./assets/male_back_muscle_anatomy.svg"
 ];
 
 self.addEventListener("install", function(e){

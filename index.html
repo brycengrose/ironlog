@@ -360,6 +360,12 @@ nav{flex:1;margin-top:26px;display:flex;flex-direction:column;gap:4px}
 .audio-bar-toggle:active{transform:scale(.96)}
 .audio-bar-toggle svg{display:block;margin-left:2px}
 .audio-bar.is-paused .audio-bar-toggle svg{margin-left:0}
+.audio-bar-skip{width:34px;height:34px;flex:none;border-radius:50%;display:grid;place-items:center;color:var(--ink-dim);
+  background:rgba(255,255,255,.06);backdrop-filter:blur(16px) saturate(1.5);-webkit-backdrop-filter:blur(16px) saturate(1.5);
+  border:1px solid rgba(255,255,255,.13);box-shadow:inset 0 1px 0 rgba(255,255,255,.1);transition:all .15s}
+.audio-bar-skip:hover{color:var(--ink);background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.24);transform:scale(1.06)}
+.audio-bar-skip:active{transform:scale(.95)}
+.audio-bar-skip svg{display:block}
 .audio-bar-meta{display:flex;flex-direction:column;gap:3px;min-width:0}
 .audio-bar-lab{font-size:7.5px;letter-spacing:.22em;color:var(--accent);text-transform:uppercase}
 .audio-bar-title{font-size:12px;font-weight:600;letter-spacing:.03em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -659,11 +665,13 @@ input{transition:background .15s,border-color .15s,color .15s}
 <div class="audio-bar" id="audioBar" aria-hidden="true">
   <div class="audio-eq"><i></i><i></i><i></i><i></i></div>
   <button class="audio-bar-toggle" id="audioBarToggle" aria-label="Play or pause"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg></button>
+  <button class="audio-bar-skip" id="audioBarBack" aria-label="Back 15 seconds"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M12 5V1L7 6l5 5V7c3.3 0 6 2.7 6 6s-2.7 6-6 6-6-2.7-6-6H4c0 4.4 3.6 8 8 8s8-3.6 8-8-3.6-8-8-8z"/></svg></button>
   <div class="audio-bar-meta">
     <span class="audio-bar-lab">Now playing</span>
     <span class="audio-bar-title" id="audioBarTitle">—</span>
     <span class="audio-bar-prog" id="audioBarProg">—</span>
   </div>
+  <button class="audio-bar-skip" id="audioBarFwd" aria-label="Forward 30 seconds"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M12 5V1l5 5-5 5V7c-3.3 0-6 2.7-6 6s2.7 6 6 6 6-2.7 6-6h2c0 4.4-3.6 8-8 8s-8-3.6-8-8 3.6-8 8-8z"/></svg></button>
   <button class="audio-bar-stop" id="audioBarStop" aria-label="Stop audio"><svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true"><path d="M6.4 6.4l11.2 11.2-1.4 1.4L5 7.8zM17.6 6.4L6.4 17.6 5 16.2 16.2 5z"/></svg></button>
 </div>
 
@@ -1566,6 +1574,14 @@ function stopAudio(){
   if(!audioPlayer) return;
   audioPlayer.pauseVideo();
   audioCurrent = null;
+  audioSyncUI();
+}
+
+function skipAudio(sec){
+  if(!audioPlayer || !audioCurrent) return;
+  var cur = audioPlayer.getCurrentTime ? audioPlayer.getCurrentTime() : 0;
+  audioPlayer.seekTo(Math.max(0, cur + sec), true);
+  if(audioPlayer.getPlayerState && audioPlayer.getPlayerState()!==1) audioPlayer.playVideo();
   audioSyncUI();
 }
 
@@ -2806,6 +2822,8 @@ function saveName(){
 function bindGlobal(){
   qsa(".audio-play").forEach(function(b){ b.addEventListener("click", function(){ playAudio(b.getAttribute("data-audio-play")); }); });
   qs("#audioBarToggle").addEventListener("click", function(){ if(audioCurrent) playAudio(audioCurrent); });
+  qs("#audioBarBack").addEventListener("click", function(){ skipAudio(-15); });
+  qs("#audioBarFwd").addEventListener("click", function(){ skipAudio(30); });
   qs("#audioBarStop").addEventListener("click", stopAudio);
   qs("#exportBtn").addEventListener("click", exportData);
   qs("#importBtn").addEventListener("click", function(){ qs("#importFile").click(); });

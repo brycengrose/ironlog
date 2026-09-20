@@ -1,4 +1,4 @@
-var CACHE = "ironlog-v6";
+var CACHE = "ironlog-v7";
 var ASSETS = [
   "./",
   "./index.html",

@@ -661,7 +661,6 @@ input{transition:background .15s,border-color .15s,color .15s}
 <div class="grain"></div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <div class="tab-glass" id="tabGlass" aria-hidden="true"></div>
-<div class="audio-stage" id="audioStage"></div>
 <div class="audio-bar" id="audioBar" aria-hidden="true">
   <div class="audio-eq"><i></i><i></i><i></i><i></i></div>
   <button class="audio-bar-toggle" id="audioBarToggle" aria-label="Play or pause"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg></button>
@@ -960,7 +959,7 @@ input{transition:background .15s,border-color .15s,color .15s}
           <div class="audio-actions">
             <button class="audio-play" data-audio-play="ideal"><span class="ap-ico"><svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg></span><span>Play audio</span></button>
           </div>
-          <div class="audio-src"><b>Source</b> &middot; Heavy Duty College &mdash; &ldquo;Mike Mentzer: The Ideal Routine&rdquo;</div>
+          <div class="audio-src"><b>Source</b> &middot; Heavy Duty College audio &mdash; &ldquo;Mike Mentzer: The Ideal Routine&rdquo;</div>
         </div>
         <div class="audio-card" id="auConsol">
           <div class="audio-head">
@@ -974,7 +973,7 @@ input{transition:background .15s,border-color .15s,color .15s}
           <div class="audio-actions">
             <button class="audio-play" data-audio-play="consolidation"><span class="ap-ico"><svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg></span><span>Play audio</span></button>
           </div>
-          <div class="audio-src"><b>Source</b> &middot; Heavy Duty College &mdash; &ldquo;Consolidated Routine: Four Exercises&rdquo;</div>
+          <div class="audio-src"><b>Source</b> &middot; Heavy Duty College audio &mdash; &ldquo;Consolidated Routine: Four Exercises&rdquo;</div>
         </div>
       </div>
     </section>
@@ -1490,24 +1489,23 @@ var PROGRAMS = {
 };
 
 var AUDIO_TRACKS = {
-  ideal:{vid:"vJbeAqnN5zQ", start:0, title:"Mike Mentzer: The Ideal Routine", prog:"Ideal Routine"},
-  consolidation:{vid:"quGsdhWWmrM", start:0, title:"Mike Mentzer's Consolidated Routine: Four Exercises", prog:"Consolidation Program"}
+  ideal:{src:"./audio/ideal-routine.mp3", title:"Mike Mentzer: The Ideal Routine", prog:"Ideal Routine"},
+  consolidation:{src:"./audio/consolidation-program.mp3", title:"Mike Mentzer's Consolidated Routine: Four Exercises", prog:"Consolidation Program"}
 };
 var audioPlayer = null;
-var audioApiLoaded = false;
 var audioCurrent = null;
-var audioQueued = null;
 
-function ensureYoutubeApi(){
-  if(audioApiLoaded || window.YT && window.YT.Player) { audioApiLoaded = true; return; }
-  var s = document.createElement("script");
-  s.src = "https://www.youtube.com/iframe_api";
-  document.head.appendChild(s);
-  window.onYouTubeIframeAPIReady = function(){
-    audioApiLoaded = true;
-    if(audioQueued){ var q=audioQueued; audioQueued=null; playAudio(q); }
-  };
+function audioInit(){
+  if(audioPlayer) return;
+  audioPlayer = new Audio();
+  audioPlayer.preload = "auto";
+  audioPlayer.addEventListener("timeupdate", function(){ if(audioSyncTicker) audioSyncTicker(); });
+  audioPlayer.addEventListener("play", function(){ audioSyncUI(); });
+  audioPlayer.addEventListener("pause", function(){ audioSyncUI(); });
+  audioPlayer.addEventListener("ended", function(){ audioCurrent = null; audioSyncUI(); });
+  audioPlayer.addEventListener("error", function(){ if(audioCurrent){ audioCurrent = null; audioSyncUI(); toast("Audio unavailable"); } });
 }
+var audioSyncTicker = null;
 
 function audioIcon(play){
   return play
@@ -1519,7 +1517,7 @@ function audioStopIcon(){
 }
 
 function audioSyncUI(){
-  var playing = audioPlayer && audioCurrent && audioPlayer.getPlayerState && audioPlayer.getPlayerState()===1;
+  var playing = audioPlayer && audioCurrent && !audioPlayer.paused && !audioPlayer.ended;
   qsa(".audio-play").forEach(function(b){
     var on = b.getAttribute("data-audio-play")===audioCurrent;
     b.classList.toggle("is-on", on);
@@ -1539,58 +1537,43 @@ function audioSyncUI(){
 function playAudio(prog){
   var track = AUDIO_TRACKS[prog];
   if(!track) return;
-  if(!window.YT || !window.YT.Player){
-    audioQueued = prog;
-    ensureYoutubeApi();
-    return;
-  }
-  if(!audioPlayer){
-    audioPlayer = new YT.Player(qs("#audioStage"), {
-      videoId: track.vid,
-      playerVars: { start: track.start, playsinline: 1, rel: 0 },
-      events: {
-        onStateChange: function(){ audioSyncUI(); },
-        onError: function(){ audioCurrent=null; audioSyncUI(); toast("Audio unavailable"); }
-      }
-    });
-    audioCurrent = prog;
-    audioSyncUI();
-    return;
-  }
+  audioInit();
   if(audioCurrent === prog){
-    var st = audioPlayer.getPlayerState ? audioPlayer.getPlayerState() : -1;
-    if(st===1) audioPlayer.pauseVideo();
-    else audioPlayer.playVideo();
+    if(audioPlayer.paused) audioPlayer.play();
+    else audioPlayer.pause();
     audioSyncUI();
     return;
   }
   audioCurrent = prog;
-  audioPlayer.loadVideoById({videoId:track.vid, startSeconds:track.start});
-  audioPlayer.playVideo();
+  audioPlayer.src = track.src;
+  audioPlayer.currentTime = 0;
+  var p = audioPlayer.play();
+  if(p && p.catch) p.catch(function(){});
   audioSyncUI();
 }
 
 function stopAudio(){
   if(!audioPlayer) return;
-  audioPlayer.pauseVideo();
+  audioPlayer.pause();
+  audioPlayer.currentTime = 0;
   audioCurrent = null;
   audioSyncUI();
 }
 
 function skipAudio(sec){
   if(!audioPlayer || !audioCurrent) return;
-  var cur = audioPlayer.getCurrentTime ? audioPlayer.getCurrentTime() : 0;
-  audioPlayer.seekTo(Math.max(0, cur + sec), true);
-  if(audioPlayer.getPlayerState && audioPlayer.getPlayerState()!==1) audioPlayer.playVideo();
+  var cur = audioPlayer.currentTime || 0;
+  audioPlayer.currentTime = Math.max(0, cur + sec);
+  if(audioPlayer.paused) audioPlayer.play();
   audioSyncUI();
 }
 
 function renderAudio(){
-  ensureYoutubeApi();
+  audioInit();
   qs("#auMeta").innerHTML =
     '<span class="lab">Audio tracks</span>'+
     '<span class="val">2 SESSIONS</span>'+
-    '<span class="sub">audio keeps playing while you browse</span>';
+    '<span class="sub">audio keeps playing while you browse &middot; no ads</span>';
   var idealCard = qs("#auIdeal");
   var consolCard = qs("#auConsol");
   if(activeProgram==="ideal"){ idealCard.classList.add("is-current"); consolCard.classList.remove("is-current"); }

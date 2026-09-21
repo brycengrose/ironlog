@@ -129,6 +129,7 @@ nav{flex:1;margin-top:26px;display:flex;flex-direction:column;gap:4px}
 #view-lifts .ledger-title h2,#view-strength .ledger-title h2{font-size:clamp(40px,5.6vw,72px)}
 #view-sessions .ledger-title h2{font-size:clamp(40px,5.6vw,72px);font-family:var(--font-note);font-style:italic;text-transform:none;letter-spacing:0}
 #view-sessions .ledger-title .kicker,#view-sessions .masthead h2 em{-webkit-text-stroke:0;font-style:italic}
+
 .tab-glass{position:fixed;inset:0;z-index:65;pointer-events:none;opacity:0;background:rgba(237,234,222,.008);backdrop-filter:blur(0) saturate(1);-webkit-backdrop-filter:blur(0) saturate(1)}
 .tab-glass.is-flashing{animation:tabGlass .36s ease-out both}
 .tab-glass::before{content:"";position:absolute;inset:0;background:linear-gradient(120deg,rgba(255,255,255,.018),transparent 42%);opacity:0}
@@ -401,6 +402,27 @@ nav{flex:1;margin-top:26px;display:flex;flex-direction:column;gap:4px}
 .audio-group-head .ag-no{font-family:var(--font-display);color:var(--accent);font-size:15px}
 .audio-group-head h4{font-family:var(--font-display);font-weight:400;font-size:20px;text-transform:uppercase;letter-spacing:.03em}
 .audio-group-head .ag-tag{font-size:9px;letter-spacing:.16em;color:var(--ink-faint);text-transform:uppercase;margin-left:auto}
+.audio-path{margin-top:30px;border:1px solid var(--line2);background:linear-gradient(180deg,rgba(255,91,31,.06),rgba(255,255,255,.015));padding:20px 20px 6px}
+.audio-path-head{display:flex;align-items:baseline;gap:14px;margin:0 0 4px}
+.audio-path-head .ap-no{font-family:var(--font-display);color:var(--accent);font-size:15px}
+.audio-path-head h4{font-family:var(--font-display);font-weight:400;font-size:24px;line-height:1;text-transform:uppercase;letter-spacing:.03em}
+.audio-path-head .ap-tag{font-size:9px;letter-spacing:.16em;color:var(--accent2);text-transform:uppercase;margin-left:auto}
+.audio-path-intro{font-size:10.5px;line-height:1.7;color:var(--ink-dim);letter-spacing:.03em;max-width:62em;margin:0 0 8px}
+.audio-path-intro b{color:var(--ink);font-weight:500}
+.audio-path-phase{display:flex;align-items:baseline;gap:12px;margin:18px 0 8px;padding-top:14px;border-top:1px solid var(--line)}
+.audio-path-phase .pp-no{font-family:var(--font-display);color:var(--accent);font-size:14px}
+.audio-path-phase .pp-name{font-family:var(--font-display);font-weight:400;font-size:16px;text-transform:uppercase;letter-spacing:.04em}
+.audio-path-phase .pp-note{font-size:8px;letter-spacing:.15em;color:var(--ink-faint);text-transform:uppercase;margin-left:auto;text-align:right}
+.audio-path-phase.is-late .pp-no,.audio-path-phase.is-late .pp-name{color:var(--accent2)}
+.audio-path-step{display:flex;align-items:center;gap:14px;padding:10px 12px;border:1px solid transparent;transition:all .12s;cursor:pointer}
+.audio-path-step:hover{background:rgba(255,255,255,.03);border-color:var(--line2)}
+.audio-path-step.is-active{background:rgba(255,91,31,.08);border-color:rgba(255,91,31,.4)}
+.audio-path-step .ps-no{font-family:var(--font-display);font-size:15px;color:var(--accent);flex:none;width:26px;font-variant-numeric:tabular-nums}
+.audio-path-step .ps-body{flex:1;min-width:0}
+.audio-path-step .ps-title{font-size:12px;color:var(--ink);letter-spacing:.02em}
+.audio-path-step .ps-title .ps-track{color:var(--ink-faint);font-size:9px;letter-spacing:.12em;text-transform:uppercase;margin-left:8px}
+.audio-path-step .ps-why{font-size:9.5px;line-height:1.55;color:var(--ink-dim);letter-spacing:.02em;margin-top:3px}
+.audio-path-step .ps-play{flex:none}
 .audio-card{display:flex;flex-direction:column;gap:12px;border:1px solid var(--line);background:var(--panel);padding:16px;min-width:0}
 .audio-card.is-current{border-color:var(--accent)}
 .audio-card.is-current::before{content:"CURRENT PROGRAM";display:inline-block;align-self:flex-start;font-size:8px;letter-spacing:.18em;color:var(--accent);text-transform:uppercase;padding:3px 6px;border:1px solid rgba(255,91,31,.4)}
@@ -1882,19 +1904,180 @@ var AUDIO_GROUPS = [
        {t:600,label:"Train by logic, not tradition"}
      ]}
    ]},
-  {id:"beginner", no:"IV", name:"For Beginners", tag:"start here",
-   tracks:[
-     {id:"beginner", src:"./audio/beginner-guide.mp3", title:"Heavy Duty Training for Beginners", tag:"the rational path", desc:"Mike's coaching fundamentals: one all-out set, full recovery, and why bodybuilding is a science, not a guessing game.", prog:"Beginner", ch:[
-       {t:0,label:"Why beginners overtrain"},
-       {t:200,label:"One all-out set"},
-       {t:400,label:"Intensity & recovery basics"},
-       {t:600,label:"Don't copy the pros"},
-       {t:750,label:"The rational path forward"}
-     ]}
-   ]}
+{id:"beginner", no:"IV", name:"For Beginners", tag:"start here",
+    tracks:[
+      {id:"beginner", src:"./audio/beginner-guide.mp3", title:"Heavy Duty Training for Beginners", tag:"the rational path", desc:"Mike's coaching fundamentals: one all-out set, full recovery, and why bodybuilding is a science, not a guessing game.", prog:"Beginner", ch:[
+        {t:0,label:"Why beginners overtrain"},
+        {t:200,label:"One all-out set"},
+        {t:400,label:"Intensity & recovery basics"},
+        {t:600,label:"Don't copy the pros"},
+        {t:750,label:"The rational path forward"}
+      ]}
+    ]},
+  {id:"methods", no:"V", name:"Advanced Methods", tag:"the secret weapons",
+    tracks:[
+      {id:"rest-pause", src:"./audio/rest-pause-training.mp3", title:"Rest-Pause Training", tag:"how Mentzer added more mass", desc:"The method that took Mentzer beyond his plateau: one all-out rep, ten seconds rest, repeat. Rare audio of Mike explaining the protocol, his 1978–79 training journal showing the 200→240 pound jumps, and why restraint — not volume — is the real exercise.", prog:"Rest-Pause", ch:[
+        {t:0,label:"1979 — the perfect 300"},
+        {t:200,label:"Intensity of effort"},
+        {t:380,label:"The impasse"},
+        {t:470,label:"The rest-pause protocol"},
+        {t:600,label:"The journal — 200 to 240"},
+        {t:720,label:"One set per exercise"},
+        {t:830,label:"The exercise of restraint"},
+        {t:950,label:"Recovery & rest"},
+        {t:1030,label:"Refine, not replace, discipline"}
+      ]}
+    ]},
+  {id:"case", no:"VI", name:"The Case Against Volume", tag:"the evidence",
+    tracks:[
+      {id:"colorado-experiment", src:"./audio/colorado-experiment.mp3", title:"The Colorado Experiment", tag:"the 1973 proof", desc:"Mike explains the significance of the 1973 Arthur Jones–Casey Viator study: from 170 to 233 pounds of muscle in a month while training just a handful of hours — and why modern champions train the opposite way.", prog:"The Evidence", ch:[
+        {t:0,label:"The setup"},
+        {t:70,label:"Casey's starting point"},
+        {t:110,label:"The result: 63 lbs of muscle"},
+        {t:175,label:"How he did it: 6 hours"},
+        {t:210,label:"Arnold's 288-hour contrast"},
+        {t:350,label:"The discrepancy"},
+        {t:450,label:"The answer: overtraining"}
+      ]},
+      {id:"three-sets-of-ten", src:"./audio/three-sets-of-ten.mp3", title:"The Forgotten Truth About 3 Sets of 10", tag:"tradition, not science", desc:"Did bodybuilding build its foundations on tradition rather than science? Mike traces the '3 sets of 10' gospel back to Bob Hoffman, the 1940s, and the 1951 confession that one set suffices — then checks it against the evidence.", prog:"The Evidence", ch:[
+        {t:0,label:"The gospel of three sets"},
+        {t:65,label:"Bob Hoffman & the magic of three"},
+        {t:195,label:"The challenge & the 1940s"},
+        {t:305,label:"The 1951 confession: one set suffices"},
+        {t:490,label:"The single-set evidence"},
+        {t:655,label:"Intensity is momentary effort"},
+        {t:785,label:"Joe Weider: more is better"},
+        {t:880,label:"Recovery ability varies"},
+        {t:1075,label:"What does modern science say"}
+      ]},
+      {id:"training-too-often", src:"./audio/training-too-often.mp3", title:"Why Training Too Often Stops Muscle Growth", tag:"the 1981 seminar", desc:"Mike explains the fundamentals governing muscular growth and why training longer or more frequently does not produce better results — recovery must be systemic, adaptive ability is limited, and maximum effort is the only sure way to cross the intensity threshold.", prog:"The Evidence", ch:[
+        {t:0,label:"Stimulate, recover, grow"},
+        {t:107,label:"Six days a week is a mistake"},
+        {t:160,label:"Specificity of training"},
+        {t:278,label:"The intensity threshold"},
+        {t:360,label:"Going to failure: not for everyone"},
+        {t:405,label:"Roy Callender and getting ripped"},
+        {t:478,label:"Weight training burns sugar"}
+      ]},
+      {id:"reducing-volume-mr-universe", src:"./audio/reducing-volume-mr-universe.mp3", title:"Reducing Volume Builds More Muscle", tag:"'78 Mr. Universe", desc:"How Mentzer cut his workouts in half heading into the 1978 Mr. Universe, stayed intensely all-out, and gained seven pounds of muscle doing less work — stepping on stage in Acapulco with the first perfect score in the contest's history.", prog:"The Evidence", ch:[
+        {t:0,label:"Mr. America, then Montreal"},
+        {t:65,label:"The problem: too much volume"},
+        {t:105,label:"The reduced-volume routine"},
+        {t:235,label:"Precision and poundages"},
+        {t:320,label:"Acapulco: the 1978 contest"},
+        {t:450,label:"The perfect score of 300"},
+        {t:515,label:"Legacy: Heavy Duty"}
+      ]},
+      {id:"mr-america-1976", src:"./audio/mr-america-1976.mp3", title:"Mr. America '76 — 3 Hours a Week", tag:"the 14-lb gain", desc:"From distant third in 1975 to dominant champion at the 1976 Mr. America on just three hours a week of training: heavy weights, forced reps, negatives, and a sprinter's approach to intensity that compressed workouts down to a few hours while adding 14 pounds of muscle.", prog:"The Evidence", ch:[
+        {t:0,label:"Third place in the '75 America"},
+        {t:105,label:"The split, then a decisive shift"},
+        {t:185,label:"Sprinter vs. distance runner"},
+        {t:295,label:"Proof in the gym: brutal strength"},
+        {t:400,label:"The 14-lb gain"},
+        {t:535,label:"Madison Square Garden victory"},
+        {t:630,label:"Vindication: brief & intense"}
+      ]},
+      {id:"ten-pounds-three-weeks", src:"./audio/ten-pounds-three-weeks.mp3", title:"10 Lbs in 3 Weeks by Training Less", tag:"the '80 Olympia build", desc:"Three weeks out from the 1980 Mr. Olympia, Mentzer added 10 pounds of muscle while losing fat — by training less often. Pushed to extremes with rest-pause and forced reps, he realized recovery had become the bottleneck, and progress accelerated the moment training dropped back.", prog:"The Evidence", ch:[
+        {t:0,label:"The 10-lb discovery"},
+        {t:65,label:"Rest-pause & perfect scores"},
+        {t:150,label:"The recovery problem"},
+        {t:195,label:"Recovery must come first"},
+        {t:350,label:"The two-workout split"},
+        {t:485,label:"Results: gains skyrocket"},
+        {t:560,label:"The pattern & the heavy-duty principle"}
+      ]},
+      {id:"overtraining-health", src:"./audio/overtraining-health.mp3", title:"Overtraining Can Damage Your Health", tag:"recovery is finite", desc:"Mike's claim that overtraining is the single greatest obstacle to progress — and one of the most overlooked threats to health. Drawing on a 1994 interview and his final recorded thoughts, this argues exercise is only the stimulus; recovery capacity is finite, and more is not better.", prog:"The Evidence", ch:[
+        {t:0,label:"The 'no pain, no gain' myth"},
+        {t:60,label:"Dr. Cooper & Mike's letter"},
+        {t:150,label:"Two decades of evidence"},
+        {t:295,label:"Exercise is a biological stressor"},
+        {t:360,label:"Muscle like a suntan: adaptation"},
+        {t:450,label:"An exercise sunburn"},
+        {t:575,label:"The workout only stimulates growth"}
+      ]},
+      {id:"how-often-workout", src:"./audio/how-often-workout.mp3", title:"The Truth About How Often You Should Train", tag:"how little is enough?", desc:"Mike's thinking evolved from high-intensity training to a deeper question: not 'how much exercise do we need?' but 'how little is actually required?' Rare audio from 1992, 1996, and 2000, plus Dorian Yates and the detraining research.", prog:"The Evidence", ch:[
+        {t:0,label:"The gym dogma"},
+        {t:58,label:"Hard, brief, infrequent"},
+        {t:153,label:"Recasting the problem"},
+        {t:271,label:"How much, or how little?"},
+        {t:398,label:"The detraining study"},
+        {t:531,label:"The evidence question"},
+        {t:661,label:"How little is enough"}
+      ]},
+      {id:"when-train-again", src:"./audio/when-to-train-again.mp3", title:"When Should You Train Again?", tag:"recovered isn't feeling ready", desc:"Most lifters train on feeling: soreness fades, energy returns, back to the gym. Mike flips it — the difference between feeling recovered and being recovered, why growth happens only after the body fully compensates, and why the pump is a lie next to the logbook.", prog:"The Evidence", ch:[
+        {t:0,label:"Train more often"},
+        {t:62,label:"Workouts don't build muscle"},
+        {t:181,label:"Training too soon short-circuits"},
+        {t:257,label:"Feeling ready isn't recovered"},
+        {t:423,label:"Cutting frequency in practice"},
+        {t:552,label:"The 50/50 big picture"},
+        {t:670,label:"Forget the pump — keep records"}
+      ]},
+      {id:"recovery-factors", src:"./audio/recovery-factors.mp3", title:"Recovery Factors & Specificity", tag:"rest drives growth", desc:"From the 1981 seminar: the role of rest and recovery in the adaptation process, how to direct your training onto the side of building muscular mass rather than endurance, the intensity threshold, and — for the cutters — the role of aerobics in losing body fat.", prog:"The Evidence", ch:[
+        {t:0,label:"Recover first, grow second"},
+        {t:119,label:"Rest 48 to 72 hours"},
+        {t:180,label:"The specificity of training"},
+        {t:295,label:"The intensity threshold"},
+        {t:370,label:"Obsession isn't progress"},
+        {t:485,label:"Getting cut is about fuel"}
+      ]},
+      {id:"never-reached-potential", src:"./audio/never-reached-potential.mp3", title:"Why I Never Reached My Full Potential", tag:"his biggest mistake", desc:"Mentzer's look back: his biggest mistake as a bodybuilder was training too long and too frequently — despite being the arch-advocate of brief and infrequent training. Includes excerpts from Casey Viator and Arthur Jones, and why he never competed again after 1980.", prog:"The Evidence", ch:[
+        {t:0,label:"The grotesque question"},
+        {t:65,label:"The 1980 photo & 30-minute training"},
+        {t:135,label:"The overtrained mistake"},
+        {t:185,label:"Machines vs. human muscles"},
+        {t:290,label:"Arthur Jones, Nautilus & Casey Viator"},
+        {t:400,label:"Variation in exercise tolerance"},
+        {t:545,label:"Rest, not volume"}
+      ]}
+    ]}
 ];
 var AUDIO_TRACKS = {};
 AUDIO_GROUPS.forEach(function(g){ g.tracks.forEach(function(t){ AUDIO_TRACKS[t.id] = t; }); });
+var AUDIO_PATH = [
+  {name:"The Idea", note:"grip the principle before touching a weight — start here",
+   steps:[
+     {id:"beginner", why:"The whole system in one sitting — why beginners overtrain, one all-out set, and the rational path forward."},
+     {id:"training-too-often", why:"The core argument in its own words: why more sessions stop growth instead of starting it."},
+     {id:"recovery-factors", why:"Growth happens during rest, not the workout — the framework the entire approach rests on."}
+   ]},
+  {name:"The Proof", note:"see the numbers before you commit",
+   steps:[
+     {id:"colorado-experiment", why:"The 1973 study — 63 lbs of muscle in a month trained briefly and infrequently."},
+     {id:"reducing-volume-mr-universe", why:"Seven pounds of muscle doing less work, first perfect score in the contest's history."},
+     {id:"mr-america-1976", why:"Three hours a week in the gym added fourteen pounds — the sprinter, not the marathoner."},
+     {id:"three-sets-of-ten", why:"'Three sets of ten' is tradition, not science — traced to its root and tested."}
+   ]},
+  {name:"How It Works", note:"the mechanics of brief, intense, infrequent",
+   steps:[
+     {id:"how-often-workout", why:"Mentzer's mature question — not how much exercise you need, but how little."},
+     {id:"optimal-frequency", why:"Two types of recovery and why 72–96 hours between sessions works."},
+     {id:"when-train-again", why:"Feeling recovered is not being recovered — growth finishes long after the pump fades."},
+     {id:"overtraining-health", why:"Recovery capacity is finite — the long-term health cost of training too much."}
+   ]},
+  {name:"The Routine", note:"what the guide is built on",
+   steps:[
+     {id:"ideal", why:"The core four-workout protocol — exercise selection, one set to failure, recovery between."},
+     {id:"how-often", why:"Recovery is systemic, not just 'less sore' — why longer rest often produces bigger gains."},
+     {id:"how-much-rest", why:"The client trapped at a plateau — recovery, not more effort, was the missing variable."}
+   ]},
+  {name:"Fuel", note:"eat like the method trains",
+   steps:[
+     {id:"protein", why:"The protein-industry myth — excess doesn't build more muscle, and you need far less than they sell."},
+     {id:"carbs", why:"Carbs are protein-sparing — extreme low-carb dogma misses the point."},
+     {id:"hd-nutrition", why:"What Mike actually ate, day to day — balanced, moderate, boring on purpose."}
+   ]},
+  {name:"Hearing the Man", note:"context, then the personal confession",
+   steps:[
+     {id:"never-reached-potential", why:"His own confession — training too long and too often was his biggest mistake."},
+     {id:"ten-pounds-three-weeks", why:"Rest-pause and forced reps taken to the edge: 10 lbs gained in 3 weeks by training less."}
+   ]},
+  {name:"Later in Your Career", note:"save these until the basics stop working",
+   steps:[
+     {id:"consolidation", why:"The most refined version — four compounds to failure. Come back when the ideal routine plateaus."},
+     {id:"rest-pause", why:"The plateau-breaker: one all-out rep, ten seconds rest. A tool for veterans, not beginners."}
+   ]}
+];
 var audioPlayer = null;
 var audioCurrent = null;
 var audioAuto = false;
@@ -2011,6 +2194,7 @@ function audioSyncUI(){
   });
   qsa(".audio-card").forEach(function(c){ c.classList.toggle("is-playing", c.getAttribute("data-audio-card")===audioCurrent); });
   qsa(".audio-chapter").forEach(function(c){ c.classList.toggle("is-active", c.getAttribute("data-ch")===audioCurrent); });
+  qsa(".audio-path-step").forEach(function(c){ c.classList.toggle("is-active", c.getAttribute("data-audio-play")===audioCurrent); });
   var bar = qs("#audioBar");
   var show = !!audioCurrent;
   bar.classList.toggle("is-on", show);
@@ -2135,6 +2319,26 @@ function renderAudio(){
     '<span class="val">'+Object.keys(AUDIO_TRACKS).length+' TRACKS</span>'+
     '<span class="sub">keeps playing on the lock screen &middot; no ads</span>';
   var html = "";
+  var stepNo = 0;
+  html += '<div class="audio-path"><div class="audio-path-head"><span class="ap-no">ROUTE</span><h4>Start Here &mdash; A Beginner\'s Path</h4><span class="ap-tag">watch in order</span></div>';
+  html += '<div class="audio-path-intro">New to Heavy Duty? Follow this from top to bottom. It starts with the idea, then the proof, then how to run it, and ends with the two techniques you should <b>save until later in your career</b> &mdash; the consolidation program and rest-pause are for after the basics stop working.</div>';
+  AUDIO_PATH.forEach(function(phase){
+    var late = phase.name.indexOf("Later")===0;
+    html += '<div class="audio-path-phase'+(late?' is-late':'')+'"><span class="pp-no">PHASE</span><span class="pp-name">'+esc(phase.name)+'</span><span class="pp-note">'+esc(phase.note)+'</span></div>';
+    phase.steps.forEach(function(s){
+      stepNo++;
+      var t = AUDIO_TRACKS[s.id];
+      if(!t) return;
+      var resumed = audioProg[s.id] && audioProg[s.id] > 20;
+      html += '<div class="audio-path-step" data-audio-play="'+s.id+'" role="button" tabindex="0">'+
+        '<span class="ps-no">'+(stepNo<10?'0':'')+stepNo+'</span>'+
+        '<span class="ps-body"><span class="ps-title">'+esc(t.title)+'<span class="ps-track">'+esc(t.tag)+'</span></span>'+
+        '<span class="ps-why">'+esc(s.why)+'</span></span>'+
+        '<button class="audio-play ps-play" data-audio-play="'+s.id+'"><span class="ap-ico"><svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg></span><span>'+(resumed?"Resume":"Play")+'</span></button>'+
+      '</div>';
+    });
+  });
+  html += '</div>';
   AUDIO_GROUPS.forEach(function(g){
     html += '<div class="audio-group"><div class="audio-group-head"><span class="ag-no">'+g.no+'</span><h4>'+esc(g.name)+'</h4><span class="ag-tag">'+esc(g.tag)+'</span></div>';
     html += '<div class="audio-grid">';
@@ -2163,6 +2367,10 @@ function renderAudio(){
   });
   qs("#auLibrary").innerHTML = html;
   qsa("#auLibrary .audio-play").forEach(function(b){ b.addEventListener("click", function(){ playAudio(b.getAttribute("data-audio-play")); }); });
+  qsa("#auLibrary .audio-path-step").forEach(function(s){
+    s.addEventListener("click", function(e){ if(e.target.closest(".audio-play")) return; playAudio(s.getAttribute("data-audio-play")); });
+    s.addEventListener("keydown", function(e){ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); playAudio(s.getAttribute("data-audio-play")); } });
+  });
   qsa("#auLibrary .audio-restart").forEach(function(b){ b.addEventListener("click", function(){ audioProg[b.getAttribute("data-restart")]=0; audioSaveProgress(); renderAudio(); playAudio(b.getAttribute("data-restart")); }); });
   qsa("#auLibrary .audio-chapter").forEach(function(b){ b.addEventListener("click", function(){ playChapter(b.getAttribute("data-ch"), parseInt(b.getAttribute("data-ct"),10)||0); }); });
   audioSyncUI();

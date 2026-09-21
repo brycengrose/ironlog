@@ -328,10 +328,26 @@ nav{flex:1;margin-top:26px;display:flex;flex-direction:column;gap:4px}
 .map-muscle:hover{fill:#64718a;stroke:var(--ink);opacity:1}
 .map-muscle.is-secondary{fill:#b17a25;stroke:#e0a83a;opacity:1}
 .map-muscle.is-primary{fill:var(--accent);stroke:#ffb18d;opacity:1;filter:drop-shadow(0 0 5px rgba(255,91,31,.35))}
+.map-muscle.g-strong{fill:#4caf6a;stroke:#7ee09b;opacity:1;filter:drop-shadow(0 0 5px rgba(76,175,106,.35))}
+.map-muscle.g-avg{fill:#e0b93a;stroke:#f3d878;opacity:1}
+.map-muscle.g-weak{fill:#c74d3a;stroke:#ef8a78;opacity:1;filter:drop-shadow(0 0 5px rgba(199,77,58,.3))}
+.map-mode{display:flex;gap:2px;margin-bottom:10px;width:max-content}
+.map-mode button{padding:7px 12px;border:1px solid var(--line2);background:var(--bg);font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-dim);transition:all .15s}
+.map-mode button:hover{color:var(--ink);border-color:var(--ink-faint)}
+.map-mode button.is-on{background:var(--accent);border-color:var(--accent);color:#0b0c09;font-weight:600}
+.map-profile{border:1px dashed var(--line2);background:var(--panel2);padding:12px 13px;display:grid;gap:10px}
+.mp-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.mp-field{display:grid;gap:4px}
+.mp-field span{font-size:7.5px;letter-spacing:.18em;color:var(--ink-faint);text-transform:uppercase}
+.mp-field input,.mp-field select{padding:8px 9px;background:var(--bg);border:1px solid var(--line2);color:var(--ink);font-size:12px;width:100%;letter-spacing:.04em}
+.mp-field input:focus,.mp-field select:focus{outline:none;border-color:var(--accent)}
+.mp-field select{appearance:none;-webkit-appearance:none;cursor:pointer}
+.mp-hint{font-size:8.5px;line-height:1.5;color:var(--ink-faint);letter-spacing:.04em}
 .map-legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:12px;font-size:9px;color:var(--ink-faint);letter-spacing:.12em;text-transform:uppercase}
 .map-legend span{display:inline-flex;align-items:center;gap:6px}
 .map-legend i{width:8px;height:8px;border-radius:50%;background:#2c3545;border:1px solid #596579}
 .map-legend .primary{background:var(--accent);border-color:#ffb18d}.map-legend .secondary{background:#b17a25;border-color:#e0a83a}
+.map-legend .g-strong{background:#4caf6a;border-color:#7ee09b}.map-legend .g-avg{background:#e0b93a;border-color:#f3d878}.map-legend .g-weak{background:#c74d3a;border-color:#ef8a78}
 .map-panel{padding:16px;display:flex;flex-direction:column;gap:16px}
 .map-panel-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;padding-bottom:12px;border-bottom:1px solid var(--line)}
 .map-panel-head h4{font-family:var(--font-display);font-weight:400;font-size:19px;line-height:1;text-transform:uppercase}
@@ -351,6 +367,7 @@ nav{flex:1;margin-top:26px;display:flex;flex-direction:column;gap:4px}
 .map-muscle-row:last-child{border-bottom:0}
 .map-muscle-row b{margin-left:auto;font-size:8px;letter-spacing:.15em;text-transform:uppercase;font-weight:500}
 .map-muscle-row b.primary{color:var(--accent)}.map-muscle-row b.secondary{color:var(--accent2)}
+.map-muscle-row b.g-strong{color:#7ee09b}.map-muscle-row b.g-avg{color:#f3d878}.map-muscle-row b.g-weak{color:#ef8a78}
 .map-empty{padding:15px;border:1px dashed var(--line2);color:var(--ink-faint);font-size:10px;line-height:1.5;letter-spacing:.08em;text-transform:uppercase}
 
 .toast{position:fixed;right:26px;bottom:28px;z-index:140;max-width:min(360px,calc(100vw - 40px));padding:12px 15px;border:1px solid var(--accent);background:var(--panel2);color:var(--ink);
@@ -1024,7 +1041,13 @@ input{transition:background .15s,border-color .15s,color .15s}
       <div class="map-layout">
         <div class="map-stage">
           <div class="map-stage-head">
-            <h4 id="mmTitle">Day I &mdash; Chest &amp; Back</h4>
+            <div>
+              <div class="map-mode" id="mapMode">
+                <button class="is-on" data-mm="coverage">Coverage</button>
+                <button data-mm="grade">Strength grade</button>
+              </div>
+              <h4 id="mmTitle">Day I &mdash; Chest &amp; Back</h4>
+            </div>
             <p>Click a region<br>to inspect the map</p>
           </div>
           <div class="map-bodies">
@@ -1061,10 +1084,22 @@ input{transition:background .15s,border-color .15s,color .15s}
               <span class="map-body-label">Back</span>
             </div>
           </div>
-          <div class="map-legend"><span><i class="primary"></i>Primary mover</span><span><i class="secondary"></i>Secondary / synergist</span><span><i></i>Not selected</span></div>
+          <div class="map-legend" id="mapLegend"><span><i class="primary"></i>Primary mover</span><span><i class="secondary"></i>Secondary / synergist</span><span><i></i>Not selected</span></div>
         </div>
         <aside class="map-panel">
           <div class="map-panel-head"><div><span id="mmMode">DAY OVERVIEW</span><h4 id="mmSelection">Day I</h4></div><span id="mmCount">0 MUSCLES</span></div>
+          <div class="map-profile" id="mapProfileForm">
+            <div class="map-section-label">Profile &mdash; for strength grading</div>
+            <div class="mp-grid">
+              <label class="mp-field"><span>Age</span><input type="number" id="mpAge" min="13" max="99" placeholder="25"></label>
+              <label class="mp-field"><span>Weight (lb)</span><input type="number" id="mpWeight" min="80" max="500" placeholder="170"></label>
+              <label class="mp-field"><span>Height (in)</span><input type="number" id="mpHeight" min="48" max="84" placeholder="70"></label>
+              <label class="mp-field"><span>Gender</span>
+                <select id="mpSex"><option value="m">Male</option><option value="f">Female</option></select>
+              </label>
+            </div>
+            <div class="mp-hint">Grades compare your best logged lift per muscle against the average for your age, weight, height &amp; gender. Empty groups stay grey.</div>
+          </div>
           <div class="map-day-tabs" id="mmDays"></div>
           <div class="map-section-label">Movements</div>
           <div class="map-exercises" id="mmExercises"></div>
@@ -1567,8 +1602,64 @@ var MUSCLE_MAP = {
 };
 var muscleMapDay = "d1";
 var muscleMapExercise = "all";
+var muscleMapMode = "coverage";
 var muscleAssetsLoading = false;
 var muscleAssetsReady = false;
+var MAP_PROFILE_KEY = "ironlog.mapProfile";
+var mapProfile = {age:0, weight:0, height:0, sex:"m"};
+function mapProfileLoad(){ try{ var v = JSON.parse(localStorage.getItem(MAP_PROFILE_KEY)||"{}"); if(typeof v==="object"){ mapProfile.age = +v.age||0; mapProfile.weight = +v.weight||0; mapProfile.height = +v.height||0; mapProfile.sex = v.sex==="f"?"f":"m"; } }catch(e){} }
+mapProfileLoad();
+function mapProfileSave(){ try{ localStorage.setItem(MAP_PROFILE_KEY, JSON.stringify(mapProfile)); }catch(e){} }
+var MAP_REF = {
+  chest:1.0, front_delt:0.85, side_delt:0.55, rear_delt:0.6, biceps:0.65, triceps:0.95,
+  lats:1.0, upper_traps:0.9, mid_traps:0.7, lower_back:1.0, abs:0.7, obliques:0.7,
+  quads:1.4, hamstrings:1.0, glute_max:1.2, glute_med:0.7, adductors:0.8, calves:1.3,
+  tibialis:0.5, hip_flexors:0.6, forearm_front:0.6, forearm_back:0.5
+};
+function mapAgeFactor(age){
+  if(age<=0) return 1;
+  if(age<=18) return 0.9;
+  if(age<=25) return 1;
+  if(age<=35) return 1-(age-25)*0.008;
+  if(age<=50) return 0.92-(age-35)*0.008;
+  return 0.8-(age-50)*0.006;
+}
+function mapHeightFactor(inches){
+  if(inches<=0) return 1;
+  var base = 69;
+  var f = 1-(inches-base)*0.004;
+  return Math.max(0.9, Math.min(1.1, f));
+}
+function mapRefFor(muscle){
+  var ref = MAP_REF[muscle]||0.7;
+  ref *= mapAgeFactor(mapProfile.age);
+  ref *= mapHeightFactor(mapProfile.height);
+  if(mapProfile.sex==="f") ref *= 0.65;
+  return ref;
+}
+function muscleMaxScore(muscle){
+  var best = null;
+  Object.keys(MUSCLE_MAP).forEach(function(exId){
+    var map = MUSCLE_MAP[exId];
+    if(!map || map.primary.indexOf(muscle)===-1) return;
+    var pts = strengthFor(exId);
+    pts.forEach(function(p){ if(best===null || p.v>best) best = p.v; });
+  });
+  return best;
+}
+function muscleGrade(muscle){
+  if(!mapProfile.weight || mapProfile.weight<=0) return null;
+  var score = muscleMaxScore(muscle);
+  if(score==null) return null;
+  var ratio = score/mapProfile.weight;
+  var ref = mapRefFor(muscle);
+  var pct = Math.round(ratio/ref*100);
+  var cls, label;
+  if(pct>=115){ cls="strong"; label="Above average"; }
+  else if(pct>=90){ cls="avg"; label="Average"; }
+  else { cls="weak"; label="Below average"; }
+  return {score:score, ratio:ratio, ref:ref, pct:pct, cls:cls, label:label};
+}
 var EXERCISE_MEDIA = {
   "pec-deck": {url:"https://raw.githubusercontent.com/shahanbutt/exercises-dataset/main/videos/0596-v3xmPAR.gif", label:"Lever seated fly", note:"Closest dataset match for pec deck."},
   "incline-press": {url:"https://raw.githubusercontent.com/shahanbutt/exercises-dataset/main/videos/0047-3TZduzM.gif", label:"Barbell incline bench press"},
@@ -2700,29 +2791,103 @@ function renderMuscleMap(){
   var selected = muscleMapExercise!=="all" ? exIndex[muscleMapExercise] : null;
   var stateMap = muscleMapState();
   var activeCount = stateMap.primary.length+stateMap.secondary.length;
-  qs("#mmMeta").innerHTML = '<span class="lab">Muscle coverage</span><span class="val">'+activeCount+' GROUPS ACTIVE</span><span class="sub">primary + secondary activation</span>';
   var unit = activeProgram==="consolidation" ? "Workout" : "Day";
+
+  var pf = qs("#mapProfileForm");
+  if(pf){
+    var aEl=qs("#mpAge"), wEl=qs("#mpWeight"), hEl=qs("#mpHeight"), sEl=qs("#mpSex");
+    if(aEl) aEl.value = mapProfile.age||"";
+    if(wEl) wEl.value = mapProfile.weight||"";
+    if(hEl) hEl.value = mapProfile.height||"";
+    if(sEl) sEl.value = mapProfile.sex;
+  }
+
+  qsa("#mapMode button").forEach(function(b){
+    b.classList.toggle("is-on", b.getAttribute("data-mm")===muscleMapMode);
+  });
+
+  if(muscleMapMode==="grade"){
+    var graded = 0, noData = 0;
+    Object.keys(MUSCLE_LABELS).forEach(function(id){
+      var g = muscleGrade(id);
+      if(g) graded++; else noData++;
+    });
+    qs("#mmMeta").innerHTML = '<span class="lab">Strength grade</span><span class="val">'+graded+' GRADED</span><span class="sub">vs average for your profile &middot; '+noData+' no data</span>';
+    qs("#mmCount").textContent = graded+" GRADED";
+    qs("#mapLegend").innerHTML =
+      '<span><i class="g-strong"></i>Above average</span>'+
+      '<span><i class="g-avg"></i>Average</span>'+
+      '<span><i class="g-weak"></i>Below average</span>'+
+      '<span><i></i>No data</span>';
+    var rows = Object.keys(MUSCLE_LABELS).map(function(id){
+      var g = muscleGrade(id);
+      if(!g) return null;
+      return '<div class="map-muscle-row"><span>'+MUSCLE_LABELS[id]+'</span><b class="g-'+g.cls+'">'+g.pct+'%</b></div>';
+    }).filter(Boolean);
+    qs("#mmMuscles").innerHTML = rows.join("") || '<div class="map-empty">Log lifts so each muscle group can be graded.</div>';
+    qsa("[data-map-muscle]").forEach(function(el){
+      var id = el.getAttribute("data-map-muscle");
+      var g = muscleGrade(id);
+      el.classList.remove("is-primary","is-secondary","g-strong","g-avg","g-weak");
+      if(g) el.classList.add("g-"+g.cls);
+    });
+  } else {
+    qs("#mmMeta").innerHTML = '<span class="lab">Muscle coverage</span><span class="val">'+activeCount+' GROUPS ACTIVE</span><span class="sub">primary + secondary activation</span>';
+    qs("#mmCount").textContent = activeCount+" MUSCLES";
+    qs("#mapLegend").innerHTML =
+      '<span><i class="primary"></i>Primary mover</span>'+
+      '<span><i class="secondary"></i>Secondary / synergist</span>'+
+      '<span><i></i>Not selected</span>';
+    var rows = stateMap.primary.map(function(id){ return '<div class="map-muscle-row"><span>'+MUSCLE_LABELS[id]+'</span><b class="primary">Primary</b></div>'; });
+    rows = rows.concat(stateMap.secondary.map(function(id){ return '<div class="map-muscle-row"><span>'+MUSCLE_LABELS[id]+'</span><b class="secondary">Secondary</b></div>'; }));
+    qs("#mmMuscles").innerHTML = rows.join("") || '<div class="map-empty">Select a movement to light up the muscles it trains.</div>';
+    qsa("[data-map-muscle]").forEach(function(el){
+      var id = el.getAttribute("data-map-muscle");
+      el.classList.remove("g-strong","g-avg","g-weak");
+      el.classList.toggle("is-primary", stateMap.primary.indexOf(id)!==-1);
+      el.classList.toggle("is-secondary", stateMap.primary.indexOf(id)===-1 && stateMap.secondary.indexOf(id)!==-1);
+    });
+  }
+
   qs("#mmTitle").innerHTML = selected ? esc(selected.name) : unit+" "+routine.no+" &mdash; "+esc(routine.name);
   qs("#mmMode").textContent = selected ? "EXERCISE DETAIL" : "WORKOUT OVERVIEW";
   qs("#mmSelection").textContent = selected ? "Selected movement" : unit+" "+routine.no;
-  qs("#mmCount").textContent = activeCount+" MUSCLES";
   qs("#mmDays").innerHTML = ROUTINES.map(function(r){ return '<button class="map-day-tab'+(r.id===muscleMapDay?" is-on":"")+'" data-map-day="'+r.id+'">'+unit+' '+r.no+'</button>'; }).join("");
   var exs = '<button class="map-exercise'+(muscleMapExercise==="all"?" is-on":"")+'" data-map-ex="all"><span class="dot"></span>All movements in '+unit+' '+routine.no+'</button>';
   routine.exercises.forEach(function(ex){
     exs += '<button class="map-exercise'+(muscleMapExercise===ex.id?" is-on":"")+'" data-map-ex="'+ex.id+'"><span class="dot"></span>'+esc(ex.name)+"</button>";
   });
   qs("#mmExercises").innerHTML = exs;
-  var rows = stateMap.primary.map(function(id){ return '<div class="map-muscle-row"><span>'+MUSCLE_LABELS[id]+'</span><b class="primary">Primary</b></div>'; });
-  rows = rows.concat(stateMap.secondary.map(function(id){ return '<div class="map-muscle-row"><span>'+MUSCLE_LABELS[id]+'</span><b class="secondary">Secondary</b></div>'; }));
-  qs("#mmMuscles").innerHTML = rows.join("") || '<div class="map-empty">Select a movement to light up the muscles it trains.</div>';
-  qsa("[data-map-muscle]").forEach(function(el){
-    var id = el.getAttribute("data-map-muscle");
-    el.classList.toggle("is-primary", stateMap.primary.indexOf(id)!==-1);
-    el.classList.toggle("is-secondary", stateMap.primary.indexOf(id)===-1 && stateMap.secondary.indexOf(id)!==-1);
-  });
   qsa("[data-map-day]").forEach(function(b){ b.addEventListener("click", function(){ muscleMapDay=b.getAttribute("data-map-day"); muscleMapExercise="all"; renderMuscleMap(); }); });
   qsa("[data-map-ex]").forEach(function(b){ b.addEventListener("click", function(){ muscleMapExercise=b.getAttribute("data-map-ex"); renderMuscleMap(); }); });
   qsa("[data-map-muscle]").forEach(function(el){ el.addEventListener("click", function(){ var id=el.getAttribute("data-map-muscle"); var row=qsa(".map-muscle-row").find(function(x){ return x.textContent.indexOf(MUSCLE_LABELS[id])!==-1; }); if(row) row.scrollIntoView({block:"nearest"}); }); });
+}
+
+function bindMapProfile(){
+  var mapModeEl = qs("#mapMode");
+  if(mapModeEl){
+    qsa("button", mapModeEl).forEach(function(b){
+      b.addEventListener("click", function(){
+        muscleMapMode = b.getAttribute("data-mm");
+        qsa("button", mapModeEl).forEach(function(x){ x.classList.toggle("is-on", x===b); });
+        renderMuscleMap();
+      });
+    });
+  }
+  function readProfile(){
+    mapProfile.age = parseFloat(qs("#mpAge").value)||0;
+    mapProfile.weight = parseFloat(qs("#mpWeight").value)||0;
+    mapProfile.height = parseFloat(qs("#mpHeight").value)||0;
+    mapProfile.sex = (qs("#mpSex")||{}).value==="f"?"f":"m";
+    mapProfileSave();
+    renderMuscleMap();
+  }
+  ["#mpAge","#mpWeight","#mpHeight"].forEach(function(sel){
+    var el = qs(sel);
+    if(el){ el.addEventListener("change", readProfile); el.addEventListener("input", readProfile); }
+  });
+  var sexEl = qs("#mpSex");
+  if(sexEl) sexEl.addEventListener("change", readProfile);
 }
 
 function renderGuide(){
@@ -3418,6 +3583,7 @@ function bindGlobal(){
   bindModalClose("programModal");
   var tipNextBtn = qs("#tipNext");
   if(tipNextBtn) tipNextBtn.addEventListener("click", tipNext);
+  bindMapProfile();
   qs("#nameSave").addEventListener("click", saveName);
   qs("#nameInput").addEventListener("keydown", function(e){
     if(e.key === "Enter") saveName();

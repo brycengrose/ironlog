@@ -1611,10 +1611,10 @@ function mapProfileLoad(){ try{ var v = JSON.parse(localStorage.getItem(MAP_PROF
 mapProfileLoad();
 function mapProfileSave(){ try{ localStorage.setItem(MAP_PROFILE_KEY, JSON.stringify(mapProfile)); }catch(e){} }
 var MAP_REF = {
-  chest:1.0, front_delt:0.85, side_delt:0.55, rear_delt:0.6, biceps:0.65, triceps:0.95,
-  lats:1.0, upper_traps:0.9, mid_traps:0.7, lower_back:1.0, abs:0.7, obliques:0.7,
-  quads:1.4, hamstrings:1.0, glute_max:1.2, glute_med:0.7, adductors:0.8, calves:1.3,
-  tibialis:0.5, hip_flexors:0.6, forearm_front:0.6, forearm_back:0.5
+  chest:0.9, front_delt:0.6, side_delt:0.45, rear_delt:0.28, biceps:0.45, triceps:0.6,
+  lats:0.85, upper_traps:0.5, mid_traps:0.4, lower_back:0.7, abs:0.35, obliques:0.35,
+  quads:1.5, hamstrings:0.8, glute_max:1.2, glute_med:0.5, adductors:0.6, calves:1.2,
+  tibialis:0.3, hip_flexors:0.4, forearm_front:0.4, forearm_back:0.35
 };
 function mapAgeFactor(age){
   if(age<=0) return 1;

@@ -328,13 +328,6 @@ nav{flex:1;margin-top:26px;display:flex;flex-direction:column;gap:4px}
 .map-muscle:hover{fill:#64718a;stroke:var(--ink);opacity:1}
 .map-muscle.is-secondary{fill:#b17a25;color:#b17a25;stroke:#e0a83a;opacity:1}
 .map-muscle.is-primary{fill:var(--accent);color:var(--accent);stroke:#ffb18d;opacity:1;filter:drop-shadow(0 0 5px rgba(255,91,31,.35))}
-.map-muscle.g-5{fill:#1e8c45;color:#1e8c45;stroke:#63d98d;opacity:1;filter:drop-shadow(0 0 5px rgba(30,140,69,.4))}
-.map-muscle.g-4{fill:#2fae5a;color:#2fae5a;stroke:#8ee8ac;opacity:1;filter:drop-shadow(0 0 4px rgba(47,174,90,.35))}
-.map-muscle.g-3{fill:#4caf6a;color:#4caf6a;stroke:#7ee09b;opacity:1;filter:drop-shadow(0 0 5px rgba(76,175,106,.35))}
-.map-muscle.g-2{fill:#8cc63f;color:#8cc63f;stroke:#c2e88a;opacity:1}
-.map-muscle.g-1{fill:#d4d44a;color:#d4d44a;stroke:#eef09b;opacity:1}
-.map-muscle.g0{fill:#a9b0a0;color:#a9b0a0;stroke:#cdd3c6;opacity:1}
-.map-muscle.g-n{fill:#c74d3a;color:#c74d3a;stroke:#ef8a78;opacity:1;filter:drop-shadow(0 0 5px rgba(199,77,58,.3))}
 .map-mode{display:flex;gap:2px;margin-bottom:10px;width:max-content}
 .map-mode button{padding:7px 12px;border:1px solid var(--line2);background:var(--bg);font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-dim);transition:all .15s}
 .map-mode button:hover{color:var(--ink);border-color:var(--ink-faint)}
@@ -343,7 +336,6 @@ nav{flex:1;margin-top:26px;display:flex;flex-direction:column;gap:4px}
 .map-legend span{display:inline-flex;align-items:center;gap:6px}
 .map-legend i{width:8px;height:8px;border-radius:50%;background:#2c3545;border:1px solid #596579}
 .map-legend .primary{background:var(--accent);border-color:#ffb18d}.map-legend .secondary{background:#b17a25;border-color:#e0a83a}
-.map-legend .g-5{background:#1e8c45;border-color:#63d98d}.map-legend .g-4{background:#2fae5a;border-color:#8ee8ac}.map-legend .g-3{background:#4caf6a;border-color:#7ee09b}.map-legend .g-2{background:#8cc63f;border-color:#c2e88a}.map-legend .g-1{background:#d4d44a;border-color:#eef09b}.map-legend .g-n{background:#c74d3a;border-color:#ef8a78}
 .map-panel{padding:16px;display:flex;flex-direction:column;gap:16px}
 .map-panel-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;padding-bottom:12px;border-bottom:1px solid var(--line)}
 .map-panel-head h4{font-family:var(--font-display);font-weight:400;font-size:19px;line-height:1;text-transform:uppercase}
@@ -363,7 +355,6 @@ nav{flex:1;margin-top:26px;display:flex;flex-direction:column;gap:4px}
 .map-muscle-row:last-child{border-bottom:0}
 .map-muscle-row b{margin-left:auto;font-size:8px;letter-spacing:.15em;text-transform:uppercase;font-weight:500}
 .map-muscle-row b.primary{color:var(--accent)}.map-muscle-row b.secondary{color:var(--accent2)}
-.map-muscle-row b.g-5{color:#63d98d}.map-muscle-row b.g-4{color:#8ee8ac}.map-muscle-row b.g-3{color:#7ee09b}.map-muscle-row b.g-2{color:#c2e88a}.map-muscle-row b.g-1{color:#eef09b}.map-muscle-row b.g0{color:#cdd3c6}.map-muscle-row b.g-n{color:#ef8a78}
 .map-empty{padding:15px;border:1px dashed var(--line2);color:var(--ink-faint);font-size:10px;line-height:1.5;letter-spacing:.08em;text-transform:uppercase}
 
 .toast{position:fixed;right:26px;bottom:28px;z-index:140;max-width:min(360px,calc(100vw - 40px));padding:12px 15px;border:1px solid var(--accent);background:var(--panel2);color:var(--ink);
@@ -1602,19 +1593,35 @@ function muscleProgress(muscle){
   });
   return best;
 }
+function gradeColor(pct){
+  var c = Math.max(-50, Math.min(500, pct));
+  var h, s, l;
+  if(c < 0){
+    h = 6; s = 62; l = 48 + (c/-50)*16;
+  } else if(c < 5){
+    h = 75; s = 30; l = 55;
+  } else {
+    var t = Math.min(1, c/500);
+    h = 70 + t*70;
+    s = 65 + t*25;
+    l = 52 - t*15;
+  }
+  return "hsl("+Math.round(h)+","+Math.round(s)+"%,"+Math.round(l)+"%)";
+}
 function muscleGrade(muscle){
   var prog = muscleProgress(muscle);
   if(!prog) return null;
   var pct = prog.pct;
-  var cls, label;
-  if(pct>=50){ cls="g-5"; label="Massive gain"; }
-  else if(pct>=30){ cls="g-4"; label="Big gain"; }
-  else if(pct>=15){ cls="g-3"; label="Solid gain"; }
-  else if(pct>=5){ cls="g-2"; label="Steady gain"; }
-  else if(pct>=0){ cls="g-1"; label="Slight gain"; }
-  else if(pct>-5){ cls="g0"; label="Flat"; }
-  else { cls="g-n"; label="Declined"; }
-  return {pct:pct, cls:cls, label:label, first:prog.first, last:prog.last, ex:prog.ex, count:prog.count};
+  var label;
+  if(pct>=200){ label="Massive gain"; }
+  else if(pct>=100){ label="Huge gain"; }
+  else if(pct>=50){ label="Big gain"; }
+  else if(pct>=20){ label="Solid gain"; }
+  else if(pct>=5){ label="Steady gain"; }
+  else if(pct>=0){ label="Slight gain"; }
+  else if(pct>-5){ label="Flat"; }
+  else { label="Declined"; }
+  return {pct:pct, color:gradeColor(pct), label:label, first:prog.first, last:prog.last, ex:prog.ex, count:prog.count};
 }
 var EXERCISE_MEDIA = {
   "pec-deck": {url:"https://raw.githubusercontent.com/shahanbutt/exercises-dataset/main/videos/0596-v3xmPAR.gif", label:"Lever seated fly", note:"Closest dataset match for pec deck."},
@@ -2766,24 +2773,28 @@ function renderMuscleMap(){
     qs("#mmMeta").innerHTML = '<span class="lab">Improvement</span><span class="val">'+graded+' GRADED</span><span class="sub">your gain from first to latest log &middot; '+noData+' no data</span>';
     qs("#mmCount").textContent = graded+" GRADED";
     qs("#mapLegend").innerHTML =
-      '<span><i class="g-5"></i>+50%</span>'+
-      '<span><i class="g-4"></i>+30%</span>'+
-      '<span><i class="g-3"></i>+15%</span>'+
-      '<span><i class="g-2"></i>+5%</span>'+
-      '<span><i class="g-1"></i>+0%</span>'+
-      '<span><i class="g-n"></i>Declined</span>'+
+      '<span><i style="background:'+gradeColor(-20)+'"></i>Declined</span>'+
+      '<span><i style="background:'+gradeColor(2)+'"></i>+2%</span>'+
+      '<span><i style="background:'+gradeColor(20)+'"></i>+20%</span>'+
+      '<span><i style="background:'+gradeColor(60)+'"></i>+60%</span>'+
+      '<span><i style="background:'+gradeColor(150)+'"></i>+150%</span>'+
+      '<span><i style="background:'+gradeColor(300)+'"></i>+300%</span>'+
+      '<span><i style="background:'+gradeColor(500)+'"></i>+500%</span>'+
       '<span><i></i>No data</span>';
     var rows = Object.keys(MUSCLE_LABELS).map(function(id){
       var g = muscleGrade(id);
       if(!g) return null;
-      return '<div class="map-muscle-row"><span>'+MUSCLE_LABELS[id]+'</span><b class="'+g.cls+'">'+(g.pct>=0?"+":"\u2212")+Math.round(Math.abs(g.pct))+'%</b></div>';
+      return '<div class="map-muscle-row"><span>'+MUSCLE_LABELS[id]+'</span><b style="color:'+g.color+'">'+(g.pct>=0?"+":"\u2212")+Math.round(Math.abs(g.pct))+'%</b></div>';
     }).filter(Boolean);
     qs("#mmMuscles").innerHTML = rows.join("") || '<div class="map-empty">Log at least two sessions per lift to measure improvement.</div>';
     qsa("[data-map-muscle]").forEach(function(el){
       var id = el.getAttribute("data-map-muscle");
       var g = muscleGrade(id);
-      el.classList.remove("is-primary","is-secondary","g-5","g-4","g-3","g-2","g-1","g0","g-n");
-      if(g) el.classList.add(g.cls);
+      el.classList.remove("is-primary","is-secondary");
+      el.style.color = g ? g.color : "";
+      el.style.fill = g ? g.color : "";
+      el.style.stroke = g ? g.color : "";
+      if(!g) el.style.color = "";
     });
     qs("#mmTitle").innerHTML = "Personal Strength Gain";
     qs("#mmMode").textContent = "YOUR PROGRESS";
@@ -2814,7 +2825,9 @@ function renderMuscleMap(){
     qs("#mmMuscles").innerHTML = rows.join("") || '<div class="map-empty">Select a movement to light up the muscles it trains.</div>';
     qsa("[data-map-muscle]").forEach(function(el){
       var id = el.getAttribute("data-map-muscle");
-      el.classList.remove("g-5","g-4","g-3","g-2","g-1","g0","g-n");
+      el.style.color = "";
+      el.style.fill = "";
+      el.style.stroke = "";
       el.classList.toggle("is-primary", stateMap.primary.indexOf(id)!==-1);
       el.classList.toggle("is-secondary", stateMap.primary.indexOf(id)===-1 && stateMap.secondary.indexOf(id)!==-1);
     });

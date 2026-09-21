@@ -324,13 +324,13 @@ nav{flex:1;margin-top:26px;display:flex;flex-direction:column;gap:4px}
 .map-asset .bodymap.is-primary{color:var(--accent);opacity:1;filter:drop-shadow(0 0 7px rgba(255,91,31,.32))}
 .map-body-label{font-size:9px;letter-spacing:.22em;color:var(--ink-faint);text-transform:uppercase}
 .map-silhouette{fill:#191d27;stroke:#3a4039;stroke-width:1.5}
-.map-muscle{fill:#2c3545;stroke:#596579;stroke-width:1;opacity:.9;cursor:pointer;transition:fill .18s,stroke .18s,filter .18s,opacity .18s}
+.map-muscle{fill:#2c3545;color:#2c3545;stroke:#596579;stroke-width:1;opacity:.9;cursor:pointer;transition:fill .18s,stroke .18s,color .18s,filter .18s,opacity .18s}
 .map-muscle:hover{fill:#64718a;stroke:var(--ink);opacity:1}
 .map-muscle.is-secondary{fill:#b17a25;stroke:#e0a83a;opacity:1}
 .map-muscle.is-primary{fill:var(--accent);stroke:#ffb18d;opacity:1;filter:drop-shadow(0 0 5px rgba(255,91,31,.35))}
-.map-muscle.g-strong{fill:#4caf6a;stroke:#7ee09b;opacity:1;filter:drop-shadow(0 0 5px rgba(76,175,106,.35))}
-.map-muscle.g-avg{fill:#e0b93a;stroke:#f3d878;opacity:1}
-.map-muscle.g-weak{fill:#c74d3a;stroke:#ef8a78;opacity:1;filter:drop-shadow(0 0 5px rgba(199,77,58,.3))}
+.map-muscle.g-strong{fill:#4caf6a;color:#4caf6a;stroke:#7ee09b;opacity:1;filter:drop-shadow(0 0 5px rgba(76,175,106,.35))}
+.map-muscle.g-avg{fill:#e0b93a;color:#e0b93a;stroke:#f3d878;opacity:1}
+.map-muscle.g-weak{fill:#c74d3a;color:#c74d3a;stroke:#ef8a78;opacity:1;filter:drop-shadow(0 0 5px rgba(199,77,58,.3))}
 .map-mode{display:flex;gap:2px;margin-bottom:10px;width:max-content}
 .map-mode button{padding:7px 12px;border:1px solid var(--line2);background:var(--bg);font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-dim);transition:all .15s}
 .map-mode button:hover{color:var(--ink);border-color:var(--ink-faint)}
@@ -2266,7 +2266,11 @@ function loadMuscleAssets(){
     qsa("#mmFront svg, #mmBack svg").forEach(function(el){ el.removeAttribute("class"); el.setAttribute("role","img"); });
     Object.keys(MUSCLE_SVG_GROUPS).forEach(function(muscle){
       MUSCLE_SVG_GROUPS[muscle].forEach(function(groupId){
-        qsa("#mmFront #"+groupId+", #mmBack #"+groupId).forEach(function(group){ group.setAttribute("data-map-muscle",muscle); group.classList.add("map-muscle"); });
+        qsa("#mmFront #"+groupId+", #mmBack #"+groupId).forEach(function(group){
+          group.classList.remove("text-mw-gray","text-mw-red","text-mw-amber","bodymap");
+          group.setAttribute("data-map-muscle",muscle);
+          group.classList.add("map-muscle");
+        });
       });
     });
     muscleAssetsReady = true;

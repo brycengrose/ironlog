@@ -506,6 +506,7 @@ nav{flex:1;margin-top:26px;display:flex;flex-direction:column;gap:4px}
 .sesh-date .y{font-size:9px;color:var(--ink-faint);letter-spacing:.14em}
 .sesh-day{font-family:var(--font-display);font-size:17px;letter-spacing:.02em;text-transform:uppercase;display:flex;flex-direction:column;gap:3px}
 .sesh-day small{font-family:var(--font-mono);font-size:9px;color:var(--ink-faint);letter-spacing:.2em}
+.travel-badge{display:inline-flex;align-items:center;align-self:flex-start;width:max-content;margin-top:2px;padding:2px 7px;border:1px solid rgba(255,203,46,.5);background:rgba(255,203,46,.1);font-family:var(--font-sans);font-size:7.5px;letter-spacing:.22em;font-weight:700;color:var(--accent2);text-transform:uppercase}
 .sesh-actions{margin-left:auto;display:flex;gap:8px}
 .sesh-btn{font-size:10px;letter-spacing:.2em;text-transform:uppercase;padding:8px 11px;border:1px solid var(--line2);color:var(--ink-dim);transition:all .15s}
 .sesh-btn:hover{color:var(--ink);border-color:var(--ink-faint)}
@@ -617,6 +618,15 @@ table.tbl{width:100%;border-collapse:collapse;font-size:11.5px}
 .form-date label{font-size:9px;letter-spacing:.22em;color:var(--ink-faint);text-transform:uppercase}
 .form-date input{padding:11px 12px;background:var(--bg);border:1px solid var(--line2);font-size:13px;color:var(--ink);letter-spacing:.06em}
 .form-date input:focus{outline:none;border-color:var(--accent)}
+.travel-toggle{display:flex;align-items:center;gap:12px;margin:6px 0 4px;padding:11px 13px;border:1px dashed var(--line2);background:var(--panel2)}
+.travel-toggle input{position:absolute;opacity:0;pointer-events:none}
+.travel-switch{flex:none;width:36px;height:20px;border-radius:999px;border:1px solid var(--line2);background:var(--bg);position:relative;cursor:pointer;transition:all .15s}
+.travel-switch i{position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:var(--ink-faint);transition:all .15s}
+.travel-toggle input:checked + .travel-switch{border-color:var(--accent);background:rgba(211,155,0,.15)}
+.travel-toggle input:checked + .travel-switch i{left:18px;background:var(--accent)}
+.travel-copy{display:grid;gap:3px;min-width:0}
+.travel-copy b{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink)}
+.travel-copy span{font-size:9px;line-height:1.45;color:var(--ink-faint);letter-spacing:.04em}
 .f-row{display:grid;grid-template-columns:1fr 92px 68px 1.3fr;gap:8px;align-items:center;padding:10px 12px;border:1px solid var(--line);background:var(--bg)}
 .f-row .f-info{min-width:0}
 .f-row .f-name{font-size:11px;font-weight:600;letter-spacing:.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -1129,6 +1139,14 @@ input{transition:background .15s,border-color .15s,color .15s}
       <div class="form-date">
         <label for="logDate">Date</label>
         <input type="date" id="logDate">
+      </div>
+      <div class="travel-toggle">
+        <input type="checkbox" id="logTravel" autocomplete="off">
+        <label for="logTravel" class="travel-switch"><i></i></label>
+        <div class="travel-copy">
+          <b>Travel / different gym</b>
+          <span>Tracked in the log but excluded from strength charts &amp; PRs</span>
+        </div>
       </div>
       <div class="form-grid" id="logForm"></div>
     </div>
@@ -2143,15 +2161,19 @@ var KEY = "ironlog.v1";
 var state = null;
 
 function loadSeed(){
-  return SEED.map(function(s){ return {id:s.id, date:s.date, day:s.day, program:"ideal", est:!!s.est, note:s.note||"", lifts:s.lifts.map(function(l){
-    if(Array.isArray(l)) return {ex:l[0], w:l[1], r:l[2], n:typeof l[3]==="string"?l[3]:(l[3]?"Press":"")};
-    return null;
-  }).filter(Boolean)}; });
-}
-function normalizeSession(s){
-  if(s && s.program==null) s.program = "ideal";
-  return s;
-}
+   return SEED.map(function(s){ return {id:s.id, date:s.date, day:s.day, program:"ideal", travel:false, est:!!s.est, note:s.note||"", lifts:s.lifts.map(function(l){
+     if(Array.isArray(l)) return {ex:l[0], w:l[1], r:l[2], n:typeof l[3]==="string"?l[3]:(l[3]?"Press":"")};
+     return null;
+   }).filter(Boolean)}; });
+ }
+ function normalizeSession(s){
+   if(s && s.program==null) s.program = "ideal";
+   if(s && s.travel==null) s.travel = false;
+   return s;
+ }
+ function tracked(list){
+   return (list||state.sessions).filter(function(s){ return !s.travel; });
+ }
 function load(){
   try{
     var raw = localStorage.getItem(KEY);
@@ -2241,7 +2263,7 @@ function displayVal(exId, lift){
 function pointsFor(exId, mode, sessions){
   var pts = [];
   var useReps = mode==="reps";
-  (sessions||state.sessions).forEach(function(s){
+  (sessions||tracked()).forEach(function(s){
     var lift = liftInSession(s, exId);
     if(!lift) return;
     var v = useReps ? lift.r : valueFor(exId, lift);
@@ -2472,7 +2494,7 @@ function scoreFor(ex, lift){
 function strengthFor(exId, sessions){
   var e = exIndex[exId];
   var pts = [];
-  (sessions||state.sessions).forEach(function(s){
+  (sessions||tracked()).forEach(function(s){
     var lift = liftInSession(s, exId);
     if(!lift) return;
     var v = scoreFor(e, lift);
@@ -2528,7 +2550,7 @@ function plateauFor(exId, sessions){
 }
 
 function renderStrength(){
-  var s = sessionsFor();
+  var s = tracked();
   var series = {};
 
   Object.keys(exIndex).forEach(function(ex){
@@ -2819,8 +2841,9 @@ function updateMeta(){
 }
 
 function renderOverview(){
-  var s = sessionsFor();
-  var last = s[s.length-1];
+  var all = sessionsFor();
+  var s = tracked();
+  var last = all[all.length-1];
   var hasS = s.length>0;
   var progLabel = PROGRAMS[activeProgram].label.toUpperCase();
   var nm = state.name? esc(state.name)+" &middot; "+progLabel : progLabel;
@@ -2861,7 +2884,7 @@ function renderOverview(){
   var pr2Name = pr2? exIndex[pr2].name.toUpperCase().slice(0,14): "—";
 
   qs("#ovStats").innerHTML =
-    stat("SESSIONS LOGGED", s.length, "", "since "+(s.length?esc(fmtDYear(s[0].date)):"—"))+
+    stat("SESSIONS LOGGED", all.length, "", "since "+(all.length?esc(fmtDYear(all[0].date)):"—"))+
     stat("LIFTS AT ALL-TIME PR", atPB, "", "current strength = your best")+
     stat(pr1Name+" PR", pr1Show, "", "top tracked lift")+
     stat(pr2Name+" PR", pr2Show, "", "second most logged");
@@ -2976,7 +2999,7 @@ function renderLifts(){
   if(q) ids = ids.filter(function(id){ return exIndex[id].name.toLowerCase().indexOf(q)!==-1; });
 
   var html = "";
-  var s = sessionsFor();
+  var s = tracked();
   ids.forEach(function(id, i){
     var e = exIndex[id];
     var ptsS = strengthFor(id,s);
@@ -3030,7 +3053,7 @@ function renderSessions(){
       '<div class="sesh-head">'+
         '<div class="sesh-date"><span class="m">'+pd.toLocaleDateString("en-US",{month:"short"}).toUpperCase()+'</span>'+
           '<span class="d">'+pd.getDate()+'</span><span class="y">\u2019'+String(pd.getFullYear()).slice(2)+'</span></div>'+
-        '<div class="sesh-day">'+seshUnit+' '+r.no+' &middot; '+esc(r.name)+(ses.est?'<span class="estim-badge"><span class="dot"></span><span class="tip">Approximate date \u2014 early entries had none, placed at cadence</span></span>':"")+
+        '<div class="sesh-day">'+seshUnit+' '+r.no+' &middot; '+esc(r.name)+(ses.travel?'<span class="travel-badge">TRAVEL GYM</span>':"")+(ses.est?'<span class="estim-badge"><span class="dot"></span><span class="tip">Approximate date \u2014 early entries had none, placed at cadence</span></span>':"")+
           (ses.note?'<small>'+esc(ses.note)+"</small>":"")+'</div>'+
         '<div class="sesh-actions">'+
           '<button class="sesh-btn" data-edit>EDIT</button>'+
@@ -3073,7 +3096,7 @@ function openDetail(exId){
   var r = routineById[e.day];
   qs("#detSub").textContent = "DAY "+r.no+" \u2014 "+r.name+" \u00b7 TARGET "+e.target;
 
-  var s = sessionsFor();
+  var s = tracked();
   var ptsW = pointsFor(exId,"w",s);
   var maxW = ptsW.length? Math.max.apply(null, ptsW.map(function(p){return p.v;})) : null;
   var maxR = null;
@@ -3166,6 +3189,8 @@ function openLogModal(sessionId){
   qs("#logTitle").textContent = ses? "Edit Session": "Log Session";
   qs("#logSub").textContent = ses? "Correct the numbers or date": "Add today's numbers";
   qs("#logDate").value = ses? ses.date : todayStr();
+  var travelEl = qs("#logTravel");
+  if(travelEl) travelEl.checked = ses? !!ses.travel : false;
 
   logDay = ses? ses.day : logRoutinePref();
   renderDaysTab();
@@ -3194,7 +3219,7 @@ function renderDaysTab(){
   });
 }
 function lastLift(exId){
-  var sl = sessionsFor();
+  var sl = tracked();
   for(var i=sl.length-1;i>=0;i--){
     var l = liftInSession(sl[i], exId);
     if(l) return l;
@@ -3250,7 +3275,7 @@ function saveSession(){
   if(!date){ toast("Pick a date"); qs("#logDate").focus(); return; }
   var lifts = collectLifts();
   if(!lifts.length){ toast("Enter at least one lift"); return; }
-  var session = {id: editId || "x"+Date.now(), date:date, day:logDay, program:activeProgram, est:false, note:"", lifts:lifts};
+  var session = {id: editId || "x"+Date.now(), date:date, day:logDay, program:activeProgram, travel:!!(qs("#logTravel")&&qs("#logTravel").checked), est:false, note:"", lifts:lifts};
   if(editId){
     state.sessions = state.sessions.map(function(x){ return x.id===editId? session : x; });
   } else {

@@ -1260,9 +1260,9 @@ var ROUTINES = [
 {id:"leg-ext", name:"Leg Extension", target:"8\u201315 reps", unit:"lb", ss:"A"},
      {id:"leg-press", name:"Leg Press", target:"8\u201315 reps", unit:"lb", ss:"A"},
      {id:"calf-raise", name:"Standing Calf Raise", target:"12\u201320 reps", unit:"lb"},
-     {id:"sit-ups", name:"Sit Ups", target:"reps", unit:"bw"}
-    ]},
-   {id:"d3", no:"III", name:"DELTS & ARMS", tag:"ISOLATION",
+{id:"sit-ups", name:"Sit Ups", target:"reps", unit:"lb"}
+     ]},
+    {id:"d3", no:"III", name:"DELTS & ARMS", tag:"ISOLATION",
     exercises:[
       {id:"lat-raise", name:"DB Lateral Raise", target:"6\u201310 reps", unit:"lb"},
       {id:"rear-delt", name:"Rear Delt", target:"6\u201310 reps", unit:"lb"},
@@ -1275,7 +1275,7 @@ var ROUTINES = [
       {id:"leg-ext-hold", name:"Leg Extension Hold (+30 LB)", target:"hold max \u2014 as long as possible", unit:"stack", time:true, ss:"A"},
       {id:"leg-press", name:"Leg Press", target:"8\u201315 reps", unit:"lb", ss:"A"},
      {id:"calf-raise", name:"Standing Calf Raise", target:"12\u201320 reps", unit:"lb"},
-     {id:"sit-ups", name:"Sit Ups", target:"reps", unit:"bw"}
+     {id:"sit-ups", name:"Sit Ups", target:"reps", unit:"lb"}
    ]}
 ];
 
@@ -2219,7 +2219,7 @@ function ssPill(exObj, routine){
   var p = ss.exs[ss.ord===0 ? 1 : 0];
   return '<span class="ss" title="Superset \u2014 back-to-back, no rest">\u2937 SUPERSET \u00b7 '+esc(p.name)+'</span> ';
 }
-function metricIsReps(exId){ return exId==="sit-ups"; }
+function metricIsReps(exId){ return false; }
 function valueFor(exId, lift){ return metricIsReps(exId) ? lift.r : lift.w; }
 function repLabel(exId){ return exIndex[exId].time ? "SEC" : "REPS"; }
 function unitLabel(exId){ var e = exIndex[exId]; return e.unit==="bw" ? "BW" : e.unit==="stack" ? "STACK LB" : "LB"; }
@@ -3090,8 +3090,7 @@ function openDetail(exId){
   qs("#detPrs").innerHTML = strip;
 
   var modes = [];
-  if(exId==="sit-ups") modes.push(["reps","REPS"]);
-  else if(e.time) modes.push(["w","STACK"],["reps","SECONDS"]);
+  if(e.time) modes.push(["w","STACK"],["reps","SECONDS"]);
   else modes.push(["w","WEIGHT"],["reps","REPS"]);
   var seg = "";
   modes.forEach(function(m, i){ seg += '<button class="'+(i===0?"is-on":"")+'" data-m="'+m[0]+'">'+m[1]+"</button>"; });

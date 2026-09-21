@@ -157,10 +157,27 @@ nav{flex:1;margin-top:26px;display:flex;flex-direction:column;gap:4px}
 .readiness-copy span{font-size:10px;line-height:1.5;color:var(--ink-dim);letter-spacing:.04em}
 .readiness-action{margin-left:auto;padding:8px 11px;border:1px solid var(--line2);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-dim);white-space:nowrap;transition:all .15s}
 .readiness-action:hover{color:var(--accent);border-color:var(--accent)}
+.tips{margin:20px 0 6px}
+.tips-head{display:flex;align-items:baseline;gap:10px;margin-bottom:12px}
+.tips-head .idx{font-family:var(--font-display);font-size:9px;letter-spacing:.2em;color:var(--accent)}
+.tips-head h3{font-family:var(--font-display);font-weight:400;font-size:15px;letter-spacing:.02em;text-transform:uppercase}
+.tips-head .hint{margin-left:auto;font-size:8.5px;letter-spacing:.16em;color:var(--ink-faint);text-transform:uppercase;white-space:nowrap}
+.tip-card{border:1px solid var(--line2);background:var(--panel2);padding:16px 18px;display:flex;flex-direction:column;gap:11px;position:relative;transition:border-color .15s}
+.tip-card:hover{border-color:var(--accent)}
+.tip-tag{display:flex;align-items:center;gap:8px}
+.tip-tag .tt-cat{font-size:7.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--accent);font-weight:700}
+.tip-tag .tt-count{margin-left:auto;font-size:7px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-faint);font-weight:600}
+.tip-quote{font-size:14px;line-height:1.5;color:var(--ink);font-family:var(--font-display);font-weight:400;letter-spacing:.01em}
+.tip-rule{width:26px;height:2px;background:var(--accent);flex:none}
+.tip-body{font-size:10.5px;line-height:1.55;color:var(--ink-dim);letter-spacing:.02em}
+.tip-foot{display:flex;justify-content:flex-end;align-items:center;margin-top:2px}
+.tip-next{padding:9px 15px;border:1px solid var(--line2);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-dim);background:transparent;display:inline-flex;align-items:center;gap:7px;transition:all .15s}
+.tip-next:hover{color:var(--accent);border-color:var(--accent)}
+.tip-next .arr{font-size:12px;line-height:1}
 .audio-continue{display:flex;align-items:center;gap:14px;margin:0 0 8px;padding:12px 14px;border:1px solid var(--line2);background:linear-gradient(90deg,rgba(198,227,77,.08),rgba(198,227,77,.02) 55%,transparent);position:relative;overflow:hidden;cursor:pointer;transition:border-color .15s}
 .audio-continue:hover{border-color:var(--good)}
 .audio-continue .ac-bars{display:inline-flex;align-items:flex-end;gap:2px;height:16px;flex:none}
-.audio-continue .ac-bars i{width:3px;background:var(--good);animation:eqBounce 1s ease-in-out infinite}
+.audio-continue .ac-bars i{width:3px;background:var(--good);animation:eqBounce 1s ease-in-out infinite;transform-origin:bottom}
 .audio-continue .ac-bars i:nth-child(1){height:45%;animation-delay:0s}
 .audio-continue .ac-bars i:nth-child(2){height:100%;animation-delay:.2s}
 .audio-continue .ac-bars i:nth-child(3){height:70%;animation-delay:.4s}
@@ -213,6 +230,15 @@ nav{flex:1;margin-top:26px;display:flex;flex-direction:column;gap:4px}
 .view-cta .arr{font-size:15px;line-height:1}
 
 .hero-chart{margin-top:8px;border:1px solid var(--line);background:var(--panel);padding:16px 16px 6px;position:relative}
+.sr-plateau{margin:6px 0 0;border:1px solid rgba(255,203,46,.4);background:rgba(255,203,46,.055);padding:12px 14px}
+.sr-plateau .sp-hd{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.sr-plateau .sp-ico{color:var(--accent2);font-size:12px}
+.sr-plateau .sp-hd b{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink)}
+.sr-plateau .sp-tag{margin-left:auto;font-size:8px;letter-spacing:.14em;color:var(--accent2);text-transform:uppercase}
+.sr-plateau .sp-row{display:flex;align-items:center;gap:10px;padding:6px 0;border-top:1px dashed rgba(255,203,46,.2);font-size:11px}
+.sr-plateau .sp-nm{font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.sr-plateau .sp-meta{font-size:9.5px;color:var(--ink-dim);letter-spacing:.03em;min-width:0}
+.sr-plateau .sp-cta{margin-left:auto;flex:none;font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent2)}
 .sr-card{border:1px solid var(--line);background:var(--panel);padding:14px;display:flex;flex-direction:column;gap:10px;min-width:0}
 .sr-card:hover{border-color:var(--line2)}
 .sr-top{display:flex;align-items:flex-start;gap:10px;min-width:0}
@@ -424,7 +450,7 @@ nav{flex:1;margin-top:26px;display:flex;flex-direction:column;gap:4px}
 .audio-bar-stop:hover{color:var(--accent);border-color:rgba(255,91,31,.5);background:rgba(255,91,31,.15)}
 .audio-bar-stop svg{display:block}
 .audio-eq{display:inline-flex;align-items:flex-end;gap:2px;height:12px;flex:none}
-.audio-eq i{width:2px;background:var(--accent);animation:eqBounce 1s ease-in-out infinite}
+.audio-eq i{width:2px;background:var(--accent);animation:eqBounce 1s ease-in-out infinite;transform-origin:bottom}
 .audio-eq i:nth-child(1){height:40%;animation-delay:0s}
 .audio-eq i:nth-child(2){height:90%;animation-delay:.2s}
 .audio-eq i:nth-child(3){height:60%;animation-delay:.4s}
@@ -548,6 +574,25 @@ nav{flex:1;margin-top:26px;display:flex;flex-direction:column;gap:4px}
 .seg button{padding:9px 16px;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-dim);border-right:1px solid var(--line2);transition:all .15s}
 .seg button:last-child{border-right:none}
 .seg button.is-on{background:var(--ink);color:#0b0c09;font-weight:600}
+
+.prog-kicker{display:inline-block;font-size:8px;letter-spacing:.24em;text-transform:uppercase;color:var(--accent);border:1px solid var(--line2);padding:3px 8px;margin-bottom:14px}
+.prog-hero{border:1px solid rgba(211,155,0,.32);background:linear-gradient(90deg,rgba(211,155,0,.08),rgba(211,155,0,0) 60%);padding:12px 14px;margin-bottom:16px}
+.prog-hero b{display:block;font-family:var(--font-display);font-weight:400;font-size:16px;letter-spacing:.02em;text-transform:uppercase;color:var(--ink);margin-bottom:5px}
+.prog-hero span{font-size:11px;line-height:1.55;color:var(--ink-dim)}
+.prog-sec{margin-bottom:16px}
+.prog-sec:last-child{margin-bottom:0}
+.prog-sec h5{font-size:8.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-faint);margin:0 0 8px;font-weight:600}
+.prog-sec p{font-size:12px;line-height:1.65;color:var(--ink-dim);margin:0 0 8px}
+.prog-sec p:last-child{margin-bottom:0}
+.prog-sec p b{color:var(--ink);font-weight:600}
+.prog-list{margin:0;padding:0;list-style:none;display:grid;gap:7px}
+.prog-list li{display:flex;gap:9px;font-size:11.5px;line-height:1.55;color:var(--ink-dim)}
+.prog-list li::before{content:"";flex:none;width:5px;height:5px;border-radius:50%;background:var(--accent);margin-top:6px}
+.prog-quote{margin:14px 0 0;padding:11px 14px;border-left:2px solid var(--accent2);background:var(--panel2);font-size:12px;line-height:1.6;color:var(--ink)}
+.prog-src{margin-top:16px;padding-top:12px;border-top:1px dashed var(--line2);font-size:9px;letter-spacing:.1em;color:var(--ink-faint);text-transform:uppercase}
+.prog-src a{color:var(--accent2);text-decoration:none}
+.prog-src a:hover{text-decoration:underline}
+
 .chart-lg{position:relative;margin-bottom:6px}
 
 .table-wrap{overflow-x:auto;border:1px solid var(--line);margin-top:18px}
@@ -687,6 +732,7 @@ input{transition:background .15s,border-color .15s,color .15s}
   .days-tab{grid-template-columns:repeat(2,1fr)}
   .stats{gap:8px}
   .stat b{font-size:30px}
+  .sr-plateau .sp-row{flex-wrap:wrap}
 }
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;animation-iteration-count:1!important}
@@ -788,6 +834,22 @@ input{transition:background .15s,border-color .15s,color .15s}
       <div class="ruler" aria-hidden="true"></div>
       <div class="stats" id="ovStats"></div>
       <div class="readiness" id="ovReadiness"></div>
+      <div class="tips" id="ovTips">
+        <div class="tips-head">
+          <span class="idx">HD</span>
+          <h3>Heavy Duty notes</h3>
+          <span class="hint">daily from the philosophy</span>
+        </div>
+        <div class="tip-card" id="tipCard">
+          <div class="tip-tag"><span class="tt-cat">Recovery</span><span class="tt-count" id="tipCount">1 &frasl; 50</span></div>
+          <div class="tip-quote" id="tipQuote"></div>
+          <div class="tip-rule"></div>
+          <div class="tip-body" id="tipBody"></div>
+          <div class="tip-foot">
+            <button class="tip-next" id="tipNext">Next <span class="arr">&rarr;</span></button>
+          </div>
+        </div>
+      </div>
       <div class="audio-continue" id="ovContinue" style="display:none">
         <span class="ac-bars"><i></i><i></i><i></i></span>
         <div class="audio-continue-copy">
@@ -872,6 +934,7 @@ input{transition:background .15s,border-color .15s,color .15s}
         </div>
       </div>
       <div class="ruler" aria-hidden="true"></div>
+      <div class="sr-plateau" id="srPlateau"></div>
       <div class="stats" id="srStats"></div>
       <div class="sec-head">
         <span class="idx">IMPROVEMENT</span>
@@ -1114,6 +1177,22 @@ input{transition:background .15s,border-color .15s,color .15s}
     </div>
   </div>
 </div>
+  <div class="modal" id="programModal" role="dialog" aria-modal="true">
+  <div class="modal-scrim" data-close></div>
+  <div class="dialog">
+    <div class="dialog-head">
+      <div class="t">
+        <h4 id="progName">Why switch?</h4>
+        <span class="sub">the reasoning behind the change</span>
+      </div>
+      <button class="dialog-x" data-close aria-label="Close">&times;</button>
+    </div>
+    <div class="dialog-body" id="progBody"></div>
+    <div class="dialog-foot">
+      <button class="btn btn-prime" data-close>Got it</button>
+    </div>
+  </div>
+</div>
   <div class="modal" id="clearModal" role="dialog" aria-modal="true">
   <div class="modal-scrim" data-close></div>
   <div class="dialog">
@@ -1152,7 +1231,7 @@ input{transition:background .15s,border-color .15s,color .15s}
       <button class="dialog-x" data-close aria-label="Close">&times;</button>
     </div>
     <div class="dialog-body">
-      <p class="clr-warn" style="font-size:11px;margin:0 0 14px;line-height:1.6">Every device keeps its own ledger. Enter a name so this one has an identity &mdash; e.g. <b style="color:var(--accent)">BRYCE</b> or the gf&rsquo;s name.</p>
+      <p class="clr-warn" style="font-size:11px;margin:0 0 14px;line-height:1.6">Every device keeps its own ledger. Enter a name so this one has an identity &mdash; e.g. <b style="color:var(--accent)">BRYCE</b>.</p>
       <div class="clr-code">
         <label>Name</label>
         <input type="text" id="nameInput" placeholder="e.g. BRYCE" maxlength="16" autocomplete="off" style="text-align:left;letter-spacing:.1em">
@@ -1205,18 +1284,20 @@ function S(id, d, dayId, lifts, est, note){
 }
 
 var SEED = [
+  S("pre1","2025-12-18","d3",[["lat-raise",30,8],["rear-delt",20,7],["curl",95,6],["pressdown",120,8],["dips",70,5]],true),
+  S("pre2","2025-12-24","d4",[["leg-ext-hold",150,28],["squat",205,9],["calf-raise",140,15]],true),
   S("s01","2025-12-30","d1",[["pec-deck",90,9],["incline-press",155,5],["pulldown",155,9],["deadlift",365,6]],true),
-  S("s02","2026-01-05","d2",[["leg-ext",180,10],["leg-press",270,8,1],["calf-raise",140,18]],true), 
-  S("s03","2026-01-11","d3",[["lat-raise",30,8],["rear-delt",20,7],["curl",95,6],["pressdown",120,8],["dips",70,5]],true),
-  S("s04","2026-01-17","d4",[["leg-ext-hold",150,28],["squat",205,9],["calf-raise",140,15]],true),
+  S("s02","2026-01-05","d2",[["leg-ext",180,10],["leg-press",270,8,"Press"],["calf-raise",140,18]],true),
+  S("s03","2026-01-11","d3",[["lat-raise",30,8],["rear-delt",20,9],["curl",95,7],["pressdown",120,9],["dips",70,4]],true),
+  S("s04","2026-01-17","d4",[["leg-ext-hold",160,40],["squat",205,9],["calf-raise",150,19]],true),
   S("s05","2026-01-23","d1",[["pec-deck",90,10],["incline-press",155,3],["pulldown",155,10],["deadlift",365,6]],true),
-  S("s06","2026-01-29","d2",[["leg-ext",180,11],["leg-press",270,15],["calf-raise",150,16]],true),
+  S("s06","2026-01-29","d2",[["leg-ext",180,11],["leg-press",270,15,"Press"],["calf-raise",150,16]],true),
   S("s07","2026-02-04","d3",[["lat-raise",30,9],["rear-delt",20,10],["curl",95,7],["pressdown",120,9],["dips",70,4]],true),
-  S("s08","2026-02-10","d4",[["leg-ext-hold",160,40],["squat",205,9],["calf-raise",150,19]],true),
+  S("s08","2026-02-10","d4",[["leg-ext-hold",170,39],["squat",205,10],["calf-raise",155,20]],true),
   S("s09","2026-02-16","d1",[["pec-deck",100,8],["incline-press",155,2],["pulldown",165,7],["deadlift",365,5]],true),
-  S("s10","2026-02-22","d2",[["leg-ext",180,12],["leg-press",290,13],["calf-raise",160,22]],true),
-  S("s11","2026-02-28","d3",[["lat-raise",120,7,"Lateral raise machine"],["rear-delt",25,null,1],["curl",95,7],["pressdown",120,10],["dips",75,3]],true),
-  S("s12","2026-03-06","d4",[["leg-ext-hold",170,110],["squat",140,null,1]],true,"St. George trip"),
+  S("s10","2026-02-22","d2",[["leg-ext",180,12],["leg-press",290,13,"Press"],["calf-raise",160,22]],true),
+  S("s11","2026-02-28","d3",[["lat-raise",120,7,"Lateral raise machine"],["rear-delt",25,null,"Press"],["curl",95,7],["pressdown",120,10],["dips",75,3]],true),
+  S("s12","2026-03-06","d4",[["leg-ext-hold",170,110],["squat",140,null,"Press"]],true,"St. George trip"),
   S("s13","2026-03-12","d1",[["pec-deck",100,9],["incline-press",155,2],["pulldown",170,7],["deadlift",375,3]],true),
   S("s14","2026-03-18","d2",[["leg-ext",190,11],["leg-press",320,13],["calf-raise",190,17]],true),
   S("s15","2026-03-24","d3",[["lat-raise",120,12],["rear-delt",20,17],["curl",95,7],["pressdown",120,10],["dips",75,4]],true),
@@ -1231,15 +1312,15 @@ var SEED = [
   S("s24","2026-05-17","d4",[["leg-ext-hold",220,28],["squat",370,15],["calf-raise",220,17]],true),
   S("s25","2026-05-23","d1",[["pec-deck",120,10],["incline-press",165,4],["pulldown",170,9],["deadlift",380,3]],true),
   S("s26","2026-05-29","d2",[["leg-ext",210,12],["leg-press",380,12],["calf-raise",230,16]],true),
-  S("s27","2026-06-04","d3",[["lat-raise",140,8],["rear-delt",20,12,"Fronting 25 before \u2014 wasn't isolating the rear delt, dropped back"],["curl",100,7],["pressdown",150,4],["dips",70,4]],false),
+  S("s27","2026-06-04","d3",[["lat-raise",140,8],["rear-delt",20,12,"Fronting 25 before — wasn't isolating the rear delt, dropped back"],["curl",100,7],["pressdown",150,4],["dips",70,4]],false),
   S("s28","2026-06-12","d4",[["leg-ext-hold",230,30],["squat",380,13]],false,"Gym at the hotel"),
   S("s29","2026-06-20","d1",[["pec-deck",140,4],["incline-press",165,4],["pullover",90,9],["pulldown",170,1,"3 forced negatives"]],false),
   S("s30","2026-06-24","d2",[["leg-ext",210,12,"Wrong seat height"],["leg-press",380,13],["calf-raise",240,16],["sit-ups",null,40,"Slow up and down"]],false),
-  S("s31","2026-06-28","d3",[["lat-raise",140,6,"Using the machine's sides to help; didn't this time \u2014 maybe switch back to DBs"],["rear-delt",20,9,"Cables now, better isolation"],["curl",100,6],["pressdown",150,4],["dips",75,3]],true),
+  S("s31","2026-06-28","d3",[["lat-raise",140,6,"Using the machine's sides to help; didn't this time — maybe switch back to DBs"],["rear-delt",20,9,"Cables now, better isolation"],["curl",100,6],["pressdown",150,4],["dips",75,3]],true),
   S("s32","2026-07-06","d4",[["leg-ext-hold",220,29],["squat",380,16],["calf-raise",250,16],["sit-ups",50,16]],false),
   S("s33","2026-07-12","d1",[["pec-deck",176,8,"New machine"],["incline-press",170,3],["pullover",100,10],["pulldown",170,2]],false),
   S("s34","2026-07-16","d2",[["leg-ext",210,9],["leg-press",390,11],["calf-raise",260,15]],false),
-  S("s35","2026-07-21","d3",[["lat-raise",140,6],["rear-delt",25,8],["curl",100,7],["pressdown",150,5],["dips",75,4]],false),
+  S("s35","2026-07-21","d3",[["lat-raise",140,6,"Height set bottom of G H"],["rear-delt",25,8,"both"],["curl",100,7],["pressdown",150,5],["dips",75,4]],false),
   S("s36","2026-07-30","d4",[["leg-ext-hold",220,28],["squat",390,12],["calf-raise",270,8,"New machine"],["sit-ups",50,19]],false),
   S("s37","2026-08-04","d1",[["pec-deck",176,10],["incline-press",175,3],["pullover",110,9],["pulldown",170,3]],true),
   S("s38","2026-08-11","d2",[["leg-ext",210,14],["leg-press",390,13],["calf-raise",270,14]],false),
@@ -1531,6 +1612,102 @@ var PROGRAMS = {
   ideal:{id:"ideal",label:"Ideal Routine",shortLabel:"Ideal",routines:IDEAL_ROUTINES,tech:IDEAL_TECH,guideMeta:IDEAL_GUIDE_META,muscleMap:IDEAL_MUSCLE_MAP,media:IDEAL_EXERCISE_MEDIA,recovery:"Every 4 days to start; add rest as strength and recovery require."},
   consolidation:{id:"consolidation",label:"Consolidation Program",shortLabel:"Consolidation",routines:CONSOLIDATION_ROUTINES,tech:CONSOLIDATION_TECH,guideMeta:CONSOLIDATION_GUIDE_META,muscleMap:CONSOLIDATION_MUSCLE_MAP,media:CONSOLIDATION_MEDIA,recovery:"Alternate A and B every 5\u201310 days; repeat only when strength has recovered."}
 };
+
+var PROGRAM_EXPLAIN = {
+  consolidation:{
+    kicker:"Switch reason &middot; stalled progress",
+    hero:["Still not improving on the Ideal Routine?","If you\u2019re training each muscle about once every 7 days and your reps or weights have stopped going up, the Consolidation Program is the logical next step."],
+    sections:[
+      {h:"Why less work, not more", p:"Growth happens in recovery, not in the gym. The workout is only the stimulus; the body adapts afterward, during rest. If you are not stronger from one session to the next, you are not fully recovered \u2014 and the answer is never more training. It is more rest."},
+      {h:"The stronger you get, the less you train", p:"A heavier workout taxes the muscular, nervous, and metabolic systems far more deeply than a light one. As your lifts go up, each session demands a longer recovery \u2014 so the routine has to get shorter, not longer.", quote:"\u201cYou don\u2019t train more as you grow stronger, you train less.\u201d \u2014 Mike Mentzer"},
+      {h:"What changes", p:"Four compound exercises \u2014 squat, pulldown, deadlift, dips \u2014 one all-out set each, spaced 5\u201310 days apart and repeated only once strength has returned. Compounds stimulate the whole body through the Indirect Effect, so isolation work becomes redundant. Intensity stays maximal; volume and frequency drop.", quote:"This is biologically necessary, not laziness."}
+    ]
+  },
+  ideal:{
+    kicker:"Switch reason &middot; recovery headroom",
+    hero:["Recovery headroom is back \u2014 expand the rotation.","If you\u2019re setting a new PR each session on the Consolidation Program and feel fully recovered between workouts, you have the capacity to train a fuller rotation again."],
+    sections:[
+      {h:"The Ideal Routine is the standard template", p:"It\u2019s the fuller four-workout protocol \u2014 pre-exhaust supersets and direct arm, shoulder, ab, and calf work \u2014 trained every 4\u20137 days, with extra rest days inserted whenever strength or recovery requires. Consolidation is the stripped-down refinement for when gains stall."},
+      {h:"You\u2019ve earned the variety back", p:"While Consolidation strips training to the absolute minimum, the Ideal Routine lets you cover more ground. If strength is climbing consistently and you want the broader rotation back, switching is a sign of progress, not regression."},
+      {h:"The rules still apply", p:"More exercises does not mean more work per muscle. Each muscle still gets one set to true failure with strict form. Only add work while progress keeps climbing \u2014 if gains stall again, that\u2019s the signal to consolidate once more.", quote:"Do what is necessary, and do it well."}
+    ]
+  }
+};
+
+var TIPS = [
+  {cat:"Recovery", q:"Growth happens in recovery, not in the gym.", b:"The workout is only the stimulus \u2014 muscle is built afterward, while you rest. Cut recovery short and you cancel the signal, not strengthen it."},
+  {cat:"Recovery", q:"No gain this session means not recovered, not undertrained.", b:"If reps or weight don\u2019t beat last time, the work hasn\u2019t been absorbed yet. The answer is more rest \u2014 never more sets."},
+  {cat:"Recovery", q:"You don\u2019t train more as you grow stronger \u2014 you train less.", b:"A heavier workout taxes the nervous and metabolic systems far deeper. As lifts go up, so does the rest required to adapt. \u2014 Mentzer"},
+  {cat:"Recovery", q:"Sleep is the strongest recovery drug you own.", b:"Adaptation is driven while you sleep. One night of real rest outweighs any pre-workout, pump, or extra set you could add in the gym."},
+  {cat:"Recovery", q:"Adding rest days as you advance is progress, not regression.", b:"After several weeks Mentzer has you insert extra rest days \u2014 moving to every 5, 6, or 7 days. That\u2019s the routine working, not breaking."},
+  {cat:"Recovery", q:"If performance stalls, fix recovery \u2014 never add work.", b:"Reps and weight are the honest signal. When they stop climbing, look at sleep, food, and rest before touching the exercise list."},
+  {cat:"Recovery", q:"The workout is only the trigger \u2014 rest is the builder.", b:"No further demands may be placed on the recovery system until adaptation finishes. Train again too soon and the gains are lost."},
+  {cat:"High Volume", q:"Overtraining \u2014 not undertraining \u2014 is the #1 cause of stalled progress.", b:"Most trainees fail because the body never finishes adapting before being hammered again. More is not the fix; recovery is."},
+  {cat:"High Volume", q:"One all-out set to failure is enough.", b:"Once a set hits true momentary failure, extra sets add fatigue without adding stimulus. Anything more is redundant; anything less is insufficient."},
+  {cat:"High Volume", q:"Pump and soreness are not growth signals.", b:"A full pump can feel like progress and still deliver none. The only honest measure is whether the logbook shows rising strength."},
+  {cat:"High Volume", q:"Every extra set borrows from a finite recovery pool.", b:"Each set you add drains the same budget the body needs for growth. Spend it on what moves the needle, not on more of the same."},
+  {cat:"High Volume", q:"Distinguish \u201cdifficult\u201d from \u201cimpossible.\u201d", b:"Only the very last rep \u2014 where another is impossible \u2014 fully engages the largest fibers. A hard-but-possible set recruits less than you think."},
+  {cat:"High Volume", q:"The Size Principle decides how much work you need.", b:"Muscle fibers are recruited from smallest to largest as effort climbs. Pushing to failure is the only way to hit the fast-twitch fibers that grow."},
+  {cat:"High Volume", q:"Volume is tradition, not physiology.", b:"Five sets came from gym culture, not from biology. One set to failure activates growth; everything after that is fatigue with a receipt."},
+  {cat:"High Volume", q:"\u201cJust one more exercise\u201d subtracts from growth.", b:"Adding a set or day out of impatience draws from the recovery budget \u2014 and undermines the very adaptation you were chasing."},
+  {cat:"Carbs", q:"Carbs are not the enemy \u2014 they\u2019re the fuel for intensity.", b:"Glycogen is what lets a set reach true failure. Cut carbs and you starve the very intensity the routine depends on."},
+  {cat:"Carbs", q:"Train hard \u2192 restore fuel \u2192 adapt \u2192 grow.", b:"The cycle only works if glycogen gets refilled after each workout. Recovery is carbohydrate replenishment plus protein rebuilding."},
+  {cat:"Carbs", q:"Protein builds the bricks; carbs supply the energy to lay them.", b:"No amount of protein compensates for an empty glycogen tank. Both are non-negotiable for progress on low-frequency training."},
+  {cat:"Carbs", q:"Low-carb + one set to failure = a failed set.", b:"Intensity runs on glycogen. A depleted trainee hits failure earlier, with less load, and the logbook shows it."},
+  {cat:"Carbs", q:"Recovery begins with refueling.", b:"Before muscle rebuilds, the body restores glycogen, enzymes, and structural protein. Nutrition is the first stage of the rest cycle, not a side note."},
+  {cat:"Nutrition", q:"Recovery = sleep + food + rest days.", b:"Skimp on any one and gains stall even when the training is perfect. The program only works as well as the recovery around it."},
+  {cat:"Nutrition", q:"The logbook is the objective test of a routine.", b:"If reps or weight are climbing, don\u2019t change a thing. If they stall, examine sleep, nutrition, and rest \u2014 not the exercise list."},
+  {cat:"Nutrition", q:"You cannot out-train a bad recovery plan.", b:"The best workout in the world is wasted if the next 48 hours undercut it. Recovery is the bigger half of the program."},
+  {cat:"Nutrition", q:"Protein is not optional at low volume.", b:"When you train once a week, each session is a bigger adaptive demand. Enough protein is what the body uses to build from it."},
+  {cat:"Nutrition", q:"Track the trend, not the mood.", b:"One bad session proves nothing. A two-week slide in the logbook means recovery or nutrition slipped \u2014 fix that, not the routine."},
+  {cat:"Mindset", q:"Consistency beats frequency.", b:"One honest, fully recovered all-out session beats three half-hearted ones. The discipline is in the resting, not just the training."},
+  {cat:"Mindset", q:"Do what is necessary \u2014 and do it well.", b:"Bodybuilding isn\u2019t about doing more. It\u2019s about the exact amount of work that stimulates growth, then letting recovery finish the job. \u2014 Mentzer"},
+  {cat:"Mindset", q:"\u201cTrain hard. Rest fully. Think rationally.\u201d", b:"Mentzer\u2019s whole method in six words. Intensity, complete recovery, and decisions made from the logbook \u2014 not from emotion."},
+  {cat:"Mindset", q:"Growth is a logical problem, not a mystical one.", b:"Stimulus, recovery, adaptation \u2014 each step is measurable. When the math stops working, change the variable that\u2019s broken, not everything at once."},
+  {cat:"Mindset", q:"The willingness to rest is the mark of the advanced trainee.", b:"Beginners chase every session. Advanced lifters protect rest because they know exactly what a single all-out set costs to recover from."},
+  {cat:"Mindset", q:"Believe the logbook, not the mirror.", b:"Day to day, the mirror lies. Rising strength over weeks is the only honest confirmation that the program is working."},
+  {cat:"Indirect Effect", q:"Compounds train the whole body \u2014 isolation is mostly redundant.", b:"Squats, presses, and rows hit arms, shoulders, and back indirectly. Direct work adds little when compound lifts are taken to failure."},
+  {cat:"Indirect Effect", q:"The most productive routine is the one you can fully recover from.", b:"Fewer exercises, taken to real failure, spaced for complete recovery, will always outperform a longer list you\u2019re still tired from."},
+  {cat:"Indirect Effect", q:"A heavy squat is a full-body event.", b:"The larger the movement, the more muscle and nervous system it calls on \u2014 which is why a few compounds can cover what a page of isolation tries to."},
+  {cat:"Indirect Effect", q:"You\u2019re already training your forearms and shoulders.", b:"Pulls, presses, and rows stimulate them indirectly. Direct work is only worth considering after years, and only if a body part truly lags."},
+  {cat:"Indirect Effect", q:"The Indirect Effect is the mechanism; failure is the switch.", b:"Compounds cover everything \u2014 but only if a set is taken to true momentary failure. Effort is what turns coverage into growth."},
+  {cat:"Intensity", q:"Intensity is the primary driver of progress.", b:"Load and effort, taken to failure, signal growth. Frequency and volume only serve recovery \u2014 intensity does the building."},
+  {cat:"Intensity", q:"One set done right is a full day of work.", b:"An all-out set of squats demands as much recovery as a longer session \u2014 that\u2019s why low frequency is enough when intensity is real."},
+  {cat:"Intensity", q:"Perfect form is intensity\u2019s foundation.", b:"Controlled tempo, full range, no momentum \u2014 sloppy reps just spread effort away from the target muscle and hide the true load."},
+  {cat:"Intensity", q:"Progressive strength is the proof.", b:"More weight, or more reps at the same weight, is the adaptation. When that trend climbs, the intensity was real."},
+  {cat:"Intensity", q:"The last rep is the only one that matters.", b:"Everything before it is preparation. The rep that can\u2019t be done is the one that forces the body to adapt and grow."},
+  {cat:"Intensity", q:"Intensity and volume are traded, not stacked.", b:"Raise one and you must lower the other. The full-volume, full-intensity approach is how trainees overtrain themselves to a standstill."},
+  {cat:"Ideal Routine", q:"The Ideal Routine starts every 4 days \u2014 and expands from there.", b:"Four-workout rotation, 96 hours apart, with extra rest days inserted as strength and recovery require. That flexibility is built in by design."},
+  {cat:"Ideal Routine", q:"The rotation stays the same; the calendar grows around it.", b:"As you get stronger, sessions cost more recovery. The routine doesn\u2019t change \u2014 the days between workouts do."},
+  {cat:"Ideal Routine", q:"Four workouts, every body part, minimal work.", b:"The Ideal Routine hits chest, back, legs, and more across a compact rotation \u2014 one set per exercise, to failure, nothing wasted."},
+  {cat:"Consolidation", q:"The Consolidation Program is the answer to a stall.", b:"When strength stops improving on the Ideal Routine, you consolidate: four compounds, spaced 5\u201310 days, repeated only when recovered."},
+  {cat:"Consolidation", q:"Less frequent is the advanced direction.", b:"Mentzer\u2019s clients trained as little as once a week \u2014 or every 10 days \u2014 and still progressed. Recovery need, not habit, sets the schedule."},
+  {cat:"Consolidation", q:"Stall on a program? Rest more, don\u2019t add more.", b:"No gain means incomplete recovery. The fix is a longer interval between sessions \u2014 the opposite of what gym culture would tell you."},
+  {cat:"Pre-exhaustion", q:"Pre-exhaustion makes a stubborn muscle fail first.", b:"A machine isolation set burns out the target before the stabilizers quit \u2014 so the compound becomes a true all-out effort on that muscle."},
+  {cat:"Pre-exhaustion", q:"Two stations, no rest between.", b:"The pre-exhaust superset is only effective when you move instantly from isolation to compound \u2014 any pause lets the muscle recover and kills the effect."}
+];
+
+var tipKey = "ironlog.tipIndex";
+var tipIndex = Math.floor(Date.now()/864e5) % TIPS.length;
+function tipLoad(){ try{ var v = parseInt(localStorage.getItem(tipKey),10); if(!isNaN(v) && v>=0 && v<TIPS.length) tipIndex = v; }catch(e){} }
+tipLoad();
+function tipSave(){ try{ localStorage.setItem(tipKey, tipIndex); }catch(e){} }
+
+function renderTips(){
+  var card = qs("#tipCard");
+  if(!card) return;
+  var t = TIPS[tipIndex];
+  qs("#tipCount").textContent = (tipIndex+1)+" \u2014 "+TIPS.length;
+  qs("#tipQuote").textContent = t.q;
+  qs("#tipBody").textContent = t.b;
+  qs("#tipCard .tt-cat").textContent = t.cat;
+}
+
+function tipNext(){
+  tipIndex = (tipIndex+1) % TIPS.length;
+  tipSave();
+  renderTips();
+}
 
 var AUDIO_GROUPS = [
   {id:"programs", no:"I", name:"The Routines", tag:"what the guide is built on",
@@ -1896,6 +2073,23 @@ function setProgram(id){
   if(currentView==="muscles") renderMuscleMap();
   updateMeta();
   toast(PROGRAMS[id].label+" active");
+  showProgramExplain(id);
+}
+
+function showProgramExplain(id){
+  var ex = PROGRAM_EXPLAIN[id];
+  if(!ex) return;
+  qs("#progName").innerHTML = PROGRAMS[id].label.replace(" Program","");
+  var html = '<span class="prog-kicker">'+ex.kicker+'</span>';
+  html += '<div class="prog-hero"><b>'+ex.hero[0]+'</b><span>'+ex.hero[1]+'</span></div>';
+  ex.sections.forEach(function(s){
+    html += '<div class="prog-sec"><h5>'+s.h+'</h5><p>'+s.p+'</p>';
+    if(s.quote) html += '<div class="prog-quote">'+s.quote+'</div>';
+    html += '</div>';
+  });
+  html += '<div class="prog-src">Source &middot; <a href="https://mikementzer.org" target="_blank" rel="noopener">Heavy Duty College &rarr;</a></div>';
+  qs("#progBody").innerHTML = html;
+  openModal("programModal");
 }
 
 function renderProgramControls(){
@@ -2262,6 +2456,7 @@ var entranceDone = false;
 function e1rm(w, r){
   var rr = Number(r); if(isNaN(rr) || rr==null) rr = 0;
   var ww = Number(w); if(isNaN(ww) || ww==null) ww = 0;
+  if(rr<=0) return Math.round(ww*10)/10;
   return Math.round(ww*(1+rr/30)*10)/10;
 }
 
@@ -2310,11 +2505,28 @@ function srTip(pt){
   return {html:html};
 }
 
+function plateauFor(exId, sessions){
+  var pts = strengthFor(exId, sessions);
+  if(pts.length < 4) return null;
+  var last = pts[pts.length-1].v;
+  var prev = pts[pts.length-2].v;
+  var max = Math.max.apply(null, pts.map(function(p){return p.v;}));
+  var sincePR = 0;
+  for(var i=pts.length-1;i>=0;i--){ if(pts[i].v>=max) break; sincePR++; }
+  var noGain = last <= prev && last < max + 0.5;
+  if(sincePR >= 3 && noGain){
+    var best = pts.filter(function(p){return p.v>=max;}).pop();
+    return {last:last, max:max, sincePR:sincePR, bestDate:best?best.date:null};
+  }
+  return null;
+}
+
 function renderStrength(){
   var s = sessionsFor();
   var series = {};
 
   Object.keys(exIndex).forEach(function(ex){
+    if(exIndex[ex].time) return;
     var pts = [];
     pointsFor(ex,"w",s).forEach(function(p){
       if(p.lift.w==null) return;
@@ -2335,7 +2547,26 @@ function renderStrength(){
       '<div style="padding:30px 8px;text-align:center;font-size:11px;letter-spacing:.14em;color:var(--ink-faint);text-transform:uppercase">Log a few sets &mdash; the index builds from weight and reps.</div>';
     qs("#srGrid").innerHTML =
       '<div style="padding:18px 8px;text-align:center;font-size:11px;letter-spacing:.14em;color:var(--ink-faint)">no per-lift data yet</div>';
+    qs("#srPlateau").innerHTML = "";
     return;
+  }
+
+  var plateau = [];
+  Object.keys(exIndex).forEach(function(ex){
+    if(exIndex[ex].time) return;
+    var p = plateauFor(ex, s);
+    if(p) plateau.push({ex:ex, info:p});
+  });
+  if(plateau.length){
+    qs("#srPlateau").innerHTML =
+      '<div class="sr-plateau"><div class="sp-hd"><span class="sp-ico">&#9888;</span><b>Possible plateau</b><span class="sp-tag">'+(activeProgram==="consolidation"?"consider a rest day":"recovery may be short")+'</span></div>'+
+      plateau.map(function(item){
+        var e = exIndex[item.ex];
+        return '<div class="sp-row"><span class="sp-nm">'+esc(e.name)+'</span><span class="sp-meta">no gain in '+item.info.sincePR+' sessions &middot; PR '+nicer(item.info.max)+' LB</span><span class="sp-cta">rest &amp; retest</span></div>';
+      }).join("")+
+      '</div>';
+  } else {
+    qs("#srPlateau").innerHTML = "";
   }
 
   var first = {};
@@ -2649,6 +2880,8 @@ function renderOverview(){
     readiness.innerHTML = '<span class="readiness-mark">'+(resting?"REST":"GO")+'</span><div class="readiness-copy"><b>'+(resting?"Recover before the next session":"Ready for the next session")+'</b><span>'+(resting?"Workout "+next.no+" follows Workout "+routineById[recent.day].no+". Give the work room to recover; check back in "+(minRest-age)+" day"+((minRest-age)===1?"":"s")+".":"Next up: Workout "+next.no+" &mdash; "+esc(next.name)+". Log the session when strength feels recovered.")+'</span></div><button class="readiness-action">Log session &rarr;</button>';
   }
   qs("#ovReadiness .readiness-action").addEventListener("click", function(){ openLogModal(); });
+
+  renderTips();
 
   var contEl = qs("#ovContinue");
   if(contEl){
@@ -3125,6 +3358,9 @@ function bindGlobal(){
   });
   qs("#nameBtn").addEventListener("click", openNameModal);
   bindModalClose("nameModal");
+  bindModalClose("programModal");
+  var tipNextBtn = qs("#tipNext");
+  if(tipNextBtn) tipNextBtn.addEventListener("click", tipNext);
   qs("#nameSave").addEventListener("click", saveName);
   qs("#nameInput").addEventListener("keydown", function(e){
     if(e.key === "Enter") saveName();

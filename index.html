@@ -412,7 +412,7 @@ nav{flex:1;margin-top:26px;display:flex;flex-direction:column;gap:4px}
 .abp-time{font-size:9px;color:var(--ink-faint);font-variant-numeric:tabular-nums;letter-spacing:.06em;flex:none;min-width:30px}
 .abp-time:last-child{text-align:right}
 .abp-track{flex:1;min-width:0;height:5px;border-radius:999px;background:rgba(255,255,255,.12);cursor:pointer;position:relative}
-.abp-fill{height:100%;width:0%;border-radius:999px;background:var(--accent);position:relative;transition:width .2s linear}
+.abp-fill{height:100%;width:0%;border-radius:999px;background:var(--accent);position:relative;will-change:width}
 .abp-fill::after{content:"";position:absolute;right:-3px;top:50%;transform:translateY(-50%);width:9px;height:9px;border-radius:50%;background:#fff;box-shadow:0 0 0 2px rgba(255,255,255,.25)}
 .audio-bar-meta{display:flex;flex-direction:column;gap:3px;min-width:0}
 .audio-bar-lab{font-size:7.5px;letter-spacing:.22em;color:var(--accent);text-transform:uppercase}
@@ -1622,24 +1622,59 @@ function audioLoadProgress(){ try{ audioProg = JSON.parse(localStorage.getItem(a
 function audioSaveProgress(){ try{ localStorage.setItem(audioProgKey, JSON.stringify(audioProg)); }catch(e){} }
 audioLoadProgress();
 
+var audioRaf = null;
+var audioLastSave = 0;
+var audioLastChapter = -1;
+function audioProgressTick(){
+  if(!audioPlayer) return;
+  var cur = audioPlayer.currentTime || 0;
+  var dur = !isNaN(audioPlayer.duration) ? audioPlayer.duration : 0;
+  qs("#audioBarTime").textContent = fmtTime(cur);
+  qs("#audioBarDur").textContent = fmtTime(dur);
+  qs("#audioBarFill").style.width = (dur>0) ? ((cur/dur)*100)+"%" : "0%";
+  if(audioCurrent && currentView==="audio" && AUDIO_TRACKS[audioCurrent].ch){
+    var chs = AUDIO_TRACKS[audioCurrent].ch;
+    var idx = -1;
+    for(var i=0;i<chs.length;i++){
+      if(cur >= chs[i].t) idx = i;
+    }
+    if(idx !== audioLastChapter){
+      audioLastChapter = idx;
+      qsa(".audio-chapter[data-ch='"+audioCurrent+"']").forEach(function(el, k){
+        el.classList.toggle("is-active", k===idx);
+      });
+    }
+  } else if(currentView!=="audio") {
+    audioLastChapter = -1;
+  }
+  if(cur - audioLastSave > 1){
+    audioLastSave = cur;
+    if(audioCurrent){ audioProg[audioCurrent] = cur; audioSaveProgress(); }
+  }
+}
+function audioStartTicker(){
+  audioStopTicker();
+  var loop = function(){
+    audioProgressTick();
+    audioRaf = requestAnimationFrame(loop);
+  };
+  audioRaf = requestAnimationFrame(loop);
+}
+function audioStopTicker(){
+  if(audioRaf){ cancelAnimationFrame(audioRaf); audioRaf = null; }
+}
 function audioInit(){
   if(audioPlayer) return;
   audioPlayer = new Audio();
   audioPlayer.preload = "auto";
-  audioSyncTicker = audioSyncUI;
   audioPlayer.addEventListener("timeupdate", function(){
-    if(audioCurrent){
-      audioProg[audioCurrent] = audioPlayer.currentTime;
-      audioSaveProgress();
-    }
-    if(audioSyncTicker) audioSyncTicker();
+    if(audioCurrent){ audioProg[audioCurrent] = audioPlayer.currentTime; audioSaveProgress(); }
   });
-  audioPlayer.addEventListener("play", function(){ audioSyncUI(); audioMediaSession(); });
-  audioPlayer.addEventListener("pause", function(){ audioSyncUI(); });
-  audioPlayer.addEventListener("ended", function(){ audioEnded(); });
-  audioPlayer.addEventListener("error", function(){ if(audioCurrent){ audioCurrent = null; audioSyncUI(); toast("Audio unavailable"); } });
+  audioPlayer.addEventListener("play", function(){ audioSyncUI(); audioMediaSession(); audioStartTicker(); });
+  audioPlayer.addEventListener("pause", function(){ audioStopTicker(); audioSyncUI(); });
+  audioPlayer.addEventListener("ended", function(){ audioStopTicker(); audioEnded(); });
+  audioPlayer.addEventListener("error", function(){ audioStopTicker(); if(audioCurrent){ audioCurrent = null; audioSyncUI(); toast("Audio unavailable"); } });
 }
-var audioSyncTicker = null;
 function fmtTime(sec){
   sec = Math.max(0, Math.floor(sec||0));
   var m = Math.floor(sec/60), s = sec%60;
@@ -1721,6 +1756,7 @@ function playAudio(prog, opts){
     return;
   }
   audioCurrent = prog;
+  audioLastChapter = -1;
   audioPlayer.src = track.src;
   audioPlayer.currentTime = 0;
   var resume = opts.resume;
@@ -1740,6 +1776,7 @@ function playAudio(prog, opts){
 
 function stopAudio(){
   if(!audioPlayer) return;
+  audioStopTicker();
   audioPlayer.pause();
   audioPlayer.currentTime = 0;
   audioCurrent = null;

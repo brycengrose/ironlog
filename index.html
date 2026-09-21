@@ -939,13 +939,13 @@ input{transition:background .15s,border-color .15s,color .15s}
       <div class="sec-head">
         <span class="idx">IMPROVEMENT</span>
         <h3>How much you&rsquo;re improving</h3>
-        <span class="hint">est. 1-rep max averaged across lifts, vs first log</span>
+        <span class="hint">weight-first strength score averaged across lifts, vs first log</span>
       </div>
       <div class="hero-chart" id="srChart"></div>
       <div class="sec-head">
-        <span class="idx">EST. 1RM</span>
+        <span class="idx">STRENGTH</span>
         <h3>Strength trend per exercise</h3>
-        <span class="hint">weight &times; (1 + reps&frasl;30)</span>
+        <span class="hint">weight first &middot; reps &amp; hold time add a small bump</span>
       </div>
       <div class="lift-grid" id="srGrid"></div>
     </section>
@@ -2460,16 +2460,22 @@ function e1rm(w, r){
   return Math.round(ww*(1+rr/30)*10)/10;
 }
 
+function scoreFor(ex, lift){
+  if(!lift) return null;
+  var w = lift.w, r = lift.r;
+  if(w==null) return r==null ? null : r;
+  if(r==null) return w;
+  if(ex.time) return w + Math.min(5, 0.2*r);
+  return w + Math.min(3.5, 0.25*r);
+}
+
 function strengthFor(exId, sessions){
   var e = exIndex[exId];
   var pts = [];
   (sessions||state.sessions).forEach(function(s){
     var lift = liftInSession(s, exId);
     if(!lift) return;
-    var v;
-    if(e.unit==="bw") v = lift.r;
-    else if(e.time) v = lift.r;
-    else v = lift.w!=null ? e1rm(lift.w, lift.r) : null;
+    var v = scoreFor(e, lift);
     if(v==null) return;
     pts.push({s:s, lift:lift, v:rounded(v), date:s.date});
   });
@@ -2526,11 +2532,9 @@ function renderStrength(){
   var series = {};
 
   Object.keys(exIndex).forEach(function(ex){
-    if(exIndex[ex].time) return;
     var pts = [];
-    pointsFor(ex,"w",s).forEach(function(p){
-      if(p.lift.w==null) return;
-      pts.push({s:p.s, lift:{ex:ex, w:p.lift.w, r:p.lift.r}, v:e1rm(p.lift.w, p.lift.r), date:p.date});
+    strengthFor(ex, s).forEach(function(p){
+      pts.push({s:p.s, lift:p.lift, v:p.v, date:p.date});
     });
     if(pts.length >= 2) series[ex] = pts;
   });
@@ -2539,7 +2543,7 @@ function renderStrength(){
   qs("#srMeta").innerHTML =
     '<span class="lab">Weighted lifts</span>'+
     '<span class="val">'+cards+' EXERCISES</span>'+
-    '<span class="sub">est. 1RM = weight &times; (1 + reps&frasl;30)</span>';
+    '<span class="sub">weight-dominant score &middot; reps &amp; holds add a small bump</span>';
 
   if(!cards){
     qs("#srStats").innerHTML = "";
@@ -2553,7 +2557,6 @@ function renderStrength(){
 
   var plateau = [];
   Object.keys(exIndex).forEach(function(ex){
-    if(exIndex[ex].time) return;
     var p = plateauFor(ex, s);
     if(p) plateau.push({ex:ex, info:p});
   });

@@ -2831,7 +2831,24 @@ function renderMuscleMap(){
       el.classList.remove("is-primary","is-secondary","g-strong","g-avg","g-weak");
       if(g) el.classList.add("g-"+g.cls);
     });
+    qs("#mmTitle").innerHTML = "Full-Body Strength Grade";
+    qs("#mmMode").textContent = "ALL MUSCLES";
+    qs("#mmSelection").textContent = "graded vs your profile";
+    qs("#mmDays").style.display = "none";
+    qs("#mmExercises").style.display = "none";
+    var lab = qsa(".map-section-label");
+    if(lab[1]) lab[1].style.display = "none";
+    if(lab[2]) lab[2].style.display = "";
+    qs("#mmMuscles").style.display = "";
+    qs("#mmDays").innerHTML = "";
+    qs("#mmExercises").innerHTML = "";
+    return;
   } else {
+    qs("#mmDays").style.display = "";
+    qs("#mmExercises").style.display = "";
+    var lab = qsa(".map-section-label");
+    if(lab[1]) lab[1].style.display = "";
+    if(lab[2]) lab[2].style.display = "";
     qs("#mmMeta").innerHTML = '<span class="lab">Muscle coverage</span><span class="val">'+activeCount+' GROUPS ACTIVE</span><span class="sub">primary + secondary activation</span>';
     qs("#mmCount").textContent = activeCount+" MUSCLES";
     qs("#mapLegend").innerHTML =

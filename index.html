@@ -85,6 +85,8 @@ nav{flex:1;margin-top:26px;display:flex;flex-direction:column;gap:4px}
 .nav-item{display:flex;align-items:center;gap:14px;padding:13px 12px;text-align:left;border:1px solid transparent;
   font-size:12px;letter-spacing:.30em;text-transform:uppercase;color:var(--ink-dim);
   transition:all .18s ease}
+.nav-item svg{flex:none;opacity:.65}
+.nav-item.is-active svg{opacity:1;color:var(--accent)}
 .nav-item .idx{font-size:10px;color:var(--ink-faint);letter-spacing:.1em;min-width:20px}
 .nav-item:hover{color:var(--ink);border-color:var(--line)}
 .nav-item.is-active{color:var(--ink);background:linear-gradient(105deg,rgba(255,255,255,.07),rgba(255,91,31,.045));border-color:var(--line);border-left:3px solid var(--accent);padding-left:10px;box-shadow:inset 0 1px 0 rgba(255,255,255,.04),0 8px 24px rgba(0,0,0,.14)}
@@ -99,6 +101,34 @@ nav{flex:1;margin-top:26px;display:flex;flex-direction:column;gap:4px}
 .view{display:none;padding-top:34px}
 .view.is-active{display:block;animation:viewIn .3s cubic-bezier(.2,.75,.25,1) both}
 @keyframes viewIn{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}
+
+/* ——— per-view identity ——— */
+#view-overview{--accent:#ff5b1f;--accent2:#ffcb2e}
+#view-lifts{--accent:#2ec4b6;--accent2:#8be6d8}
+#view-sessions{--accent:#e2a93b;--accent2:#f3cf7a}
+#view-strength{--accent:#e0475a;--accent2:#f08a96}
+#view-guide{--accent:#7ab648;--accent2:#b3dd7a}
+#view-muscles{--accent:#ff5b1f;--accent2:#ffcb2e}
+#view-audio{--accent:#ff5b1f;--accent2:#ffcb2e}
+
+.view::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.7}
+.view{position:relative}
+#view-lifts::before{background-image:radial-gradient(rgba(46,196,182,.07) 1px, transparent 1px);background-size:22px 22px}
+#view-sessions::before{background-image:repeating-linear-gradient(180deg, transparent 0 27px, rgba(226,169,59,.06) 27px 28px)}
+#view-strength::before{background-image:radial-gradient(ellipse at 50% -10%, rgba(224,71,90,.10), transparent 55%)}
+#view-guide::before{background-image:repeating-linear-gradient(90deg, transparent 0 40px, rgba(122,182,72,.05) 40px 41px)}
+
+/* distinct masthead character per section */
+#view-lifts .ghost{color:transparent;-webkit-text-stroke:1.5px rgba(46,196,182,.28)}
+#view-sessions .ghost{color:transparent;-webkit-text-stroke:1.5px rgba(226,169,59,.26);font-style:italic}
+#view-strength .ghost{color:transparent;-webkit-text-stroke:1.5px rgba(224,71,90,.30)}
+#view-guide .ghost{color:transparent;-webkit-text-stroke:1.5px rgba(122,182,72,.26)}
+#view-lifts .ghost,#view-strength .ghost,#view-audio .ghost{font-style:normal;letter-spacing:.06em}
+
+#view-overview .masthead-top{align-items:flex-end}
+#view-lifts .ledger-title h2,#view-strength .ledger-title h2{font-size:clamp(40px,5.6vw,72px)}
+#view-sessions .ledger-title h2{font-size:clamp(40px,5.6vw,72px);font-family:var(--font-note);font-style:italic;text-transform:none;letter-spacing:0}
+#view-sessions .ledger-title .kicker,#view-sessions .masthead h2 em{-webkit-text-stroke:0;font-style:italic}
 .tab-glass{position:fixed;inset:0;z-index:65;pointer-events:none;opacity:0;background:rgba(237,234,222,.008);backdrop-filter:blur(0) saturate(1);-webkit-backdrop-filter:blur(0) saturate(1)}
 .tab-glass.is-flashing{animation:tabGlass .36s ease-out both}
 .tab-glass::before{content:"";position:absolute;inset:0;background:linear-gradient(120deg,rgba(255,255,255,.018),transparent 42%);opacity:0}
@@ -501,6 +531,11 @@ nav{flex:1;margin-top:26px;display:flex;flex-direction:column;gap:4px}
 .empty{grid-column:1/-1;text-align:center;padding:70px 20px;color:var(--ink-faint);border:1px dashed var(--line2);font-size:11px;letter-spacing:.24em;text-transform:uppercase}
 
 .session-list{display:grid;gap:12px}
+#view-sessions .session-list{background-image:repeating-linear-gradient(180deg, transparent 0 33px, rgba(226,169,59,.05) 33px 34px)}
+#view-sessions .session{background:var(--panel);border:1px solid var(--line)}
+#view-sessions .sesh-lift .sl-name{font-family:var(--font-note);letter-spacing:.02em;text-transform:none;font-size:13px}
+#view-sessions .sesh-date .d{font-family:var(--font-note);font-style:italic}
+#view-sessions .sesh-day{font-family:var(--font-note);font-style:italic;text-transform:none;letter-spacing:.01em;font-size:18px}
 .session{position:relative;border:1px solid var(--line);background:var(--panel);padding:0;transition:border-color .16s}
 .session:hover{border-color:var(--line2)}
 .sesh-head{display:flex;align-items:center;gap:16px;padding:14px 18px;border-bottom:1px solid var(--line);flex-wrap:wrap}
@@ -664,7 +699,18 @@ table.tbl{width:100%;border-collapse:collapse;font-size:11.5px}
 .fab .plus{font-size:18px;line-height:1}
 
 .mobile-head{display:none}
-.mobile-nav{display:none}
+
+.drawer-scrim{position:fixed;inset:0;z-index:48;background:rgba(4,5,3,.6);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);
+  opacity:0;pointer-events:none;transition:opacity .28s ease}
+.drawer-scrim.is-on{opacity:1;pointer-events:auto}
+
+.mh-menu{display:none;width:42px;height:42px;flex:none;border:1px solid var(--line2);background:var(--panel);
+  flex-direction:column;align-items:center;justify-content:center;gap:4px;position:relative;transition:border-color .15s,background .15s}
+.mh-menu:hover{border-color:var(--accent)}
+.mh-menu span{width:16px;height:2px;background:var(--ink);display:block;transition:transform .25s cubic-bezier(.2,.8,.2,1),opacity .2s}
+.mh-menu.is-open span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+.mh-menu.is-open span:nth-child(2){opacity:0}
+.mh-menu.is-open span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
 
 /* ——— polish: consistency & motion ——— */
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
@@ -691,7 +737,7 @@ input{transition:background .15s,border-color .15s,color .15s}
   .tab-grid button:active{transform:none}
 }
 @supports not (backdrop-filter:blur(1px)){
-  .mobile-head,.mobile-nav{background:rgba(11,12,9,.99)}
+  .mobile-head{background:rgba(11,12,9,.99)}
 }
 
 @media (max-width:1080px){
@@ -700,29 +746,39 @@ input{transition:background .15s,border-color .15s,color .15s}
 }
 @media (max-width:860px){
   .wrap{grid-template-columns:1fr}
-  .rail{display:none}
-  .fab{display:none}
-  .stage{padding:0 18px 120px}
+  .stage{padding:0 18px calc(120px + env(safe-area-inset-bottom))}
   .mobile-head{display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;
-    background:rgba(11,12,9,.94);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:calc(14px + env(safe-area-inset-top)) 18px 14px;gap:10px}
-.mobile-head .brand-inline{font-family:var(--font-display);font-size:20px;letter-spacing:.02em}
-.mobile-head .brand-inline b{color:var(--accent)}
-.mobile-head .mh-brand{display:flex;flex-direction:column;gap:3px;min-width:0;line-height:1}
-.mobile-head .mh-track{font-size:7.5px;letter-spacing:.28em;color:var(--ink-faint);text-transform:uppercase;line-height:1.4}
+    background:rgba(11,12,9,.94);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:calc(14px + env(safe-area-inset-top)) 18px 14px;gap:12px}
+  .mh-menu{display:flex}
+  .fab{right:16px;bottom:calc(16px + env(safe-area-inset-bottom));padding:17px 19px;box-shadow:0 14px 38px rgba(255,91,31,.4),5px 5px 0 rgba(0,0,0,.4)}
+  .mobile-head .brand-inline{font-family:var(--font-display);font-size:20px;letter-spacing:.02em;line-height:1}
+  .mobile-head .brand-inline b{color:var(--accent)}
+  .mobile-head .mh-brand{display:flex;flex-direction:column;gap:3px;min-width:0;line-height:1}
+  .mobile-head .mh-track{font-size:7.5px;letter-spacing:.28em;color:var(--ink-faint);text-transform:uppercase;line-height:1.4}
   .mobile-head .mh-date{font-size:9px;color:var(--ink-faint);letter-spacing:.16em;text-transform:uppercase;text-align:right;line-height:1.5}
-  .mobile-nav{position:fixed;left:0;right:0;bottom:0;z-index:55;display:grid;grid-template-columns:repeat(7,1fr);
-    background:rgba(11,12,9,.97);border-top:1px solid var(--line);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
-    padding-bottom:env(safe-area-inset-bottom)}
-  .mobile-nav .mnav{padding:13px 4px 15px;display:flex;flex-direction:column;align-items:center;gap:6px;font-size:8.5px;letter-spacing:.18em;
-    text-transform:uppercase;color:var(--ink-faint);transition:color .15s}
-  .mobile-nav .mnav svg{opacity:.6}
-  .mobile-nav .mnav.is-on{color:var(--accent);background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,91,31,.06));box-shadow:inset 0 1px 0 rgba(255,255,255,.08)}
-  .mobile-nav .mnav.is-on svg{opacity:1}
-.mobile-nav .mnav.is-add{color:#0b0c09;background:var(--accent)}
-  .readiness{align-items:flex-start;gap:10px;padding:13px 12px}
-  .readiness-mark{font-size:15px}
-  .readiness-action{margin-left:auto;padding:7px 8px;font-size:8px}
-  .toast{right:14px;bottom:calc(78px + env(safe-area-inset-bottom));left:14px;max-width:none;text-align:center}
+  .mobile-head .mh-brand{flex:1}
+
+  .rail{position:fixed;left:0;top:0;bottom:0;z-index:60;height:100vh;width:min(300px,84vw);
+    transform:translateX(-105%);transition:transform .34s cubic-bezier(.2,.8,.2,1);display:flex;flex-direction:column;
+    padding:calc(24px + env(safe-area-inset-top)) 20px calc(24px + env(safe-area-inset-bottom));
+    background:linear-gradient(270deg, rgba(255,255,255,.02), transparent 30%), var(--bg2);
+    border-right:1px solid var(--line);box-shadow:24px 0 60px rgba(0,0,0,.5);overflow-y:auto}
+  .rail.is-open{transform:translateX(0)}
+  .drawer-scrim{display:block}
+  .rail #railNav{flex:1}
+  .rail .nav-item{padding:15px 14px;font-size:13px;gap:16px}
+  .rail .nav-item .idx{min-width:26px;font-size:11px}
+  .rail-foot{margin-top:14px;padding-top:16px}
+  .rail.is-open #railNav .nav-item{animation:drawerIn .3s cubic-bezier(.2,.8,.2,1) both}
+.rail.is-open #railNav .nav-item:nth-child(1){animation-delay:.05s}
+.rail.is-open #railNav .nav-item:nth-child(2){animation-delay:.08s}
+.rail.is-open #railNav .nav-item:nth-child(3){animation-delay:.11s}
+.rail.is-open #railNav .nav-item:nth-child(4){animation-delay:.14s}
+.rail.is-open #railNav .nav-item:nth-child(5){animation-delay:.17s}
+.rail.is-open #railNav .nav-item:nth-child(6){animation-delay:.20s}
+.rail.is-open #railNav .nav-item:nth-child(7){animation-delay:.23s}
+@keyframes drawerIn{from{opacity:0;transform:translateX(-14px)}to{opacity:1;transform:none}}
+.toast{right:14px;bottom:calc(78px + env(safe-area-inset-bottom));left:14px;max-width:none;text-align:center}
   .guide-controls{margin-top:24px;padding:11px}
   .guide-filter-row{flex-wrap:nowrap;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}
   .guide-filter-row::-webkit-scrollbar{display:none}
@@ -753,12 +809,8 @@ input{transition:background .15s,border-color .15s,color .15s}
   html{scroll-behavior:auto}
 }
 @media (max-width:480px){
-  .stage{padding-left:14px;padding-right:14px;padding-bottom:calc(132px + env(safe-area-inset-bottom))}
+  .stage{padding-left:14px;padding-right:14px;padding-bottom:calc(110px + env(safe-area-inset-bottom))}
   .mobile-head{padding-left:14px;padding-right:14px}
-  .mobile-nav{display:flex;justify-content:flex-start;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;padding-left:3px;padding-right:3px}
-  .mobile-nav::-webkit-scrollbar{display:none}
-  .mobile-nav .mnav{flex:0 0 62px;min-width:62px}
-  .mobile-nav .mnav.is-add{flex-basis:82px;min-width:82px}
   .g-media{align-items:flex-start}
   .g-media img{width:96px;height:96px}
   .g-media-copy{padding-top:2px}
@@ -798,12 +850,17 @@ input{transition:background .15s,border-color .15s,color .15s}
 </div>
 
 <div class="mobile-head">
+  <button class="mh-menu" id="mhMenu" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
   <div class="mh-brand">
     <div class="brand-inline">IRON<b>LOG</b></div>
     <div class="mh-track" id="mhTrack"></div>
   </div>
   <div class="mh-date" id="mhDate"></div>
 </div>
+
+<div class="drawer-scrim" id="drawerScrim" aria-hidden="true"></div>
 
 <div class="wrap">
   <aside class="rail">
@@ -813,13 +870,13 @@ input{transition:background .15s,border-color .15s,color .15s}
       <div class="num">LEDGER 001</div>
     </div>
     <nav id="railNav">
-      <button class="nav-item is-active" data-view="overview"><span class="idx">01</span>Overview</button>
-      <button class="nav-item" data-view="lifts"><span class="idx">02</span>Lift Progress</button>
-      <button class="nav-item" data-view="sessions"><span class="idx">03</span>Session Log</button>
-      <button class="nav-item" data-view="strength"><span class="idx">04</span>Strength Index</button>
-      <button class="nav-item" data-view="guide"><span class="idx">05</span>Exercise Guide</button>
-      <button class="nav-item" data-view="muscles"><span class="idx">06</span>Muscle Map</button>
-      <button class="nav-item" data-view="audio"><span class="idx">07</span>Audio</button>
+      <button class="nav-item is-active" data-view="overview"><span class="idx">01</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>Overview</button>
+      <button class="nav-item" data-view="lifts"><span class="idx">02</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17l5-5 4 4 7-8"/><path d="M15 8h6v6"/></svg>Lift Progress</button>
+      <button class="nav-item" data-view="sessions"><span class="idx">03</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 6h13M8 12h13M8 18h13"/><path d="M3 6h.01M3 12h.01M3 18h.01"/></svg>Session Log</button>
+      <button class="nav-item" data-view="strength"><span class="idx">04</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V10"/><path d="M10 20V4"/><path d="M16 20v-8"/><path d="M22 20H2"/></svg>Strength Index</button>
+      <button class="nav-item" data-view="guide"><span class="idx">05</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V2H6.5A2.5 2.5 0 0 0 4 4.5v15z"/><path d="M22 19.5A2.5 2.5 0 0 0 19.5 17H8"/></svg>Exercise Guide</button>
+      <button class="nav-item" data-view="muscles"><span class="idx">06</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="4" r="2"/><path d="M8 21v-7l-2-3 2-3 4 2 4-2 2 3-2 3v7"/><path d="M8 14h8"/></svg>Muscle Map</button>
+      <button class="nav-item" data-view="audio"><span class="idx">07</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>Audio</button>
     </nav>
     <div class="rail-foot">
       <div class="rail-name" id="railName"></div>
@@ -1109,30 +1166,6 @@ input{transition:background .15s,border-color .15s,color .15s}
 </div>
 
 <button class="fab" id="fab"><span class="plus">+</span><span>Log Session</span></button>
-<div class="mobile-nav" id="mobileNav">
-  <button class="mnav is-on" data-view="overview">
-    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>Overview
-  </button>
-  <button class="mnav" data-view="lifts">
-    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17l5-5 4 4 7-8"/><path d="M15 8h6v6"/></svg>Lifts
-  </button>
-  <button class="mnav" data-view="sessions">
-    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 6h13M8 12h13M8 18h13"/><path d="M3 6h.01M3 12h.01M3 18h.01"/></svg>Log
-  </button>
-  <button class="mnav" data-view="strength">
-    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V10"/><path d="M10 20V4"/><path d="M16 20v-8"/><path d="M22 20H2"/></svg>Strength
-  </button>
-  <button class="mnav" data-view="guide">
-    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V2H6.5A2.5 2.5 0 0 0 4 4.5v15z"/><path d="M22 19.5A2.5 2.5 0 0 0 19.5 17H8"/></svg>Guide
-  </button>
-  <button class="mnav" data-view="muscles">
-    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="4" r="2"/><path d="M8 21v-7l-2-3 2-3 4 2 4-2 2 3-2 3v7"/><path d="M8 14h8"/></svg>Map
-  </button>
-  <button class="mnav" data-view="audio">
-    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>Audio
-  </button>
-  <button class="mnav is-add" id="mFab">+&nbsp;Session</button>
-</div>
 
 <div class="modal" id="logModal" role="dialog" aria-modal="true">
   <div class="modal-scrim" data-close></div>
@@ -2366,6 +2399,12 @@ function niceTop(v){
   return Math.ceil(v/step)*step || 1;
 }
 
+function chartAccent(){
+  var v = qs(".view.is-active");
+  if(!v) return "#ff5b1f";
+  var cs = getComputedStyle(v);
+  return cs.getPropertyValue("--accent").trim() || "#ff5b1f";
+}
 function chart(el, pts, opts){
   opts = opts||{};
   el = typeof el==="string" ? qs(el) : el;
@@ -2437,10 +2476,11 @@ function chart(el, pts, opts){
       var lg = document.createElementNS(ns,"linearGradient");
       lg.setAttribute("id","grad"+opts.id);
       lg.setAttribute("x1","0");lg.setAttribute("y1","0");lg.setAttribute("x2","0");lg.setAttribute("y2","1");
+      var ac = chartAccent();
       var stop1 = document.createElementNS(ns,"stop");
-      stop1.setAttribute("offset","0");stop1.setAttribute("stop-color", opts.pr?"#ff5b1f":"#ff5b1f");stop1.setAttribute("stop-opacity",".22");
+      stop1.setAttribute("offset","0");stop1.setAttribute("stop-color", ac);stop1.setAttribute("stop-opacity",".22");
       var stop2 = document.createElementNS(ns,"stop");
-      stop2.setAttribute("offset","1");stop2.setAttribute("stop-color","#ff5b1f");stop2.setAttribute("stop-opacity","0");
+      stop2.setAttribute("offset","1");stop2.setAttribute("stop-color",ac);stop2.setAttribute("stop-opacity","0");
       lg.appendChild(stop1);lg.appendChild(stop2);grad.appendChild(lg);svg.appendChild(grad);
       svg.appendChild(area);
 
@@ -2449,7 +2489,7 @@ function chart(el, pts, opts){
       for(var j=1;j<ptsW;j++) ld += " L"+x(j).toFixed(1)+" "+y(vals[j]).toFixed(1);
       line.setAttribute("d",ld);
       line.setAttribute("fill","none");
-      line.setAttribute("stroke","#ff5b1f");
+      line.setAttribute("stroke",ac);
       line.setAttribute("stroke-width", opts.thin?1.5:2);
       line.setAttribute("stroke-linecap","round");
       line.setAttribute("stroke-linejoin","round");
@@ -2977,7 +3017,6 @@ function goView(name){
   currentView = name;
   qsa(".view").forEach(function(v){ v.classList.toggle("is-active", v.id==="view-"+name); });
   qsa(".nav-item").forEach(function(b){ b.classList.toggle("is-active", b.getAttribute("data-view")===name); });
-  qsa(".mnav").forEach(function(b){ b.classList.toggle("is-on", b.getAttribute("data-view")===name); });
   window.scrollTo(0,0);
   if(name==="overview") renderOverview();
   if(name==="lifts") renderLifts();
@@ -2989,6 +3028,31 @@ function goView(name){
 }
 
 function renderAll(){ renderOverview(); renderLifts(); renderSessions(); updateMeta(); renderName(); renderStrength(); renderAudio(); }
+
+function openDrawer(){
+  var rail = qs(".rail");
+  if(!rail) return;
+  rail.classList.add("is-open");
+  var scrim = qs("#drawerScrim");
+  if(scrim) scrim.classList.add("is-on");
+  var menu = qs("#mhMenu");
+  if(menu){ menu.classList.add("is-open"); menu.setAttribute("aria-expanded","true"); }
+  document.body.style.overflow = "hidden";
+}
+function closeDrawer(){
+  var rail = qs(".rail");
+  if(rail) rail.classList.remove("is-open");
+  var scrim = qs("#drawerScrim");
+  if(scrim) scrim.classList.remove("is-on");
+  var menu = qs("#mhMenu");
+  if(menu){ menu.classList.remove("is-open"); menu.setAttribute("aria-expanded","false"); }
+  if(!qs(".modal.is-open")) document.body.style.overflow = "";
+}
+function toggleDrawer(){
+  var rail = qs(".rail");
+  if(rail && rail.classList.contains("is-open")) closeDrawer();
+  else openDrawer();
+}
 
 function renderName(){
   var n = state.name||"";
@@ -3563,12 +3627,13 @@ function bindGlobal(){
     if(t.closest && t.closest("#ovNameBtn")) openNameModal();
   });
   qsa(".nav-item").forEach(function(b){
-    b.addEventListener("click", function(){ goView(b.getAttribute("data-view")); });
+    b.addEventListener("click", function(){ goView(b.getAttribute("data-view")); closeDrawer(); });
   });
-  qsa(".mnav").forEach(function(b){
-    if(b.id==="mFab"){ b.addEventListener("click", function(){ openLogModal(); }); return; }
-    b.addEventListener("click", function(){ goView(b.getAttribute("data-view")); });
-  });
+  var mhMenu = qs("#mhMenu");
+  if(mhMenu) mhMenu.addEventListener("click", function(){ toggleDrawer(); });
+  var drawerScrim = qs("#drawerScrim");
+  if(drawerScrim) drawerScrim.addEventListener("click", closeDrawer);
+  document.addEventListener("keydown", function(e){ if(e.key==="Escape") closeDrawer(); });
   qs("#fab").addEventListener("click", function(){ openLogModal(); });
 
   qsa("[data-program]", qs("#programSwitch")).forEach(function(b){

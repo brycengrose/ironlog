@@ -323,9 +323,15 @@ nav{flex:1;margin-top:26px;display:flex;flex-direction:column;gap:4px}
 .program-choice:hover{color:var(--ink);border-color:var(--line2)}
 .program-choice.is-on{background:var(--accent);border-color:var(--accent);color:#0b0c09;font-weight:600}
 .audio-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:30px}
+.audio-group{margin-top:30px}
+.audio-group-head{display:flex;align-items:baseline;gap:14px;margin:0 0 14px}
+.audio-group-head .ag-no{font-family:var(--font-display);color:var(--accent);font-size:15px}
+.audio-group-head h4{font-family:var(--font-display);font-weight:400;font-size:20px;text-transform:uppercase;letter-spacing:.03em}
+.audio-group-head .ag-tag{font-size:9px;letter-spacing:.16em;color:var(--ink-faint);text-transform:uppercase;margin-left:auto}
 .audio-card{display:flex;flex-direction:column;gap:12px;border:1px solid var(--line);background:var(--panel);padding:16px;min-width:0}
 .audio-card.is-current{border-color:var(--accent)}
 .audio-card.is-current::before{content:"CURRENT PROGRAM";display:inline-block;align-self:flex-start;font-size:8px;letter-spacing:.18em;color:var(--accent);text-transform:uppercase;padding:3px 6px;border:1px solid rgba(255,91,31,.4)}
+.audio-card.is-playing::after{content:"NOW PLAYING";display:inline-block;align-self:flex-start;font-size:8px;letter-spacing:.18em;color:var(--good);text-transform:uppercase;padding:3px 6px;border:1px solid rgba(198,227,77,.4)}
 .audio-head{display:flex;align-items:flex-start;gap:12px;min-width:0}
 .audio-no{font-family:var(--font-display);color:var(--accent);font-size:16px;line-height:1.2;flex:none}
 .audio-nm{font-family:var(--font-display);font-weight:400;font-size:19px;line-height:1;text-transform:uppercase;letter-spacing:.02em}
@@ -943,39 +949,10 @@ input{transition:background .15s,border-color .15s,color .15s}
       <div class="ruler" aria-hidden="true"></div>
       <div class="sec-head">
         <span class="idx">HEAVY DUTY</span>
-        <h3>Hear the routine, from the source</h3>
-        <span class="hint">audio from the videos the guide is based on</span>
+        <h3 id="auTitle">The Audio Library</h3>
+        <span class="hint">tap play &middot; keeps playing on the lock screen</span>
       </div>
-      <div class="audio-grid">
-        <div class="audio-card" id="auIdeal">
-          <div class="audio-head">
-            <span class="audio-no">IDEAL</span>
-            <div style="min-width:0">
-              <div class="audio-nm">The Ideal Routine</div>
-              <div class="audio-tag">4-workout protocol &middot; recovery-based</div>
-            </div>
-          </div>
-          <div class="audio-desc">Mike explains the structure, exercise selection, rep ranges, and why recovery — not more training — drives growth.</div>
-          <div class="audio-actions">
-            <button class="audio-play" data-audio-play="ideal"><span class="ap-ico"><svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg></span><span>Play audio</span></button>
-          </div>
-          <div class="audio-src"><b>Source</b> &middot; Heavy Duty College audio &mdash; &ldquo;Mike Mentzer: The Ideal Routine&rdquo;</div>
-        </div>
-        <div class="audio-card" id="auConsol">
-          <div class="audio-head">
-            <span class="audio-no">CONSOL</span>
-            <div style="min-width:0">
-              <div class="audio-nm">The Consolidation Program</div>
-              <div class="audio-tag">four compounds &middot; indirect effect</div>
-            </div>
-          </div>
-          <div class="audio-desc">Mike walks through the most refined version of the routine: squats, pulldowns, deadlifts and dips, trained to failure and spaced for full recovery.</div>
-          <div class="audio-actions">
-            <button class="audio-play" data-audio-play="consolidation"><span class="ap-ico"><svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg></span><span>Play audio</span></button>
-          </div>
-          <div class="audio-src"><b>Source</b> &middot; Heavy Duty College audio &mdash; &ldquo;Consolidated Routine: Four Exercises&rdquo;</div>
-        </div>
-      </div>
+      <div class="audio-library" id="auLibrary"></div>
     </section>
 
   </main>
@@ -1488,10 +1465,30 @@ var PROGRAMS = {
   consolidation:{id:"consolidation",label:"Consolidation Program",shortLabel:"Consolidation",routines:CONSOLIDATION_ROUTINES,tech:CONSOLIDATION_TECH,guideMeta:CONSOLIDATION_GUIDE_META,muscleMap:CONSOLIDATION_MUSCLE_MAP,media:CONSOLIDATION_MEDIA,recovery:"Alternate A and B every 5\u201310 days; repeat only when strength has recovered."}
 };
 
-var AUDIO_TRACKS = {
-  ideal:{src:"./audio/ideal-routine.mp3", title:"Mike Mentzer: The Ideal Routine", prog:"Ideal Routine"},
-  consolidation:{src:"./audio/consolidation-program.mp3", title:"Mike Mentzer's Consolidated Routine: Four Exercises", prog:"Consolidation Program"}
-};
+var AUDIO_GROUPS = [
+  {id:"programs", no:"I", name:"The Routines", tag:"what the guide is built on",
+   tracks:[
+     {id:"ideal", src:"./audio/ideal-routine.mp3", title:"The Ideal Routine", tag:"4-workout protocol · recovery-based", desc:"Mike explains the structure, exercise selection, rep ranges, and why recovery — not more training — drives growth.", prog:"Ideal Routine"},
+     {id:"consolidation", src:"./audio/consolidation-program.mp3", title:"The Consolidation Program", tag:"four compounds · indirect effect", desc:"The most refined version: squats, pulldowns, deadlifts and dips, trained to failure and spaced for full recovery.", prog:"Consolidation Program"}
+   ]},
+  {id:"nutrition", no:"II", name:"Nutrition & Protein", tag:"what you really need",
+   tracks:[
+     {id:"protein", src:"./audio/protein-myth.mp3", title:"Protein: How Little Do You Need?", tag:"the fake protein industry", desc:"Mike dismantles the protein-industry myth — why excess protein doesn't build more muscle and how much you actually need.", prog:"Nutrition"},
+     {id:"hd-nutrition", src:"./audio/heavy-duty-nutrition.mp3", title:"Heavy Duty Nutrition", tag:"what Mike actually ate", desc:"A breakdown of Mike's real daily diet and the balanced, moderate approach behind it.", prog:"Nutrition"},
+     {id:"carbs", src:"./audio/carbs-not-the-enemy.mp3", title:"Carbs Are Not the Enemy", tag:"60 / 25 / 15", desc:"Why carbohydrates are protein-sparing, and why extreme low-carb or all-protein dogma misses the point.", prog:"Nutrition"}
+   ]},
+  {id:"recovery", no:"III", name:"Rest & Recovery", tag:"grow during rest",
+   tracks:[
+     {id:"optimal-frequency", src:"./audio/optimal-frequency-recovery.mp3", title:"Your Optimal Training Frequency", tag:"two types of recovery", desc:"The precise explanation of training frequency, systemic recovery, and why 72–96 hours between workouts works.", prog:"Recovery"},
+     {id:"how-often", src:"./audio/how-often-train.mp3", title:"How Often Should You Train?", tag:"individual recovery ability", desc:"Recovery isn't just feeling less sore — it's systemic. Why extended rest often produces greater gains.", prog:"Recovery"}
+   ]},
+  {id:"beginner", no:"IV", name:"For Beginners", tag:"start here",
+   tracks:[
+     {id:"beginner", src:"./audio/beginner-guide.mp3", title:"Heavy Duty Training for Beginners", tag:"the rational path", desc:"Mike's coaching fundamentals: one all-out set, full recovery, and why bodybuilding is a science, not a guessing game.", prog:"Beginner"}
+   ]}
+];
+var AUDIO_TRACKS = {};
+AUDIO_GROUPS.forEach(function(g){ g.tracks.forEach(function(t){ AUDIO_TRACKS[t.id] = t; }); });
 var audioPlayer = null;
 var audioCurrent = null;
 
@@ -1500,7 +1497,7 @@ function audioInit(){
   audioPlayer = new Audio();
   audioPlayer.preload = "auto";
   audioPlayer.addEventListener("timeupdate", function(){ if(audioSyncTicker) audioSyncTicker(); });
-  audioPlayer.addEventListener("play", function(){ audioSyncUI(); });
+  audioPlayer.addEventListener("play", function(){ audioSyncUI(); audioMediaSession(); });
   audioPlayer.addEventListener("pause", function(){ audioSyncUI(); });
   audioPlayer.addEventListener("ended", function(){ audioCurrent = null; audioSyncUI(); });
   audioPlayer.addEventListener("error", function(){ if(audioCurrent){ audioCurrent = null; audioSyncUI(); toast("Audio unavailable"); } });
@@ -1516,6 +1513,27 @@ function audioStopIcon(){
   return '<svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true"><path d="M6.4 6.4l11.2 11.2-1.4 1.4L5 7.8zM17.6 6.4L6.4 17.6 5 16.2 16.2 5z"/></svg>';
 }
 
+function audioMediaSession(){
+  if(!("mediaSession" in navigator)) return;
+  if(!audioCurrent) return;
+  var t = AUDIO_TRACKS[audioCurrent];
+  navigator.mediaSession.metadata = new MediaMetadata({
+    title: t.title,
+    artist: "Mike Mentzer — Heavy Duty",
+    album: "Heavy Duty College",
+    artwork: [
+      { src: "./assets/artwork-180.png", sizes: "180x180", type: "image/png" },
+      { src: "./assets/artwork-192.png", sizes: "192x192", type: "image/png" },
+      { src: "./assets/artwork-512.png", sizes: "512x512", type: "image/png" }
+    ]
+  });
+  navigator.mediaSession.setActionHandler("play", function(){ if(audioPlayer.paused) audioPlayer.play(); });
+  navigator.mediaSession.setActionHandler("pause", function(){ audioPlayer.pause(); });
+  navigator.mediaSession.setActionHandler("seekbackward", function(){ skipAudio(-15); });
+  navigator.mediaSession.setActionHandler("seekforward", function(){ skipAudio(30); });
+  navigator.mediaSession.setActionHandler("stop", function(){ stopAudio(); });
+}
+
 function audioSyncUI(){
   var playing = audioPlayer && audioCurrent && !audioPlayer.paused && !audioPlayer.ended;
   qsa(".audio-play").forEach(function(b){
@@ -1524,6 +1542,7 @@ function audioSyncUI(){
     b.querySelector(".ap-ico").innerHTML = on && playing ? audioIcon(false) : audioIcon(true);
     b.querySelector("span:nth-child(2)").textContent = on && playing ? "Pause audio" : (on ? "Resume audio" : "Play audio");
   });
+  qsa(".audio-card").forEach(function(c){ c.classList.toggle("is-playing", c.getAttribute("data-audio-card")===audioCurrent); });
   var bar = qs("#audioBar");
   var show = !!audioCurrent;
   bar.classList.toggle("is-on", show);
@@ -1549,6 +1568,7 @@ function playAudio(prog){
   audioPlayer.currentTime = 0;
   var p = audioPlayer.play();
   if(p && p.catch) p.catch(function(){});
+  audioMediaSession();
   audioSyncUI();
 }
 
@@ -1572,12 +1592,26 @@ function renderAudio(){
   audioInit();
   qs("#auMeta").innerHTML =
     '<span class="lab">Audio tracks</span>'+
-    '<span class="val">2 SESSIONS</span>'+
-    '<span class="sub">audio keeps playing while you browse &middot; no ads</span>';
-  var idealCard = qs("#auIdeal");
-  var consolCard = qs("#auConsol");
-  if(activeProgram==="ideal"){ idealCard.classList.add("is-current"); consolCard.classList.remove("is-current"); }
-  else { consolCard.classList.add("is-current"); idealCard.classList.remove("is-current"); }
+    '<span class="val">'+Object.keys(AUDIO_TRACKS).length+' TRACKS</span>'+
+    '<span class="sub">keeps playing on the lock screen &middot; no ads</span>';
+  var html = "";
+  AUDIO_GROUPS.forEach(function(g){
+    html += '<div class="audio-group"><div class="audio-group-head"><span class="ag-no">'+g.no+'</span><h4>'+esc(g.name)+'</h4><span class="ag-tag">'+esc(g.tag)+'</span></div>';
+    html += '<div class="audio-grid">';
+    g.tracks.forEach(function(t){
+      var current = activeProgram==="ideal" ? "ideal" : "consolidation";
+      var mark = (g.id==="programs" && t.id===current) ? ' is-current' : '';
+      html += '<div class="audio-card'+mark+'" data-audio-card="'+t.id+'">'+
+        '<div class="audio-head"><span class="audio-no">'+esc(t.tag.toUpperCase().slice(0,6))+'</span><div style="min-width:0"><div class="audio-nm">'+esc(t.title)+'</div><div class="audio-tag">'+esc(t.tag)+'</div></div></div>'+
+        '<div class="audio-desc">'+esc(t.desc)+'</div>'+
+        '<div class="audio-actions"><button class="audio-play" data-audio-play="'+t.id+'"><span class="ap-ico"><svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg></span><span>Play audio</span></button></div>'+
+        '<div class="audio-src"><b>Source</b> &middot; Heavy Duty College audio</div>'+
+      '</div>';
+    });
+    html += '</div></div>';
+  });
+  qs("#auLibrary").innerHTML = html;
+  qsa("#auLibrary .audio-play").forEach(function(b){ b.addEventListener("click", function(){ playAudio(b.getAttribute("data-audio-play")); }); });
   audioSyncUI();
 }
 
@@ -2803,7 +2837,6 @@ function saveName(){
   closeModal("nameModal");
 }
 function bindGlobal(){
-  qsa(".audio-play").forEach(function(b){ b.addEventListener("click", function(){ playAudio(b.getAttribute("data-audio-play")); }); });
   qs("#audioBarToggle").addEventListener("click", function(){ if(audioCurrent) playAudio(audioCurrent); });
   qs("#audioBarBack").addEventListener("click", function(){ skipAudio(-15); });
   qs("#audioBarFwd").addEventListener("click", function(){ skipAudio(30); });

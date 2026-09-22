@@ -460,6 +460,14 @@ nav{flex:1;margin-top:26px;display:flex;flex-direction:column;gap:4px}
   border:1px solid rgba(255,255,255,.2);box-shadow:inset 0 1px 0 rgba(255,255,255,.15)}
 .audio-play.is-on .ap-ico{background:var(--accent);border-color:rgba(255,255,255,.35)}
 .audio-play .ap-ico svg{display:block}
+.audio-share{flex:none;display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;color:var(--ink-dim);
+  background:rgba(255,255,255,.06);backdrop-filter:blur(16px) saturate(1.5);-webkit-backdrop-filter:blur(16px) saturate(1.5);
+  border:1px solid rgba(255,255,255,.12);box-shadow:inset 0 1px 0 rgba(255,255,255,.1),0 6px 16px rgba(0,0,0,.28);
+  transition:all .18s}
+.audio-share:hover{color:var(--ink);background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.24);transform:translateY(-1px)}
+.audio-share svg{display:block}
+.audio-path-step .audio-share{width:34px;height:34px}
+.audio-card.is-shared,.audio-path-step.is-shared{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent),0 0 26px rgba(255,91,31,.28)}
 .audio-playing-note{font-size:8.5px;letter-spacing:.14em;color:var(--accent);text-transform:uppercase;white-space:nowrap}
 .audio-src{font-size:8.5px;line-height:1.5;color:var(--ink-faint);letter-spacing:.06em}
 .audio-src b{color:var(--ink-dim);font-weight:500}
@@ -2305,6 +2313,34 @@ function playChapter(prog, t){
   audioSyncUI();
 }
 
+function audioShareURL(id){
+  var base = location.protocol + "//" + location.host + location.pathname;
+  if(!/\.html$/.test(base)) base = base.replace(/\/+$/, "") + "/index.html";
+  return base + "?audio=" + encodeURIComponent(id);
+}
+function shareAudio(id){
+  var t = AUDIO_TRACKS[id];
+  if(!t) return;
+  var url = audioShareURL(id);
+  var data = {
+    title: "Heavy Duty — " + t.title,
+    text: t.desc,
+    url: url
+  };
+  if(navigator.share){
+    navigator.share(data).catch(function(){});
+  } else if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(url).then(function(){ toast("Link copied — share it anywhere"); }).catch(function(){ toast("Couldn't copy link"); });
+  } else {
+    var ta = document.createElement("textarea");
+    ta.value = url;
+    document.body.appendChild(ta);
+    ta.select();
+    try{ document.execCommand("copy"); toast("Link copied — share it anywhere"); }catch(e){}
+    document.body.removeChild(ta);
+  }
+}
+
 function audioNextInGroup(id){
   for(var gi=0;gi<AUDIO_GROUPS.length;gi++){
     var g = AUDIO_GROUPS[gi];
@@ -2353,6 +2389,7 @@ function renderAudio(){
         '<span class="ps-body"><span class="ps-title">'+esc(t.title)+'<span class="ps-track">'+esc(t.tag)+'</span></span>'+
         '<span class="ps-why">'+esc(s.why)+'</span></span>'+
         '<button class="audio-play ps-play" data-audio-play="'+s.id+'"><span class="ap-ico"><svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg></span><span>'+(resumed?"Resume":"Play")+'</span></button>'+
+        '<button class="audio-share" data-share="'+s.id+'" aria-label="Share audio" title="Share"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v13"/><path d="M7 8l5-5 5 5"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></svg></button>'+
       '</div>';
     });
   });
@@ -2376,7 +2413,7 @@ function renderAudio(){
       html += '<div class="audio-card'+mark+'" data-audio-card="'+t.id+'">'+
         '<div class="audio-head"><span class="audio-no">'+esc(t.tag.toUpperCase().slice(0,6))+'</span><div style="min-width:0"><div class="audio-nm">'+esc(t.title)+'</div><div class="audio-tag">'+esc(t.tag)+'</div></div></div>'+
         '<div class="audio-desc">'+esc(t.desc)+'</div>'+
-        '<div class="audio-actions"><button class="audio-play" data-audio-play="'+t.id+'"><span class="ap-ico"><svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg></span><span>'+ (resumed ? "Resume" : "Play audio") +'</span></button></div>'+
+        '<div class="audio-actions"><button class="audio-play" data-audio-play="'+t.id+'"><span class="ap-ico"><svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg></span><span>'+ (resumed ? "Resume" : "Play audio") +'</span></button><button class="audio-share" data-share="'+t.id+'" aria-label="Share audio" title="Share"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v13"/><path d="M7 8l5-5 5 5"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></svg></button></div>'+
         resumeBar+chapters+
         '<div class="audio-src"><b>Source</b> &middot; Heavy Duty College audio</div>'+
       '</div>';
@@ -2385,6 +2422,7 @@ function renderAudio(){
   });
   qs("#auLibrary").innerHTML = html;
   qsa("#auLibrary .audio-play").forEach(function(b){ b.addEventListener("click", function(){ playAudio(b.getAttribute("data-audio-play")); }); });
+  qsa("#auLibrary .audio-share").forEach(function(b){ b.addEventListener("click", function(e){ e.stopPropagation(); shareAudio(b.getAttribute("data-share")); }); });
   qsa("#auLibrary .audio-path-step").forEach(function(s){
     s.addEventListener("click", function(e){ if(e.target.closest(".audio-play")) return; playAudio(s.getAttribute("data-audio-play")); });
     s.addEventListener("keydown", function(e){ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); playAudio(s.getAttribute("data-audio-play")); } });
@@ -3888,6 +3926,22 @@ function bindGlobal(){
   renderOverview();
   renderName();
   entranceDone = true;
+  var deep = (location.search.match(/[?&]audio=([^&]+)/)||[])[1];
+  if(deep){
+    var id = decodeURIComponent(deep);
+    if(AUDIO_TRACKS[id]){
+      goView("audio");
+      var card = qs('[data-audio-card="'+id+'"]');
+      if(card){ card.classList.add("is-shared"); card.scrollIntoView({block:"center"}); }
+      setTimeout(function(){
+        playAudio(id);
+        var c2 = qs('[data-audio-card="'+id+'"]');
+        if(c2){ c2.classList.add("is-shared"); c2.scrollIntoView({block:"center"}); }
+      }, 150);
+    } else {
+      toast("Audio not found");
+    }
+  }
 })();
 </script>
 </body>

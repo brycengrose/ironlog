@@ -418,6 +418,7 @@ nav{flex:1;margin-top:26px;display:flex;flex-direction:column;gap:4px}
 .audio-path-step{display:flex;align-items:center;gap:14px;padding:10px 12px;border:1px solid transparent;transition:all .12s;cursor:pointer}
 .audio-path-step:hover{background:rgba(255,255,255,.03);border-color:var(--line2)}
 .audio-path-step.is-active{background:rgba(255,91,31,.08);border-color:rgba(255,91,31,.4)}
+.audio-path-step .ps-main{display:flex;align-items:center;gap:14px;flex:1;min-width:0}
 .audio-path-step .ps-no{font-family:var(--font-display);font-size:15px;color:var(--accent);flex:none;width:26px;font-variant-numeric:tabular-nums}
 .audio-path-step .ps-body{flex:1;min-width:0}
 .audio-path-step .ps-title{font-size:12px;color:var(--ink);letter-spacing:.02em}
@@ -833,6 +834,10 @@ input{transition:background .15s,border-color .15s,color .15s}
   .guide-chip{flex:none}
   .cards,.lift-grid,.guide-grid{grid-template-columns:minmax(0,1fr)}
   .audio-grid{grid-template-columns:minmax(0,1fr)}
+  .audio-path-step{flex-wrap:wrap;gap:10px 14px}
+  .audio-path-step .ps-main{flex:1 1 100%;align-items:flex-start}
+  .audio-path-step .ps-title .ps-track{display:block;margin-left:0;margin-top:3px}
+  .audio-path-step .ps-play{margin-left:auto}
   .map-layout{grid-template-columns:1fr}
   .map-stage{padding:12px}
   .map-panel{padding:13px}
@@ -2385,9 +2390,9 @@ function renderAudio(){
       if(!t) return;
       var resumed = audioProg[s.id] && audioProg[s.id] > 20;
       html += '<div class="audio-path-step" data-audio-play="'+s.id+'" role="button" tabindex="0">'+
-        '<span class="ps-no">'+(stepNo<10?'0':'')+stepNo+'</span>'+
+        '<span class="ps-main"><span class="ps-no">'+(stepNo<10?'0':'')+stepNo+'</span>'+
         '<span class="ps-body"><span class="ps-title">'+esc(t.title)+'<span class="ps-track">'+esc(t.tag)+'</span></span>'+
-        '<span class="ps-why">'+esc(s.why)+'</span></span>'+
+        '<span class="ps-why">'+esc(s.why)+'</span></span></span>'+
         '<button class="audio-play ps-play" data-audio-play="'+s.id+'"><span class="ap-ico"><svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg></span><span>'+(resumed?"Resume":"Play")+'</span></button>'+
         '<button class="audio-share" data-share="'+s.id+'" aria-label="Share audio" title="Share"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v13"/><path d="M7 8l5-5 5 5"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></svg></button>'+
       '</div>';

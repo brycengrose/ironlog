@@ -2639,11 +2639,12 @@ function ssPill(exObj, routine){
   return '<span class="ss" title="Superset \u2014 back-to-back, no rest">\u2937 SUPERSET \u00b7 '+esc(p.name)+'</span> ';
 }
 function metricIsReps(exId){ return false; }
-function valueFor(exId, lift){ return metricIsReps(exId) ? lift.r : lift.w; }
+function valueFor(exId, lift){ if(!lift) return null; if(lift.w===0 && lift.r===0) return null; return metricIsReps(exId) ? lift.r : lift.w; }
 function repLabel(exId){ return exIndex[exId].time ? "SEC" : "REPS"; }
 function unitLabel(exId){ var e = exIndex[exId]; return e.unit==="bw" ? "BW" : e.unit==="stack" ? "STACK LB" : "LB"; }
 function displayVal(exId, lift){
   if(!lift) return "—";
+  if(lift.w===0 && lift.r===0) return "—";
   var e = exIndex[exId];
   if(e.unit==="bw"){
     if(lift.w!=null && lift.r!=null) return nicer(lift.w)+" LB \u00d7 "+nicer(lift.r)+" REPS";
@@ -2889,6 +2890,7 @@ function e1rm(w, r){
 function scoreFor(ex, lift){
   if(!lift) return null;
   var w = lift.w, r = lift.r;
+  if(w===0 && r===0) return null;
   if(w==null) return r==null ? null : r;
   if(r==null) return w;
   if(ex.time) return w + Math.min(5, 0.2*r);
@@ -3743,6 +3745,7 @@ function collectLifts(){
     var nIn = qs(".f-nt",row).value.trim();
     var w = wIn===""? null : parseFloat(wIn);
     var r = rIn===""? null : parseFloat(rIn);
+    if(w===0 && r===0) return;
     var lift = {ex:exId, w:w, r:r};
     if(nIn) lift.n = nIn;
     if(w!==null || r!==null || nIn) out.push(lift);
